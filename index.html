@@ -998,6 +998,16 @@ function showDetail(id) {
       </div>
     </div>
 
+    ${t.id === 1 ? `
+    <div class="info-box" style="margin-bottom:28px">
+      <div class="info-box-label">ภาพประกอบชิ้นส่วนที่เกี่ยวข้อง</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
+        <img src="ดุม.png" style="width:100%;border-radius:10px" onerror="this.style.display='none'">
+        <img src="ดุมม.png" style="width:100%;border-radius:10px" onerror="this.style.display='none'">
+      </div>
+    </div>
+    ` : ''}
+
   `;
 
   showScreen('screen-detail');
