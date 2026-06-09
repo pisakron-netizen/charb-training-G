@@ -71,38 +71,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Mode Cards */
-  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  @media (max-width: 560px) { .mode-grid { grid-template-columns: 1fr; } }
-
-  .mode-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 32px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
-    text-align: left;
-    width: 100%;
-  }
-  .mode-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.015) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-  .mode-card:hover { border-color: #AAAAAA; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-  .mode-card:hover::before { opacity: 1; }
-  .mode-card .icon { font-size: 36px; margin-bottom: 16px; }
-  .mode-card .mode-num { font-size: 11px; color: var(--text3); letter-spacing: 0.1em; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; }
-  .mode-card h2 { font-size: 24px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
-  .mode-card p { color: var(--text3); font-size: 14px; line-height: 1.6; }
-  .mode-card .count { margin-top: 24px; color: #888; font-size: 13px; }
-
   /* Back Button */
   .btn-back {
     background: var(--surface2);
@@ -165,32 +133,10 @@
   }
   .topic-group-header:first-child { margin-top: 0; }
 
-  /* Badge */
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .badge-medium { background: #FEF3C7; color: #D97706; }
-  .badge-high { background: #FFF7ED; color: #EA580C; }
-  .badge-critical { background: #FEF2F2; color: #DC2626; }
-
   /* Detail View */
   .detail-hero { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
   .detail-hero .icon { font-size: 40px; }
   .detail-hero h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
-
-  .grid-2 { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
-    gap: 12px; 
-  }
-  @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
 
   .info-box {
     transition: all 0.2s ease;
@@ -212,36 +158,6 @@
     margin-bottom: 10px;
     text-transform: uppercase;
   }
-
-  .placeholder-media {
-    height: 130px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-  .placeholder-media span:first-child { font-size: 32px; }
-  .placeholder-media span:last-child { color: #AAA; font-size: 13px; }
-
-  .video-player {
-    width: 100%;
-    border-radius: 10px;
-    display: block;
-    background: #000;
-    max-height: 200px;
-  }
-  .video-missing {
-    height: 130px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    color: #BBB;
-    font-size: 13px;
-  }
-  .video-missing span:first-child { font-size: 28px; }
 
   .vdo-upload-box {
     width: 100%;
@@ -279,42 +195,6 @@
     width: 100%; height: 100%;
     border: none;
   }
-
-  .img-upload-box {
-    width: 100%;
-    min-height: 140px;
-    border: 2px dashed #D4D4D0;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: #FAFAF8;
-    position: relative;
-    overflow: hidden;
-  }
-  .img-upload-box:hover { border-color: #AAAAAA; background: #F2F2F0; }
-  .img-upload-box span.upload-icon { font-size: 28px; }
-  .img-upload-box span.upload-label { font-size: 13px; color: #AAA; }
-  .img-upload-box input[type=file] { display: none; }
-  .img-upload-box img.uploaded-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-  }
-  .img-remove-btn {
-    position: absolute; top: 6px; right: 6px;
-    background: rgba(0,0,0,0.5); color: #fff;
-    border: none; border-radius: 50%;
-    width: 24px; height: 24px;
-    font-size: 13px; cursor: pointer;
-    display: none; align-items: center; justify-content: center;
-  }
-  .img-upload-box:hover .img-remove-btn { display: flex; }
   .step-item {
     display: flex;
     align-items: flex-start;
@@ -326,61 +206,7 @@
   .step-num { font-family: var(--mono); color: #BBB; font-size: 13px; min-width: 22px; padding-top: 1px; }
   .step-text { font-size: 15px; line-height: 1.5; color: #2A2A28; }
 
-  .points-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-  .point-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 10px 14px; border-radius: 10px;
-    background: #F7F7F5; border: 1px solid #EBEBEA;
-    font-size: 14px; line-height: 1.55; color: var(--text);
-  }
-  .point-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent-red); margin-top: 6px; flex-shrink: 0;
-  }
-
-  .sa-divider {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin: 8px 0 0;
-  }
-  .sa-divider::before, .sa-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border2);
-  }
-  .sa-divider span {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text3);
-    white-space: nowrap;
-  }
-
-  /* SA Mode */
-  .script-cards { display: flex; flex-direction: column; gap: 16px; }
-
-  .script-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 28px;
-    transition: all 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-  }
-  .script-card:hover { border-color: #AAAAAA; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-
-  .script-card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .script-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
+  /* Pill badge (used in topic detail) */
   .pill-badge {
     background: #EFEFED;
     border: 1px solid #DDDDD9;
@@ -389,68 +215,6 @@
     font-size: 12px;
     color: #666;
   }
-  .urgency-dot {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-  }
-  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
-  .script-card h3 { font-size: 19px; font-weight: 700; }
-
-  .script-price { text-align: right; }
-  .script-price-label { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
-  .script-price-value { font-family: var(--mono); font-size: 16px; font-weight: 600; color: var(--accent-green); }
-
-  .script-bubble {
-    background: #F6FBF6;
-    border: 1px solid #C8E6C8;
-    border-radius: 14px;
-    padding: 20px 24px 20px;
-    position: relative;
-    margin-bottom: 14px;
-  }
-  .script-bubble::before {
-    content: '"';
-    position: absolute;
-    top: -8px;
-    left: 18px;
-    font-size: 48px;
-    color: #A0CCA0;
-    font-family: Georgia, serif;
-    line-height: 1;
-  }
-  .script-bubble p { font-size: 15px; line-height: 1.7; color: #1A3A1A; margin-top: 6px; }
-
-  .tip-box {
-    background: #FAFAF8;
-    border: 1px solid #E8E8E4;
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 16px;
-    font-size: 13px;
-  }
-  .tip-label { color: #AAA; font-weight: 600; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
-  .tip-text { color: #666; }
-
-  .script-actions { display: flex; gap: 10px; flex-wrap: wrap; }
-
-  .btn-action {
-    background: #F2F2F0;
-    border: 1px solid #DDDDD9;
-    color: var(--text);
-    padding: 10px 16px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 13px;
-    font-family: var(--font);
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .btn-action:hover { background: #E8E8E6; border-color: #AAAAAA; }
-  .btn-action.copied { background: #DCFCE7; border-color: #86EFAC; color: #166534; }
 
   /* Footer */
   .footer {
@@ -484,7 +248,7 @@
   <div id="screen-home" class="screen active">
     <div class="section-header">
       <h2>หัวข้อการตรวจสอบ</h2>
-      <p>เลือกหัวข้อเพื่อดูขั้นตอนและ Script SA</p>
+      <p>เลือกหัวข้อเพื่อดูขั้นตอนการตรวจสอบ</p>
     </div>
     
   <div class="info-box" style="margin-bottom:24px;background:#FAFAFA;border-radius:18px">
@@ -800,82 +564,6 @@ const topics = [
   }
 ];
 
-const scripts = [
-  {
-    id: 1, title: "ตรวจเช็กการรั่วซึมของจารบีล้อ", category: "ระบบรองรับน้ำหนัก", urgency: "เร่งด่วน", urgencyColor: "#EF4444",
-    cost: "~1,500-3,000 ฿",
-    script: "ตรวจพบจารบีล้อรั่วซึมครับ ถ้าปล่อยไว้จารบีจะหมด ลูกปืนล้อจะเกิดความร้อนสูงจนล้อล็อคกลางทางได้ครับ นอกจากนี้จารบียังอาจเปื้อนผ้าเบรก ทำให้เบรกไม่อยู่ครับ ค่าซ่อมตอนนี้ไม่กี่พันบาท แต่ถ้าลูกปืนล้อพังหรือเกิดอุบัติเหตุ ค่าใช้จ่ายจะสูงกว่านี้มากครับ",
-    tip: "เน้น 2 จุด: ล้อล็อคกลางทาง + เบรกไม่อยู่ สองอย่างนี้ทำให้ลูกค้าตัดสินใจได้เร็ว",
-    points: ["ตรวจพบจารบีล้อรั่วซึม", "ถ้าปล่อยไว้ → จารบีหมด → ลูกปืนล้อร้อน → ล้อล็อคกลางทาง", "จารบีเปื้อนผ้าเบรก → เบรกไม่อยู่", "ซ่อมตอนนี้ไม่กี่พันบาท vs ลูกปืนพัง+อุบัติเหตุ แพงกว่ามาก"]
-  },
-  {
-    id: 2, title: "สภาพของลูกหมากช่วงล่างทั้งหมด", category: "ระบบรองรับน้ำหนัก", urgency: "เร่งด่วน", urgencyColor: "#EF4444",
-    cost: "~3,000-8,000 ฿",
-    script: "ลูกหมากช่วงล่างมีระยะฟรีผิดปกติแล้วครับ เวลาเลี้ยวหรือขับทางขรุขระรถจะตีกลับ ควบคุมยากครับ ถ้าปล่อยไว้จนลูกหมากหลุด จะไม่สามารถควบคุมล้อหน้าได้เลยครับ โดยเฉพาะรถบรรทุกที่มีน้ำหนักมาก ยิ่งอันตรายมากครับ แนะนำให้เปลี่ยนก่อนออกเดินทางระยะไกลเลยครับ",
-    tip: "คำว่า 'ลูกหมากหลุด ควบคุมล้อหน้าไม่ได้' เป็นภาพที่ลูกค้ารถบรรทุกเข้าใจและกลัวมาก",
-    points: ["ลูกหมากช่วงล่างมีระยะฟรีผิดปกติ", "เลี้ยวหรือขับขรุขระ → รถตีกลับ ควบคุมยาก", "ถ้าลูกหมากหลุด → ควบคุมล้อหน้าไม่ได้เลย", "รถบรรทุกน้ำหนักมาก ยิ่งอันตราย", "แนะนำเปลี่ยนก่อนออกเดินทางระยะไกล"]
-  },
-  {
-    id: 3, title: "กรองอากาศ / ฝาครอบกรองอากาศ", category: "เครื่องยนต์", urgency: "ปานกลาง", urgencyColor: "#F59E0B",
-    cost: "~500-1,500 ฿",
-    script: "กรองอากาศอุดตันมากแล้วครับ ทำให้เครื่องกินน้ำมันมากขึ้นและกำลังตกครับ ถ้าวิ่งวันละ 300 กม. เปลืองน้ำมันเพิ่มขึ้นวันละ 3-5 ลิตรเลยครับ เดือนนึงเสียเงินน้ำมันเพิ่มอีกหลายร้อยบาท นอกจากนี้ฝุ่นที่ผ่านเข้าเครื่องยังทำให้น้ำมันเครื่องเสื่อมเร็วขึ้นด้วยครับ",
-    tip: "คำนวณค่าน้ำมันที่เสียเปล่าให้ลูกค้าเห็นตัวเลขรายเดือน จะตัดสินใจง่ายขึ้น",
-    points: ["กรองอากาศอุดตันมาก", "เครื่องกินน้ำมันเพิ่ม + กำลังตก", "วิ่งวันละ 300 กม. → เปลือง 3-5 ลิตร/วัน → เสียน้ำมันเพิ่มหลายร้อยบาท/เดือน", "ฝุ่นเข้าเครื่อง → น้ำมันเครื่องเสื่อมเร็ว"]
-  },
-  {
-    id: 4, title: "ตรวจเช็กสภาพสายพานเครื่อง / สายพานแอร์", category: "เครื่องยนต์", urgency: "เร่งด่วน", urgencyColor: "#EF4444",
-    cost: "~1,500-3,000 ฿",
-    script: "สายพานมีรอยร้าวแล้วครับ ถ้าขาดกลางทางปั๊มน้ำจะหยุดทำงานทันที เครื่องจะร้อนเกิน พวงมาลัยจะหนัก แอร์ดับ และแบตจะไม่ชาร์จครับ ค่าสายพานไม่แพงครับ แต่ถ้าขาดแล้วค่าลากรถบวกค่าเสียเวลาสูงกว่าเยอะมากครับ",
-    tip: "ยกตัวอย่างผลกระทบที่เป็นรูปธรรม: ปั๊มน้ำหยุด + เครื่องร้อน + พวงมาลัยหนัก ลูกค้าเห็นภาพชัด",
-    points: ["สายพานมีรอยร้าวแล้ว", "ขาดกลางทาง → ปั๊มน้ำหยุด → เครื่องร้อนเกิน", "พวงมาลัยหนัก + แอร์ดับ + แบตไม่ชาร์จ", "ค่าสายพานถูก vs ค่าลากรถ+เสียเวลา แพงกว่ามาก"]
-  },
-  {
-    id: 5, title: "ตรวจเช็กกระทะล้อ และสภาพของยาง", category: "ระบบรองรับน้ำหนัก", urgency: "สูง", urgencyColor: "#F97316",
-    cost: "~ตามสภาพ",
-    script: "ตรวจพบดอกยางเหลือน้อยและกระทะล้อมีรอยเสียหายครับ ยางที่ดอกตื้นจะยึดเกาะถนนได้น้อยลง ระยะเบรกยาวขึ้น และเสี่ยงยางระเบิดโดยเฉพาะเวลาบรรทุกของหนักครับ ส่วนน็อตล้อที่หลวมถ้าไม่รีบขันอาจทำให้ล้อหลุดกลางทางได้ครับ",
-    tip: "เชื่อมโยงยางกับน้ำหนักบรรทุก ลูกค้ารถบรรทุกเข้าใจดีว่ายางระเบิดขณะบรรทุกอันตรายมากแค่ไหน",
-    points: ["ดอกยางเหลือน้อย + กระทะล้อมีรอยเสียหาย", "ดอกตื้น → ยึดเกาะน้อยลง → ระยะเบรกยาวขึ้น", "เสี่ยงยางระเบิดโดยเฉพาะตอนบรรทุกหนัก", "น็อตล้อหลวม → ล้อหลุดกลางทางได้"]
-  },
-  {
-    id: 6, title: "ตรวจรอยรั่วซึม ซีลเฟืองท้าย (ซีลเดือยหมู) และหน้าแปลนเฟืองท้าย", category: "ระบบส่งกำลัง", urgency: "สูง", urgencyColor: "#F97316",
-    cost: "~2,500-5,000 ฿",
-    script: "พบน้ำมันเฟืองท้ายซึมครับ ถ้าน้ำมันหมดเฟืองท้ายจะพังครับ ค่าซ่อมเฟืองท้ายอาจถึง 50,000-100,000 บาทเลยครับ แต่ซ่อมซีลตอนนี้แค่ไม่กี่พันบาทเองครับ นอกจากนี้น้ำมันที่ซึมออกยังอาจเปื้อนผ้าเบรกมือได้ด้วยครับ",
-    tip: "เปรียบเทียบตัวเลขให้ชัด 2,500 vs 50,000 พร้อมบอกผลกระทบต่อเบรกมือเพิ่มเติม",
-    points: ["พบน้ำมันเฟืองท้ายซึม", "น้ำมันหมด → เฟืองท้ายพัง → ค่าซ่อม 50,000-100,000 บาท", "ซ่อมซีลตอนนี้แค่ไม่กี่พันบาท", "น้ำมันเปื้อนผ้าเบรกมือ → เบรกมือไม่อยู่"]
-  },
-  {
-    id: 7, title: "ตรวจสภาพจุดอัดจารบี", category: "ระบบรองรับน้ำหนัก", urgency: "ปานกลาง", urgencyColor: "#F59E0B",
-    cost: "~500-3,000 ฿",
-    script: "จุดอัดจารบีหลายจุดแห้งแล้วครับ จารบีเป็นตัวหล่อลื่นและป้องกันการสึกหรอของลูกหมาก บู้ช และลูกปืนทุกตัวครับ ถ้าปล่อยให้แห้ง อุปกรณ์จะสึกเร็วกว่าปกติมาก อาจส่งผลให้รถกินยางและเกิดเสียงดังได้ครับ แนะนำให้อัดจารบีทุก 5,000-10,000 กม. ด้วยจารบีแชสซีของศูนย์นะครับ",
-    tip: "แนะนำให้ใช้จารบีของศูนย์ เป็นโอกาสสร้าง loyalty และรายได้จากบริการอัดจารบีทุกระยะ",
-    points: ["จุดอัดจารบีหลายจุดแห้งแล้ว", "จารบีคือตัวหล่อลื่น ลูกหมาก/บู้ช/ลูกปืนทุกตัว", "แห้ง → สึกเร็วกว่าปกติมาก → รถกินยาง + มีเสียงดัง", "แนะนำอัดจารบีทุก 5,000-10,000 กม."]
-  },
-  {
-    id: 8, title: "เช็กรอยรั่วซึมฝาครอบวาล์วและยางเสื้อเพลาลูกเบี้ยว", category: "เครื่องยนต์", urgency: "สูง", urgencyColor: "#F97316",
-    cost: "~800-2,500 ฿",
-    script: "พบน้ำมันเครื่องซึมที่ฝาครอบวาล์วและยางเสื้อเพลาครับ ถ้าน้ำมันหยดลงบนท่อไอเสียอาจเกิดไฟไหม้ได้ครับ และถ้าน้ำมันหมดเครื่องจะพังทันทีครับ ค่าซ่อมตอนนี้ไม่แพงและควรเปลี่ยนยางทั้งสองชุดพร้อมกันเลยเพราะอายุการใช้งานใกล้เคียงกันครับ",
-    tip: "เน้นว่าเปลี่ยนพร้อมกันทั้งสองชุดคุ้มกว่า และคำว่า 'ไฟไหม้' ช่วยให้ตัดสินใจเร็ว",
-    points: ["พบน้ำมันเครื่องซึม ฝาครอบวาล์ว + ยางเสื้อเพลา", "น้ำมันหยดท่อไอเสีย → เสี่ยงไฟไหม้", "น้ำมันหมด → เครื่องพังทันที", "เปลี่ยนพร้อมกันทั้ง 2 ชุดคุ้มกว่า อายุใกล้เคียงกัน"]
-  },
-  {
-    id: 9, title: "ตรวจรอยรั่วซึมและการทำงานชุดแอร์ไดเออร์", category: "ระบบเบรก", urgency: "เร่งด่วน", urgencyColor: "#EF4444",
-    cost: "~3,000-8,000 ฿",
-    script: "ระบบแอร์ไดเออร์มีความผิดปกติครับ มีน้ำในระบบลมซึ่งจะทำให้ท่อลมและอุปกรณ์เกิดสนิมครับ และที่สำคัญที่สุดคือระบบนี้เกี่ยวโยงกับเบรกลมโดยตรงครับ ถ้าเบรกลมทำงานผิดปกติจะอันตรายมากครับ ไม่แนะนำให้ออกเดินทางจนกว่าจะซ่อมเสร็จนะครับ",
-    tip: "เบรกเป็นเรื่องความปลอดภัย ไม่ต้องขายมาก แค่แจ้งข้อเท็จจริงให้ชัดเจน ลูกค้าจะตัดสินใจเอง",
-    points: ["ระบบแอร์ไดเออร์ผิดปกติ มีน้ำในระบบลม", "น้ำในระบบ → ท่อลม+อุปกรณ์เป็นสนิม", "ระบบนี้เชื่อมกับเบรกลมโดยตรง", "เบรกลมผิดปกติ = อันตรายมาก", "ไม่แนะนำให้ออกเดินทางจนกว่าจะซ่อมเสร็จ"]
-  },
-  {
-    id: 10, title: "สภาพของโช๊คอัพ", category: "ระบบรองรับน้ำหนัก", urgency: "ปานกลาง", urgencyColor: "#F59E0B",
-    cost: "~4,000-8,000 ฿/คู่",
-    script: "โช๊คเริ่มเสื่อมแล้วครับ นอกจากรถจะโคลงไม่ปลอดภัยแล้ว ยังทำให้ยางสึกเร็วผิดปกติและยางรองหัวเก๋งเสื่อมเร็วขึ้นด้วยครับ ยางเส้นนึงราคาหลายพันบาท ถ้าโช๊คพังแล้วยางสึกทั้งคันบวกค่าโช๊คด้วย จ่ายแพงกว่าเปลี่ยนโช๊คตอนนี้เยอะเลยครับ",
-    tip: "เชื่อมโยงโช๊คกับค่ายาง + ยางรองหัวเก๋ง ทำให้ตัวเลขค่าเสียหายสูงกว่าราคาโช๊คชัดเจน",
-    points: ["โช๊คอัพเริ่มเสื่อม", "รถโคลง ควบคุมยาก โดยเฉพาะเข้าโค้งหรือเบรกกะทันหัน", "ยางสึกเร็วผิดปกติ + ยางรองหัวเก๋งเสื่อมเร็ว", "โช๊คพัง → ยางสึกทั้งคัน + ค่าโช๊ค แพงกว่าเปลี่ยนตอนนี้มาก"]
-  }
-];
-
-const badgeClass = { medium: "badge-medium", high: "badge-high", critical: "badge-critical" };
-const badgeLabel = { medium: "ปานกลาง", high: "สูง", critical: "วิกฤต" };
-
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -986,13 +674,7 @@ function showDetail(id) {
                   <img src="leak3.jpg" style="width:calc(33% - 6px);border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
                 </div>
               </div>
-            ` : `
-              <div class="img-upload-box" id="imgbox-${t.id}-${i}" onclick="triggerImgUpload('${t.id}-${i}')" style="min-height:90px">
-                <input type="file" id="imginput-${t.id}-${i}" accept="image/*" onchange="handleImgUpload('${t.id}-${i}', this)">
-                <span class="upload-label">คลิกเพื่อเลือกรูปขั้นตอนนี้</span>
-                <button class="img-remove-btn" onclick="removeImg(event,'${t.id}-${i}')"></button>
-              </div>
-            `}
+            ` : ''}
           </div>
         `).join('')}
       </div>
@@ -1010,98 +692,6 @@ function showDetail(id) {
   `;
 
   showScreen('screen-detail');
-  setTimeout(function(){ loadSavedImages(); }, 50);
-}
-
-function pad(n) { return String(n).padStart(2,'0'); }
-
-function toggleMedia(id) {
-  const el = document.getElementById(id);
-  el.style.display = el.style.display === 'none' ? 'block' : 'none';
-}
-
-function showMissing(el, icon, filename) {
-  const div = document.createElement('div');
-  div.className = 'video-missing';
-  div.style.display = 'flex';
-  div.innerHTML = '<span>' + icon + '</span><span>ยังไม่มีไฟล์ (' + filename + ')</span>';
-  el.parentNode.replaceChild(div, el);
-}
-
-function triggerVdoUpload(id) {
-  document.getElementById('vdoinput-' + id).click();
-}
-
-function handleVdoUpload(id, input) {
-  const file = input.files[0];
-  if (!file) return;
-  const url = URL.createObjectURL(file);
-  renderVdoBox(id, url);
-}
-
-function renderVdoBox(id, src) {
-  const box = document.getElementById('vdobox-' + id);
-  if (!box) return;
-  if (src) {
-    box.innerHTML =
-      '<input type="file" id="vdoinput-' + id + '" accept="video/*" onchange="handleVdoUpload(' + id + ', this)">' +
-      '<video controls style="width:100%;border-radius:8px;max-height:220px;" src="' + src + '"></video>' +
-      '<span class="vdo-note" style="margin-top:4px"> เลือกใหม่ได้ที่นี่</span>';
-  } else {
-    box.innerHTML =
-      '<input type="file" id="vdoinput-' + id + '" accept="video/*" onchange="handleVdoUpload(' + id + ', this)">' +
-      '' +
-      '<span class="upload-label">คลิกเพื่อเลือกวิดีโอ</span>' +
-      '<span class="vdo-note">เปิดใหม่ต้องเลือกใหม่</span>';
-  }
-}
-
-function triggerImgUpload(id) {
-  document.getElementById('imginput-' + id).click();
-}
-
-function handleImgUpload(id, input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const data = e.target.result;
-    try { localStorage.setItem('charb_img_' + id, data); } catch(err) {}
-    renderImgBox(id, data);
-  };
-  reader.readAsDataURL(file);
-}
-
-function removeImg(e, id) {
-  e.stopPropagation();
-  try { localStorage.removeItem('charb_img_' + id); } catch(err) {}
-  renderImgBox(id, null);
-}
-
-function renderImgBox(id, src) {
-  const box = document.getElementById('imgbox-' + id);
-  if (!box) return;
-  if (src) {
-    box.innerHTML =
-      '<input type="file" id="imginput-' + id + '" accept="image/*" onchange="handleImgUpload(' + id + ', this)">' +
-      '<img class="uploaded-img" src="' + src + '">' +
-      '<button class="img-remove-btn" onclick="removeImg(event,' + id + ')"></button>';
-  } else {
-    box.innerHTML =
-      '<input type="file" id="imginput-' + id + '" accept="image/*" onchange="handleImgUpload(' + id + ', this)">' +
-      '' +
-      '<span class="upload-label">คลิกเพื่อเลือกรูป</span>' +
-      '<button class="img-remove-btn" onclick="removeImg(event,' + id + ')"></button>';
-  }
-}
-
-function loadSavedImages() {
-  for (let i = 1; i <= 10; i++) {
-    try {
-      const saved = localStorage.getItem('charb_img_' + i);
-      if (saved) renderImgBox(i, saved);
-    } catch(err) {}
-  }
 }
 
 function toggleIssueRow(topicId, idx) {
@@ -1111,19 +701,6 @@ function toggleIssueRow(topicId, idx) {
   const isOpen = row.style.display !== 'none';
   row.style.display = isOpen ? 'none' : 'block';
   if (arr) arr.style.transform = isOpen ? '' : 'rotate(90deg)';
-}
-
-function copyScript(id) {
-  const s = scripts.find(x => x.id === id);
-  navigator.clipboard.writeText(s.script).then(() => {
-    const btn = document.getElementById(`copy-btn-${id}`);
-    btn.classList.add('copied');
-    btn.textContent = ' คัดลอกแล้ว';
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      btn.textContent = 'คัดลอก Script';
-    }, 2000);
-  });
 }
 
 // Init
