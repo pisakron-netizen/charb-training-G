@@ -662,15 +662,15 @@ function showDetail(id) {
                 <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#16A34A;text-transform:uppercase;margin-bottom:6px">✅ วิธีการแก้ไข</div>
                 <p style="font-size:14px;line-height:1.7;color:#166534;margin:0 0 14px">${iss.solution}</p>
                 ${iss.talkingPoints ? `
-                <button onclick="togglePoints(event,${t.id},${idx})" id="ptsbtn-${t.id}-${idx}" style="display:inline-flex;align-items:center;gap:6px;background:#FFF7ED;border:1px solid #FED7AA;color:#EA580C;font-family:inherit;font-size:12px;font-weight:600;padding:7px 14px;border-radius:8px;cursor:pointer;margin-bottom:12px">
+                <button onclick="togglePoints(event,${t.id},${idx})" id="ptsbtn-${t.id}-${idx}" style="display:inline-flex;align-items:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-family:inherit;font-size:12px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;margin-bottom:12px">
                   🗣️ จุดที่ต้องพูดกับลูกค้า <span id="ptsarr-${t.id}-${idx}" style="transition:transform 0.2s">›</span>
                 </button>
                 <div id="pts-${t.id}-${idx}" style="display:none;margin-bottom:14px">
                   <div style="display:flex;flex-direction:column;gap:8px">
                     ${iss.talkingPoints.map(pt => `
                       <div style="display:flex;align-items:flex-start;gap:10px">
-                        <span style="width:6px;height:6px;border-radius:50%;background:#EA580C;margin-top:7px;flex-shrink:0"></span>
-                        <span style="font-size:14px;line-height:1.55;color:#7C2D12">${pt}</span>
+                        <span style="width:6px;height:6px;border-radius:50%;background:#2563EB;margin-top:7px;flex-shrink:0"></span>
+                        <span style="font-size:14px;font-weight:700;line-height:1.55;color:#1E3A8A">${pt}</span>
                       </div>
                     `).join('')}
                   </div>
