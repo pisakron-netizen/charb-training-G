@@ -698,9 +698,18 @@ function showDetail(id) {
               <div style="display:flex;flex-direction:column;gap:8px">
                 <div style="font-size:11px;font-weight:700;color:#92400E;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">สภาพของจารบีรั่วซึม</div>
                 <div style="display:flex;gap:8px;flex-wrap:wrap">
-                  <img src="leak2.jpg" style="width:calc(33% - 6px);border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
-                  <img src="leak1.jpg" style="width:calc(33% - 6px);border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
-                  <img src="leak3.jpg" style="width:calc(33% - 6px);border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
+                  <figure style="width:calc(33% - 6px);margin:0;display:flex;flex-direction:column;gap:6px">
+                    <img src="leak2.jpg" style="width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
+                    <figcaption style="font-size:14px;font-weight:700;color:#374151;line-height:1.35">1. ประเก็นล้อเสื่อมสภาพ</figcaption>
+                  </figure>
+                  <figure style="width:calc(33% - 6px);margin:0;display:flex;flex-direction:column;gap:6px">
+                    <img src="leak1.jpg" style="width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
+                    <figcaption style="font-size:14px;font-weight:700;color:#374151;line-height:1.35">2. ซีลล้อเสื่อมสภาพ</figcaption>
+                  </figure>
+                  <figure style="width:calc(33% - 6px);margin:0;display:flex;flex-direction:column;gap:6px">
+                    <img src="leak3.jpg" style="width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
+                    <figcaption style="font-size:14px;font-weight:700;color:#374151;line-height:1.35">3. ซีลล้อเสื่อมสภาพ</figcaption>
+                  </figure>
                 </div>
               </div>
             ` : ''}
