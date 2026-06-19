@@ -1,9 +1,9 @@
 param(
-  [string]$Message = "Update training system",
+  [string]$Message = "Update training media system",
   [string]$Remote = "origin",
   [string]$Branch = "",
-  [string]$UserName = "",
-  [string]$UserEmail = "",
+  [string]$UserName = "pisakron-netizen",
+  [string]$UserEmail = "pisakron-netizen@users.noreply.github.com",
   [switch]$NoPull
 )
 
