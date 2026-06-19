@@ -205,6 +205,54 @@
   .step-item:last-child { border-bottom: none; }
   .step-num { font-family: var(--mono); color: #BBB; font-size: 13px; min-width: 22px; padding-top: 1px; }
   .step-text { font-size: 15px; line-height: 1.5; color: #2A2A28; }
+  .step-media { display: flex; flex-direction: column; gap: 8px; }
+  .media-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #92400E;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .media-strip { display: flex; gap: 8px; flex-wrap: wrap; }
+  .media-figure {
+    width: calc(33% - 6px);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .media-figure img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
+    background: #F3F4F6;
+  }
+  .media-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1px dashed #D4D4D0;
+    border-radius: 10px;
+    background: #F7F7F5;
+    color: #8C8C86;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    text-align: center;
+    padding: 12px;
+  }
+  .media-placeholder span { font-family: var(--mono); font-size: 18px; color: #92400E; }
+  .media-placeholder small { font-size: 12px; line-height: 1.4; color: #8C8C86; }
+  .media-caption { font-size: 14px; font-weight: 700; color: #374151; line-height: 1.35; }
+  .related-media { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+  .related-media img { width: 100%; border-radius: 10px; background: #F3F4F6; }
+
+  @media (max-width: 640px) {
+    .media-figure { width: calc(50% - 4px); }
+  }
 
   /* Pill badge (used in topic detail) */
   .pill-badge {
@@ -313,6 +361,201 @@ function getYtId(url) {
   if (!url) return '';
   const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([^?&\s]+)/);
   return m ? m[1] : url;
+}
+
+const topicMedia = {
+  1: {
+    stepIndex: 0,
+    title: "สภาพของจารบีรั่วซึม",
+    items: [
+      { src: "leak2.jpg", caption: "1. ประเก็นล้อเสื่อมสภาพ + จารบีเสื่อมสภาพ" },
+      { src: "leak1.jpg", caption: "2. ซีลล้อเสื่อมสภาพ + จารบีเสื่อมสภาพ" },
+      { src: "leak3.jpg", caption: "3. ซีลล้อเสื่อมสภาพ + จารบีเสื่อมสภาพ" }
+    ],
+    related: [
+      { src: "hub2.png", caption: "ภาพรวมดุมล้อและชิ้นส่วนที่เกี่ยวข้อง" }
+    ]
+  },
+  2: {
+    stepIndex: 2,
+    title: "จุดตรวจลูกหมากและยางหุ้มกันฝุ่น",
+    items: [
+      { caption: "1. ลูกหมากมีระยะฟรีหรือขยับผิดปกติ" },
+      { caption: "2. ยางหุ้มลูกหมากฉีกขาดหรือมีจารบีซึม" },
+      { caption: "3. จุดอัดจารบีแห้งหรือจารบีเก่าเปลี่ยนสี" }
+    ],
+    related: [
+      { caption: "ภาพตำแหน่งลูกหมากช่วงล่างและจุดอัดจารบี" }
+    ]
+  },
+  3: {
+    stepIndex: 0,
+    title: "จุดตรวจกรองอากาศและทางเดินอากาศ",
+    items: [
+      { caption: "1. ไส้กรองอากาศดำทึบหรือมีฝุ่นอุดตัน" },
+      { caption: "2. ฝาครอบกรองอากาศแตกร้าวหรือปิดไม่สนิท" },
+      { caption: "3. ท่อทางเดินอากาศหลุด หลวม หรือมีรอยรั่ว" }
+    ],
+    related: [
+      { caption: "ภาพตำแหน่งเสื้อกรองอากาศและท่อทางเดินอากาศ" }
+    ]
+  },
+  4: {
+    stepIndex: 0,
+    title: "จุดตรวจสายพานและลูกลอก",
+    items: [
+      { caption: "1. สายพานแตกลายงาหรือขอบสึก" },
+      { caption: "2. ลูกลอกมีเสียงดัง หมุนฝืด หรือสึกผิดปกติ" },
+      { caption: "3. ระยะยุบสายพานหย่อนหรือตึงเกินมาตรฐาน" }
+    ],
+    related: [
+      { caption: "ภาพแนวสายพาน เครื่องยนต์ และตำแหน่งลูกลอก" }
+    ]
+  },
+  5: {
+    stepIndex: 0,
+    title: "จุดตรวจกระทะล้อและสภาพยาง",
+    items: [
+      { caption: "1. ดอกยางต่ำ สึกไม่เท่ากัน หรือมีรอยบาด" },
+      { caption: "2. กระทะล้องอ บิ่น แตก หรือมีสนิมผิดปกติ" },
+      { caption: "3. น็อตล้อหลวม หรือมีรอยคลอนรอบรูน็อต" }
+    ],
+    related: [
+      { caption: "ภาพกระทะล้อ ดอกยาง และตำแหน่งน็อตล้อ" }
+    ]
+  },
+  6: {
+    stepIndex: 1,
+    title: "จุดตรวจซีลเฟืองท้ายและหน้าแปลน",
+    items: [
+      { caption: "1. คราบน้ำมันรอบซีลเดือยหมู" },
+      { caption: "2. รอยซึมบริเวณหน้าแปลนเฟืองท้ายซ้าย-ขวา" },
+      { caption: "3. ท่อหายใจเฟืองท้ายอุดตันหรือมีคราบสกปรก" }
+    ],
+    related: [
+      { caption: "ภาพตำแหน่งเฟืองท้าย ซีลเดือยหมู และหน้าแปลน" }
+    ]
+  },
+  7: {
+    stepIndex: 0,
+    title: "จุดอัดจารบีและสภาพบู้ช",
+    items: [
+      { caption: "1. Grease nipple แต่ละตำแหน่งที่ต้องอัดจารบี" },
+      { caption: "2. จารบีเก่าดำมาก มีน้ำปน หรืออัดไม่ออก" },
+      { caption: "3. บู้ชแหนบแตก บี้ หรือหลวมผิดปกติ" }
+    ],
+    related: [
+      { caption: "ภาพผังตำแหน่งจุดอัดจารบีรอบช่วงล่าง" }
+    ]
+  },
+  8: {
+    stepIndex: 0,
+    title: "จุดตรวจรอยซึมฝาครอบวาล์ว",
+    items: [
+      { caption: "1. คราบน้ำมันบนฝาครอบวาล์วหรือรอบหัวเครื่อง" },
+      { caption: "2. ยางซีลฝาครอบวาล์วแข็ง บี้ หรือแตกร้าว" },
+      { caption: "3. คราบน้ำมันใกล้ยางเสื้อเพลาลูกเบี้ยว" }
+    ],
+    related: [
+      { caption: "ภาพตำแหน่งฝาครอบวาล์วและยางเสื้อเพลาลูกเบี้ยว" }
+    ]
+  },
+  9: {
+    stepIndex: 0,
+    title: "จุดตรวจแอร์ไดเออร์และระบบลม",
+    items: [
+      { caption: "1. จุดฟังเสียงลมรั่วรอบชุดแอร์ไดเออร์" },
+      { caption: "2. น้ำหรือน้ำมันที่ระบายออกจากถังลม" },
+      { caption: "3. สภาพสารดูดความชื้นและโอริงที่เกี่ยวข้อง" }
+    ],
+    related: [
+      { caption: "ภาพชุดแอร์ไดเออร์ ท่อลม และจุดระบายน้ำถังลม" }
+    ]
+  },
+  10: {
+    stepIndex: 1,
+    title: "จุดตรวจโช๊คอัพและลูกยาง",
+    items: [
+      { caption: "1. คราบน้ำมันรั่วตามแกนโช๊คอัพ" },
+      { caption: "2. ลูกยางหูโช๊คแตก บี้ หรือผิดรูป" },
+      { caption: "3. จุดยึดโช๊คบน-ล่างหลวม หรือมีรอยขยับ" }
+    ],
+    related: [
+      { caption: "ภาพตำแหน่งโช๊คอัพ ลูกยาง และจุดยึดบน-ล่าง" }
+    ]
+  }
+};
+
+function getTopicMedia(topicId) {
+  return topicMedia[topicId] || null;
+}
+
+function renderVideoBlock(t) {
+  const videoId = getYtId(videoUrls[t.id]);
+  if (videoId) {
+    return '<div class="yt-wrap"><iframe class="yt-frame" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allowfullscreen></iframe></div>';
+  }
+
+  return `
+    <div class="vdo-upload-box" style="border:none;border-radius:0;background:#F7F7F5;margin:0 0 4px">
+      <span class="upload-label">ยังไม่มีวิดีโอหัวข้อ ${String(t.id).padStart(2,'0')}</span>
+      <div class="vdo-note">ใส่ลิงก์ YouTube ของหัวข้อ “${t.title}” ที่ videoUrls[${t.id}]</div>
+    </div>
+  `;
+}
+
+function renderMediaItem(item, idx) {
+  const visual = item.src
+    ? `<img src="${item.src}" alt="${item.caption}" onerror="this.parentElement.querySelector('.media-placeholder').style.display='flex';this.style.display='none'"><div class="media-placeholder" style="display:none"><span>${String(idx + 1).padStart(2,'0')}</span><small>ไม่พบไฟล์ภาพ</small></div>`
+    : `<div class="media-placeholder"><span>${String(idx + 1).padStart(2,'0')}</span><small>เตรียมใส่ภาพจริงของหัวข้อนี้</small></div>`;
+
+  return `
+    <figure class="media-figure">
+      ${visual}
+      <figcaption class="media-caption">${item.caption}</figcaption>
+    </figure>
+  `;
+}
+
+function renderStepMedia(t, stepIndex) {
+  const media = getTopicMedia(t.id);
+  if (!media || media.stepIndex !== stepIndex || !media.items || media.items.length === 0) return '';
+
+  return `
+    <div class="step-media">
+      <div class="media-title">${media.title}</div>
+      <div class="media-strip">
+        ${media.items.map(renderMediaItem).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderRelatedMedia(t) {
+  const media = getTopicMedia(t.id);
+  if (!media || !media.related || media.related.length === 0) return '';
+
+  return `
+    <div class="info-box" style="margin-bottom:28px">
+      <div class="info-box-label">ภาพประกอบชิ้นส่วนที่เกี่ยวข้อง</div>
+      <div class="related-media">
+        ${media.related.map(function(item, idx) {
+          if (item.src) {
+            return `<figure style="margin:0"><img src="${item.src}" alt="${item.caption}" onerror="this.style.display='none'"><figcaption class="media-caption" style="margin-top:8px">${item.caption}</figcaption></figure>`;
+          }
+          return `
+            <figure style="margin:0;display:flex;flex-direction:column;gap:8px">
+              <div class="media-placeholder" style="aspect-ratio:16 / 7">
+                <span>${String(idx + 1).padStart(2,'0')}</span>
+                <small>เตรียมใส่ภาพรวมของหัวข้อนี้</small>
+              </div>
+              <figcaption class="media-caption">${item.caption}</figcaption>
+            </figure>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
 }
 
 const topics = [
@@ -641,10 +884,7 @@ function showDetail(id) {
 
     <div class="info-box" style="margin-bottom:12px;padding:0;overflow:hidden;border-radius:14px;">
       <div class="info-box-label" style="padding:12px 16px 8px">วิดีโอการตรวจ</div>
-      ${videoUrls[t.id]
-        ? '<div class="yt-wrap"><iframe class="yt-frame" src="https://www.youtube.com/embed/' + getYtId(videoUrls[t.id]) + '" frameborder="0" allowfullscreen></iframe></div>'
-        : '<div class="vdo-upload-box" style="border:none;border-radius:0;background:#F7F7F5;margin:0 0 4px"><span class="upload-label">ยังไม่มีวิดีโอ</span></div>'
-      }
+      ${renderVideoBlock(t)}
     </div>
 
     <div style="margin-bottom:12px">
@@ -694,38 +934,13 @@ function showDetail(id) {
               <span class="step-num">${String(i+1).padStart(2,'0')}</span>
               <span class="step-text">${step}</span>
             </div>
-            ${t.id === 1 && i === 0 ? `
-              <div style="display:flex;flex-direction:column;gap:8px">
-                <div style="font-size:11px;font-weight:700;color:#92400E;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:4px">สภาพของจารบีรั่วซึม</div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap">
-                  <figure style="width:calc(33% - 6px);margin:0;display:flex;flex-direction:column;gap:6px">
-                    <img src="leak2.jpg" style="width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
-                    <figcaption style="font-size:14px;font-weight:700;color:#374151;line-height:1.35">1. ประเก็นล้อเสื่อมสภาพ + จารบีเสื่อมสภาพ</figcaption>
-                  </figure>
-                  <figure style="width:calc(33% - 6px);margin:0;display:flex;flex-direction:column;gap:6px">
-                    <img src="leak1.jpg" style="width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
-                    <figcaption style="font-size:14px;font-weight:700;color:#374151;line-height:1.35">2. ซีลล้อเสื่อมสภาพ + จารบีเสื่อมสภาพ</figcaption>
-                  </figure>
-                  <figure style="width:calc(33% - 6px);margin:0;display:flex;flex-direction:column;gap:6px">
-                    <img src="leak3.jpg" style="width:100%;border-radius:10px;object-fit:cover;aspect-ratio:1/1" onerror="this.style.display='none'">
-                    <figcaption style="font-size:14px;font-weight:700;color:#374151;line-height:1.35">3. ซีลล้อเสื่อมสภาพ + จารบีเสื่อมสภาพ</figcaption>
-                  </figure>
-                </div>
-              </div>
-            ` : ''}
+            ${renderStepMedia(t, i)}
           </div>
         `).join('')}
       </div>
     </div>
 
-    ${t.id === 1 ? `
-    <div class="info-box" style="margin-bottom:28px">
-      <div class="info-box-label">ภาพประกอบชิ้นส่วนที่เกี่ยวข้อง</div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px">
-        <img src="hub2.png" style="width:100%;border-radius:10px" onerror="this.style.display='none'">
-      </div>
-    </div>
-    ` : ''}
+    ${renderRelatedMedia(t)}
 
   `;
 
