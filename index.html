@@ -1014,27 +1014,15 @@ function renderTopics() {
     const grid = document.getElementById('topic-grid');
     if (!grid) { console.error('topic-grid not found'); return; }
 
-    const categoryOrder = ['ระบบรองรับน้ำหนัก', 'เครื่องยนต์', 'ระบบส่งกำลัง', 'ระบบเบรก'];
-    const grouped = {};
-    categoryOrder.forEach(function(c) { grouped[c] = []; });
-    topics.forEach(function(t) {
-      if (!grouped[t.category]) grouped[t.category] = [];
-      grouped[t.category].push(t);
-    });
-
     let html = '';
-    categoryOrder.forEach(function(cat) {
-      if (!grouped[cat] || grouped[cat].length === 0) return;
-      html += '<div class="topic-group-header">' + cat + '</div>';
-      grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
-        html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
-          '<div class="topic-card-top">' +
-          '<span class="topic-num">' + String(t.id).padStart(2,'0') + '</span>' +
-          '<h3>' + t.title + '</h3>' +
-          '</div>' +
-          '<span class="topic-card-arrow">›</span>' +
-          '</button>';
-      });
+    topics.slice().sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
+      html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
+        '<div class="topic-card-top">' +
+        '<span class="topic-num">' + String(t.id).padStart(2,'0') + '</span>' +
+        '<h3>' + t.title + '</h3>' +
+        '</div>' +
+        '<span class="topic-card-arrow">›</span>' +
+        '</button>';
     });
     grid.innerHTML = html;
   } catch(e) { console.error('renderTopics error:', e); }
