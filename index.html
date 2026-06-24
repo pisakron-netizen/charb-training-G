@@ -113,7 +113,7 @@
   .topic-card:first-child { border-top: 1px solid var(--border); }
   .topic-card:hover { background: var(--surface2); }
   .topic-card:active { background: #EFEFED; }
-  .topic-card-top { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .topic-card-top { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
   .topic-bullet {
     width: 7px;
     height: 7px;
@@ -121,25 +121,9 @@
     background: var(--text2);
     flex-shrink: 0;
   }
-  .topic-num {
-    min-width: 38px;
-    height: 26px;
-    border-radius: 8px;
-    background: #3A3A36;
-    color: #FFFFFF;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
   .topic-card h3 { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; min-width: 0; }
-  .topic-title-line { display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; line-height: 1.45; }
+  .topic-title-line { display: flex; align-items: baseline; line-height: 1.45; }
   .topic-title { color: var(--text); }
-  .topic-divider { color: var(--text3); }
-  .topic-category { color: var(--text2); font-weight: 500; }
   .topic-card .pill-badge { flex-shrink: 0; }
   .topic-card-arrow { color: var(--text3); font-size: 16px; flex-shrink: 0; }
 
@@ -331,7 +315,7 @@
   @media (max-width: 640px) {
     body { padding: 20px 12px 48px; }
     .topic-card { padding: 14px 8px; gap: 10px; }
-    .topic-card-top { gap: 9px; }
+    .topic-card-top { gap: 10px; }
     .topic-card h3 { font-size: 15px; }
     .topic-card-arrow { display: none; }
     .media-figure { width: calc(50% - 4px); }
@@ -1095,20 +1079,29 @@ function renderTopics() {
     const grid = document.getElementById('topic-grid');
     if (!grid) { console.error('topic-grid not found'); return; }
 
+    const categoryOrder = ['ระบบรองรับน้ำหนัก', 'เครื่องยนต์', 'ระบบส่งกำลัง', 'ระบบเบรก'];
+    const grouped = {};
+    categoryOrder.forEach(function(c) { grouped[c] = []; });
+    topics.forEach(function(t) {
+      if (!grouped[t.category]) grouped[t.category] = [];
+      grouped[t.category].push(t);
+    });
+
     let html = '';
-    topics.slice().sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
-      html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
-        '<div class="topic-card-top">' +
-        '<span class="topic-bullet"></span>' +
-        '<span class="topic-num">' + String(t.id).padStart(2,'0') + '</span>' +
-        '<h3 class="topic-title-line">' +
-          '<span class="topic-title">' + t.title + '</span>' +
-          '<span class="topic-divider">—</span>' +
-          '<span class="topic-category">' + t.category + '</span>' +
-        '</h3>' +
-        '</div>' +
-        '<span class="topic-card-arrow">›</span>' +
-        '</button>';
+    categoryOrder.forEach(function(cat) {
+      if (!grouped[cat] || grouped[cat].length === 0) return;
+      html += '<div class="topic-group-header">' + cat + '</div>';
+      grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
+        html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
+          '<div class="topic-card-top">' +
+          '<span class="topic-bullet"></span>' +
+          '<h3 class="topic-title-line">' +
+            '<span class="topic-title">' + t.title + '</span>' +
+          '</h3>' +
+          '</div>' +
+          '<span class="topic-card-arrow">›</span>' +
+          '</button>';
+      });
     });
     grid.innerHTML = html;
   } catch(e) { console.error('renderTopics error:', e); }
