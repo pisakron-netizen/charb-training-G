@@ -10,15 +10,18 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #FFFFFF;
+    --bg: #F6F6F4;
     --surface: #FFFFFF;
-    --surface2: #F7F7F5;
-    --border: #E8E8E4;
-    --border2: #D4D4D0;
+    --surface2: #F2F2F0;
+    --border: #E3E3DF;
+    --border2: #CBCBC6;
     --text: #111110;
     --text2: #4A4A46;
     --text3: #8C8C86;
     --accent-red: #C8102E;
+    --accent-red-dark: #980C22;
+    --accent-red-soft: #F3E6E9;
+    --accent-red-pale: #FAF7F7;
     --accent-green: #16A34A;
     --yellow: #D97706;
     --danger: #DC2626;
@@ -30,35 +33,78 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
+    background:
+      linear-gradient(180deg, #FFFFFF 0, var(--bg) 230px, #FFFFFF 100%);
     color: var(--text);
     font-family: var(--font);
     min-height: 100vh;
-    padding: 32px 20px 60px;
+    padding: 28px 20px 64px;
   }
 
-  .container { max-width: 900px; margin: 0 auto; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--accent-red);
+    z-index: 10000;
+  }
+
+  .container { max-width: 940px; margin: 0 auto; }
 
   /* Header */
-  .header { margin-bottom: 36px; }
-  .hino-badge {
-    display: inline-block;
-    background: var(--accent-red);
-    color: #fff;
-    font-weight: 700;
-    font-size: 13px;
-    padding: 3px 10px;
-    border-radius: 5px;
-    letter-spacing: 0.08em;
-    margin-right: 10px;
+  .header {
+    margin-bottom: 26px;
+    padding: 24px 26px 26px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent-red);
+    border-radius: 8px;
+    box-shadow: 0 10px 26px rgba(17, 17, 16, 0.06);
   }
-  .header-sub { color: var(--text3); font-size: 13px; letter-spacing: 0.06em; }
+  .brand-logo {
+    display: block;
+    width: clamp(190px, 32vw, 280px);
+    height: auto;
+    margin: 0;
+    flex: 0 0 auto;
+  }
+  .header-content { max-width: 620px; }
+  .header-kicker {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .header-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding-left: 14px;
+    border-left: 1px solid var(--border2);
+  }
+  .header-sub {
+    color: var(--accent-red-dark);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .header-company {
+    color: #666660;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: nowrap;
+  }
   .header h1 {
-    font-size: clamp(26px, 5vw, 40px);
+    font-size: clamp(28px, 5vw, 42px);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
-    margin: 14px 0 8px;
+    margin: 12px 0 8px;
   }
   .header h1 span { color: var(--text3); }
   .header p { color: var(--text3); font-size: 15px; }
@@ -73,10 +119,10 @@
 
   /* Back Button */
   .btn-back {
-    background: var(--surface2);
+    background: #FFFFFF;
     border: 1px solid var(--border2);
-    color: var(--text);
-    padding: 10px 18px;
+    color: var(--accent-red-dark);
+    padding: 9px 15px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
@@ -87,22 +133,31 @@
     gap: 8px;
     margin-bottom: 24px;
   }
-  .btn-back:hover { background: #E8E8E6; border-color: #AAAAAA; }
+  .btn-back:hover { background: #F7F7F5; border-color: var(--accent-red); }
 
   /* Section Header */
-  .section-header { margin-bottom: 20px; }
-  .section-header h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .section-header { margin-bottom: 18px; }
+  .section-header h2 { font-size: 21px; font-weight: 700; margin-bottom: 4px; }
   .section-header p { color: var(--text3); font-size: 14px; }
 
   /* Topic Grid */
-  .topic-grid { display: flex; flex-direction: column; gap: 0; }
+  .topic-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 24px rgba(17, 17, 16, 0.045);
+  }
   .topic-card {
     width: 100%;
     background: var(--surface);
     border: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid #E7E7E3;
     border-radius: 0;
-    padding: 16px 20px;
+    padding: 15px 18px;
     text-align: left;
     cursor: pointer;
     display: flex;
@@ -110,67 +165,125 @@
     gap: 16px;
     transition: background 0.15s;
   }
-  .topic-card:first-child { border-top: 1px solid var(--border); }
-  .topic-card:hover { background: var(--surface2); }
-  .topic-card:active { background: #EFEFED; }
+  .topic-card:first-child { border-top: none; }
+  .topic-card:hover { background: #F7F7F5; }
+  .topic-card:active { background: var(--accent-red-soft); }
   .topic-card-top { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
   .topic-bullet {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--text2);
+    width: 12px;
+    color: var(--accent-red);
+    font-size: 14px;
+    line-height: 1;
+    text-align: center;
     flex-shrink: 0;
   }
-  .topic-card h3 { font-size: 15px; font-weight: 600; color: var(--text); flex: 1; min-width: 0; }
+  .topic-bullet::before { content: "-"; }
+  .topic-card h3 { font-size: 15px; font-weight: 500; color: var(--text); flex: 1; min-width: 0; }
   .topic-title-line { display: flex; align-items: baseline; line-height: 1.45; }
-  .topic-title { color: var(--text); }
+  .topic-title { color: #2F2F2C; }
   .topic-card .pill-badge { flex-shrink: 0; }
-  .topic-card-arrow { color: var(--text3); font-size: 16px; flex-shrink: 0; }
+  .topic-card-arrow { color: var(--accent-red); font-size: 16px; flex-shrink: 0; }
 
   .topic-group-header {
-    padding: 10px 20px 6px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    padding: 16px 18px 11px;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0;
+    line-height: 1.45;
     text-transform: uppercase;
-    color: var(--text3);
-    background: var(--surface2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin-top: 8px;
+    color: var(--text);
+    background: #FFFFFF;
+    border-top: 2px solid var(--accent-red);
+    border-bottom: 1px solid #E7E7E3;
+    border-left: 4px solid var(--accent-red);
+    margin-top: 0;
   }
   .topic-group-header:first-child { margin-top: 0; }
 
   /* Detail View */
-  .detail-hero { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .detail-hero {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    padding: 18px 20px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent-red);
+    border-radius: 8px;
+  }
   .detail-hero .icon { font-size: 40px; }
   .detail-hero h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .detail-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .share-button {
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: var(--accent-red-dark);
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 12px;
+  }
+  .share-button:hover { background: #F7F7F5; border-color: var(--accent-red); }
+  .floating-home {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 1000;
+    border: 1px solid var(--accent-red-dark);
+    border-radius: 999px;
+    background: var(--accent-red);
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  }
+  .floating-home:hover { background: var(--accent-red-dark); }
 
   .info-box {
     transition: all 0.2s ease;
-    background: #FAFAF8;
-    border: 1px solid #E8E8E4;
-    border-radius: 14px;
+    background: #FFFFFF;
+    border: 1px solid var(--border);
+    border-radius: 8px;
     padding: 18px 22px;
   }
   .info-box:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+    box-shadow: 0 10px 24px rgba(17, 17, 16, 0.05);
   }
 
   .info-box-label {
     font-size: 11px;
-    color: var(--text3);
+    color: var(--accent-red-dark);
     letter-spacing: 0.08em;
     font-weight: 600;
     margin-bottom: 10px;
     text-transform: uppercase;
   }
 
+  .home-intro {
+    margin-bottom: 24px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    border-left: 4px solid var(--accent-red);
+  }
+
+  .customer-guide {
+    margin-bottom: 20px;
+    background: #FFFFFF;
+    border-color: var(--border);
+    border-left: 4px solid var(--accent-red);
+  }
+
   .vdo-upload-box {
     width: 100%;
     min-height: 140px;
-    border: 2px dashed #D4D4D0;
+    border: 1px dashed var(--border2);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -179,11 +292,11 @@
     gap: 8px;
     cursor: pointer;
     transition: all 0.2s;
-    background: #FAFAF8;
+    background: #F7F7F5;
     position: relative;
     overflow: hidden;
   }
-  .vdo-upload-box:hover { border-color: #AAAAAA; background: #F2F2F0; }
+  .vdo-upload-box:hover { border-color: var(--accent-red); background: #F2F2F0; }
   .vdo-upload-box span.upload-icon { font-size: 28px; }
   .vdo-upload-box span.upload-label { font-size: 13px; color: #AAA; }
   .vdo-upload-box input[type=file] { display: none; }
@@ -207,17 +320,30 @@
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    padding: 13px 0;
-    border-bottom: 1px solid #E8E8E4;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
   }
   .step-item:last-child { border-bottom: none; }
-  .step-num { font-family: var(--mono); color: #BBB; font-size: 13px; min-width: 22px; padding-top: 1px; }
-  .step-text { font-size: 15px; line-height: 1.5; color: #2A2A28; }
+  .step-num {
+    font-family: var(--mono);
+    color: #FFFFFF;
+    background: var(--accent-red);
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 28px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1px;
+  }
+  .step-text { font-size: 15px; line-height: 1.55; color: #2A2A28; font-weight: 500; }
   .step-media { display: flex; flex-direction: column; gap: 8px; }
   .media-title {
     font-size: 11px;
     font-weight: 700;
-    color: #92400E;
+    color: var(--accent-red-dark);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     margin-bottom: 4px;
@@ -240,9 +366,9 @@
   .media-placeholder {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border: 1px dashed #D4D4D0;
+    border: 1px dashed var(--border2);
     border-radius: 10px;
-    background: #F7F7F5;
+    background: #FFFFFF;
     color: #8C8C86;
     display: flex;
     flex-direction: column;
@@ -252,9 +378,9 @@
     text-align: center;
     padding: 12px;
   }
-  .media-placeholder span { font-family: var(--mono); font-size: 18px; color: #92400E; }
+  .media-placeholder span { font-family: var(--mono); font-size: 18px; color: var(--accent-red-dark); }
   .media-placeholder small { font-size: 12px; line-height: 1.4; color: #8C8C86; }
-  .media-caption { font-size: 14px; font-weight: 700; color: #374151; line-height: 1.35; }
+  .media-caption { font-size: 14px; font-weight: 600; color: #374151; line-height: 1.35; }
   .media-figure img,
   .related-media img { cursor: zoom-in; }
   .single-step-media .media-strip { display: block; }
@@ -313,37 +439,49 @@
   .image-viewer-close:hover { background: rgba(255,255,255,0.2); }
 
   @media (max-width: 640px) {
-    body { padding: 20px 12px 48px; }
-    .topic-card { padding: 14px 8px; gap: 10px; }
+    body { padding: 18px 12px 52px; }
+    .header { margin-bottom: 28px; padding-bottom: 18px; }
+    .brand-logo { width: clamp(120px, 32vw, 145px); }
+    .header-kicker { gap: 8px; margin-bottom: 12px; }
+    .header-meta { gap: 3px; padding-left: 8px; flex: 1 1 auto; }
+    .header-sub { font-size: 10px; letter-spacing: 0.035em; white-space: normal; line-height: 1.3; }
+    .header-company { font-size: 11px; white-space: normal; }
+    .section-header { padding: 0 2px; }
+    .topic-card { padding: 14px 12px; gap: 10px; }
     .topic-card-top { gap: 10px; }
     .topic-card h3 { font-size: 15px; }
     .topic-card-arrow { display: none; }
+    .topic-group-header { padding: 15px 12px 10px; font-size: 15px; }
+    .info-box { padding: 16px; border-radius: 11px; }
+    .detail-hero h2 { font-size: 24px; }
+    .floating-home { right: 12px; bottom: 12px; }
     .media-figure { width: calc(50% - 4px); }
   }
 
   /* Pill badge (used in topic detail) */
   .pill-badge {
-    background: #EFEFED;
-    border: 1px solid #DDDDD9;
+    background: #FFFFFF;
+    border: 1px solid var(--border2);
     border-radius: 100px;
-    padding: 3px 12px;
+    padding: 4px 12px;
     font-size: 12px;
-    color: #666;
+    color: var(--accent-red-dark);
+    font-weight: 700;
   }
 
   /* Footer */
   .footer {
     margin-top: 48px;
     padding-top: 24px;
-    border-top: 1px solid #E4E4E0;
+    border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 10px;
   }
-  .footer span:first-child { color: #AAAAAA; font-size: 13px; }
-  .footer span:last-child { font-family: var(--mono); color: #CCCCCC; font-size: 11px; }
+  .footer span:first-child { color: #777771; font-size: 13px; }
+  .footer span:last-child { font-family: var(--mono); color: #AAAAA4; font-size: 11px; }
 </style>
 </head>
 <body>
@@ -351,22 +489,21 @@
 
   <!-- Header -->
   <div class="header">
-    <div>
-      <span class="hino-badge">ชัยรัชการ</span>
-      <span class="header-sub">SERVICE TRAINING · กรุงเทพ</span>
+    <div class="header-kicker">
+      <img class="brand-logo" src="chairatchakarn-group-logo.png" alt="กลุ่มบริษัทชัยรัชการ CHAIRATCHAKARN GROUP">
+      <div class="header-meta">
+        <span class="header-sub">HUMAN RESOURCE DEVELOPMENT · สำนักงานใหญ่</span>
+        <span class="header-company">ชัยรัชการ (กรุงเทพ) จำกัด</span>
+      </div>
     </div>
-    <h1>ระบบฝึกอบรม<br><span>ช่าง & SA</span></h1>
-    <p>ชัยรัชการ (กรุงเทพ) จำกัด</p>
+    <div class="header-content">
+      <h1>ระบบฝึกอบรม <span>ช่าง & SA</span></h1>
+    </div>
   </div>
 
   <!-- Screen: Home = Topic List -->
   <div id="screen-home" class="screen active">
-    <div class="section-header">
-      <h2>หัวข้อการตรวจสอบ</h2>
-      <p>เลือกหัวข้อเพื่อดูขั้นตอนการตรวจสอบ</p>
-    </div>
-    
-  <div class="info-box" style="margin-bottom:24px;background:#FAFAFA;border-radius:18px">
+  <div class="info-box home-intro">
     <div class="info-box-label">คู่มือการใช้งาน</div>
     <p style="font-size:15px;line-height:1.8;color:#555">
       ระบบนี้จัดทำขึ้นเพื่อช่วยให้ช่างและ SA สามารถอธิบายอาการเสีย วิเคราะห์ปัญหา และแนะนำลูกค้าได้อย่างมืออาชีพ
@@ -382,7 +519,7 @@
   </div>
 
     
-  <div class="info-box" style="margin-bottom:20px;background:#FFFDF7;border-color:#FDE68A">
+  <div class="info-box customer-guide">
     <div class="info-box-label">แนวทางการพูดกับลูกค้า</div>
     <p style="font-size:15px;line-height:1.8;color:#6B7280">
       แนะนำให้สื่อสารกับลูกค้าโดยเน้นประโยชน์ที่ลูกค้าจะได้รับเป็นหลัก
@@ -390,6 +527,11 @@
       และช่วยประหยัดค่าใช้จ่ายในระยะยาว เพราะการแก้ไขตั้งแต่พบอาการเริ่มต้นมักคุ้มค่ากว่าปล่อยให้เสียหายลุกลามครับ
     </p>
   </div>
+
+    <div class="section-header">
+      <h2>หัวข้อการตรวจสอบ</h2>
+      <p>เลือกหัวข้อเพื่อดูขั้นตอนการตรวจสอบ</p>
+    </div>
 
 <div class="topic-grid" id="topic-grid"></div>
   </div>
@@ -1071,7 +1213,71 @@ function showScreen(id) {
 
 function showHome() {
   renderTopics();
+  updateTopicUrl(null);
   showScreen('screen-home');
+}
+
+function updateTopicUrl(topicId) {
+  if (!window.history || !window.history.replaceState) return;
+  const url = new URL(window.location.href);
+  if (topicId) {
+    url.search = '';
+    url.searchParams.set('topic', topicId);
+  } else {
+    url.search = '';
+  }
+  window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+}
+
+function buildShareUrl(topicId) {
+  const url = new URL(window.location.href);
+  url.search = '';
+  url.searchParams.set('topic', topicId);
+  return url.toString();
+}
+
+async function copyShareLink(topicId) {
+  const text = buildShareUrl(topicId);
+  const btn = document.getElementById('share-topic-btn');
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      copyTextFallback(text);
+    }
+    if (btn) {
+      btn.textContent = 'คัดลอกลิงก์แล้ว';
+      setTimeout(function() { btn.textContent = 'แชร์หัวข้อนี้'; }, 1600);
+    }
+  } catch(e) {
+    try {
+      copyTextFallback(text);
+      if (btn) {
+        btn.textContent = 'คัดลอกลิงก์แล้ว';
+        setTimeout(function() { btn.textContent = 'แชร์หัวข้อนี้'; }, 1600);
+      }
+    } catch(err) {
+      if (btn) {
+        btn.textContent = 'ใช้ลิงก์บนแถบที่อยู่';
+        setTimeout(function() { btn.textContent = 'แชร์หัวข้อนี้'; }, 2200);
+      }
+    }
+  }
+}
+
+function copyTextFallback(text) {
+  const input = document.createElement('textarea');
+  input.value = text;
+  input.setAttribute('readonly', '');
+  input.style.position = 'fixed';
+  input.style.left = '-9999px';
+  input.style.top = '0';
+  document.body.appendChild(input);
+  input.focus();
+  input.select();
+  const copied = document.execCommand('copy');
+  document.body.removeChild(input);
+  if (!copied) throw new Error('copy failed');
 }
 
 function renderTopics() {
@@ -1110,8 +1316,8 @@ function renderTopics() {
 function showDetail(id) {
   const t = topics.find(x => x.id === id);
   const severityColors = {
-    medium: { color: '#F59E0B', bg: '#FEF3C7' },
-    high: { color: '#F97316', bg: '#FFF7ED' },
+    medium: { color: '#C8102E', bg: '#FFFFFF' },
+    high: { color: '#C8102E', bg: '#FFFFFF' },
     critical: { color: '#EF4444', bg: '#FEF2F2' }
   };
   const sc = severityColors[t.severity];
@@ -1123,6 +1329,9 @@ function showDetail(id) {
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
           <span class="pill-badge">${t.category}</span>
         </div>
+        <div class="detail-actions">
+          <button class="share-button" type="button" id="share-topic-btn" onclick="copyShareLink(${t.id})">แชร์หัวข้อนี้</button>
+        </div>
       </div>
     </div>
 
@@ -1133,30 +1342,30 @@ function showDetail(id) {
 
     <div style="margin-bottom:12px">
       <div class="info-box" style="padding:0;overflow:hidden">
-        <div class="info-box-label" style="padding:14px 18px 10px">🔍 อาการเสีย / สิ่งที่พบ</div>
+        <div class="info-box-label" style="padding:14px 18px 10px;border-bottom:1px solid #E7E7E3">อาการเสีย / สิ่งที่พบ</div>
         ${t.issuesList.map((iss, idx) => `
-          <div style="border-top:1px solid #F0EDE6">
+          <div style="border-top:1px solid #E7E7E3">
             <div onclick="toggleIssueRow(${t.id},${idx})" style="display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none">
-              <span style="min-width:22px;height:22px;border-radius:50%;background:#92400E;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${idx+1}</span>
-              <span style="font-size:15px;color:#78350F;flex:1;line-height:1.5">${iss.issue}</span>
-              <span id="arr-${t.id}-${idx}" style="color:#D6B896;font-size:18px;transition:transform 0.2s;flex-shrink:0">›</span>
+              <span style="min-width:24px;height:24px;border-radius:4px;background:#C8102E;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${idx+1}</span>
+              <span style="font-size:15px;color:#2A2A28;flex:1;line-height:1.5;font-weight:600">${iss.issue}</span>
+              <span id="arr-${t.id}-${idx}" style="color:#C8102E;font-size:18px;transition:transform 0.2s;flex-shrink:0">›</span>
             </div>
-            <div id="issrow-${t.id}-${idx}" style="display:none;border-top:1px solid #FEF3C7">
-              <div style="padding:14px 18px 14px 52px;background:#FFFDF7">
-                <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#16A34A;text-transform:uppercase;margin-bottom:6px">✅ วิธีการแก้ไข</div>
-                <p style="font-size:14px;line-height:1.7;color:#166534;margin:0 0 14px">${iss.solution}</p>
-                <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#DC2626;text-transform:uppercase;margin-bottom:6px">⚠️ ถ้าไม่แก้ไขจะเกิดอะไรขึ้น</div>
-                <p style="font-size:14px;line-height:1.7;color:#7F1D1D;margin:0 0 14px">${iss.fix}</p>
+            <div id="issrow-${t.id}-${idx}" style="display:none;border-top:1px solid #E7E7E3">
+              <div style="padding:15px 18px 15px 52px;background:#F7F7F5">
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#980C22;text-transform:uppercase;margin-bottom:6px">วิธีการแก้ไข</div>
+                <p style="font-size:14px;line-height:1.7;color:#2F2F2C;margin:0 0 14px">${iss.solution}</p>
+                <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#980C22;text-transform:uppercase;margin-bottom:6px">ผลกระทบหากไม่แก้ไข</div>
+                <p style="font-size:14px;line-height:1.7;color:#2F2F2C;margin:0 0 14px">${iss.fix}</p>
                 ${iss.talkingPoints ? `
-                <button onclick="togglePoints(event,${t.id},${idx})" id="ptsbtn-${t.id}-${idx}" style="display:inline-flex;align-items:center;gap:6px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1D4ED8;font-family:inherit;font-size:12px;font-weight:700;padding:7px 14px;border-radius:8px;cursor:pointer;margin-bottom:12px">
-                  🗣️ จุดที่ต้องพูดกับลูกค้า <span id="ptsarr-${t.id}-${idx}" style="transition:transform 0.2s">›</span>
+                <button onclick="togglePoints(event,${t.id},${idx})" id="ptsbtn-${t.id}-${idx}" style="display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;border:1px solid #CBCBC6;color:#980C22;font-family:inherit;font-size:12px;font-weight:700;padding:7px 14px;border-radius:6px;cursor:pointer;margin-bottom:12px">
+                  จุดที่ต้องพูดกับลูกค้า <span id="ptsarr-${t.id}-${idx}" style="transition:transform 0.2s">›</span>
                 </button>
                 <div id="pts-${t.id}-${idx}" style="display:none;margin-bottom:14px">
                   <div style="display:flex;flex-direction:column;gap:8px">
                     ${iss.talkingPoints.map(pt => `
                       <div style="display:flex;align-items:flex-start;gap:10px">
-                        <span style="width:6px;height:6px;border-radius:50%;background:#2563EB;margin-top:7px;flex-shrink:0"></span>
-                        <span style="font-size:14px;font-weight:700;line-height:1.55;color:#1E3A8A">${pt}</span>
+                        <span style="width:6px;height:6px;border-radius:50%;background:#C8102E;margin-top:7px;flex-shrink:0"></span>
+                        <span style="font-size:14px;font-weight:700;line-height:1.55;color:#2A2A28">${pt}</span>
                       </div>
                     `).join('')}
                   </div>
@@ -1186,8 +1395,11 @@ function showDetail(id) {
 
     ${renderRelatedMedia(t)}
 
+    <button class="floating-home" type="button" onclick="showHome()">รายการ</button>
+
   `;
 
+  updateTopicUrl(id);
   showScreen('screen-detail');
 }
 
@@ -1249,7 +1461,15 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Init
-document.addEventListener('DOMContentLoaded', function() { showHome(); });
+document.addEventListener('DOMContentLoaded', function() {
+  renderTopics();
+  const topicId = Number(new URLSearchParams(window.location.search).get('topic'));
+  if (topics.some(function(t) { return t.id === topicId; })) {
+    showDetail(topicId);
+  } else {
+    showScreen('screen-home');
+  }
+});
 </script>
 </body>
 </html>
