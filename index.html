@@ -552,14 +552,15 @@ function renderStepMedia(t, stepIndex) {
 }
 
 function renderRelatedMedia(t) {
-  if (t.id >= 2 && t.id <= 10) return '';
-
   const media = getTopicMedia(t.id);
   if (!media || !media.related || media.related.length === 0) return '';
+  const isAssemblyTopic = t.id >= 2 && t.id <= 10;
+  const label = isAssemblyTopic ? 'หัวข้อที่เกี่ยวข้อง' : 'ภาพประกอบชิ้นส่วนที่เกี่ยวข้อง';
+  const placeholderText = isAssemblyTopic ? 'เตรียมใส่รูป Assembly ที่เกี่ยวข้อง' : 'เตรียมใส่ภาพรวมของหัวข้อนี้';
 
   return `
     <div class="info-box" style="margin-bottom:28px">
-      <div class="info-box-label">ภาพประกอบชิ้นส่วนที่เกี่ยวข้อง</div>
+      <div class="info-box-label">${label}</div>
       <div class="related-media">
         ${media.related.map(function(item, idx) {
           if (item.src) {
@@ -569,7 +570,7 @@ function renderRelatedMedia(t) {
             <figure style="margin:0;display:flex;flex-direction:column;gap:8px">
               <div class="media-placeholder" style="aspect-ratio:16 / 7">
                 <span>${String(idx + 1).padStart(2,'0')}</span>
-                <small>เตรียมใส่ภาพรวมของหัวข้อนี้</small>
+                <small>${placeholderText}</small>
               </div>
               <figcaption class="media-caption">${item.caption}</figcaption>
             </figure>
