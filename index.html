@@ -247,10 +247,62 @@
   .media-placeholder span { font-family: var(--mono); font-size: 18px; color: #92400E; }
   .media-placeholder small { font-size: 12px; line-height: 1.4; color: #8C8C86; }
   .media-caption { font-size: 14px; font-weight: 700; color: #374151; line-height: 1.35; }
+  .media-figure img,
+  .related-media img { cursor: zoom-in; }
   .single-step-media .media-strip { display: block; }
   .single-step-media .media-figure { width: min(100%, 320px); }
   .related-media { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
   .related-media img { width: 100%; border-radius: 10px; background: #F3F4F6; }
+
+  .image-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(17, 17, 16, 0.88);
+  }
+  .image-viewer.active { display: flex; }
+  .image-viewer-panel {
+    width: min(100%, 1000px);
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .image-viewer-img {
+    max-width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #FFFFFF;
+  }
+  .image-viewer-caption {
+    max-width: 900px;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .image-viewer-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    color: #FFFFFF;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .image-viewer-close:hover { background: rgba(255,255,255,0.2); }
 
   @media (max-width: 640px) {
     .media-figure { width: calc(50% - 4px); }
@@ -509,7 +561,7 @@ function renderVideoBlock(t) {
 function renderMediaItem(item, idx) {
   const itemNum = item.number || idx + 1;
   const visual = item.src
-    ? `<img src="${item.src}" alt="${item.caption}" onerror="this.parentElement.querySelector('.media-placeholder').style.display='flex';this.style.display='none'"><div class="media-placeholder" style="display:none"><span>${String(itemNum).padStart(2,'0')}</span><small>ไม่พบไฟล์ภาพ</small></div>`
+    ? `<img src="${item.src}" alt="${item.caption}" onclick="openImageViewer(this.src, this.alt)" onerror="this.parentElement.querySelector('.media-placeholder').style.display='flex';this.style.display='none'"><div class="media-placeholder" style="display:none"><span>${String(itemNum).padStart(2,'0')}</span><small>ไม่พบไฟล์ภาพ</small></div>`
     : `<div class="media-placeholder"><span>${String(itemNum).padStart(2,'0')}</span><small>เตรียมใส่ภาพจริงของขั้นตอนนี้</small></div>`;
 
   return `
@@ -564,7 +616,7 @@ function renderRelatedMedia(t) {
       <div class="related-media">
         ${media.related.map(function(item, idx) {
           if (item.src) {
-            return `<figure style="margin:0"><img src="${item.src}" alt="${item.caption}" onerror="this.style.display='none'"><figcaption class="media-caption" style="margin-top:8px">${item.caption}</figcaption></figure>`;
+            return `<figure style="margin:0"><img src="${item.src}" alt="${item.caption}" onclick="openImageViewer(this.src, this.alt)" onerror="this.style.display='none'"><figcaption class="media-caption" style="margin-top:8px">${item.caption}</figcaption></figure>`;
           }
           return `
             <figure style="margin:0;display:flex;flex-direction:column;gap:8px">
@@ -1130,6 +1182,44 @@ function togglePoints(e, topicId, idx) {
   box.style.display = isOpen ? 'none' : 'block';
   if (arr) arr.style.transform = isOpen ? '' : 'rotate(90deg)';
 }
+
+function ensureImageViewer() {
+  if (document.getElementById('image-viewer')) return;
+  document.body.insertAdjacentHTML('beforeend', `
+    <div id="image-viewer" class="image-viewer" aria-hidden="true" onclick="closeImageViewer(event)">
+      <button class="image-viewer-close" type="button" onclick="closeImageViewer(event)" aria-label="ปิด">×</button>
+      <div class="image-viewer-panel">
+        <img id="image-viewer-img" class="image-viewer-img" alt="">
+        <div id="image-viewer-caption" class="image-viewer-caption"></div>
+      </div>
+    </div>
+  `);
+}
+
+function openImageViewer(src, caption) {
+  if (!src) return;
+  ensureImageViewer();
+  const viewer = document.getElementById('image-viewer');
+  const img = document.getElementById('image-viewer-img');
+  const cap = document.getElementById('image-viewer-caption');
+  img.src = src;
+  img.alt = caption || '';
+  cap.textContent = caption || '';
+  viewer.classList.add('active');
+  viewer.setAttribute('aria-hidden', 'false');
+}
+
+function closeImageViewer(e) {
+  if (e && e.type === 'click' && e.target.id !== 'image-viewer' && !e.target.classList.contains('image-viewer-close')) return;
+  const viewer = document.getElementById('image-viewer');
+  if (!viewer) return;
+  viewer.classList.remove('active');
+  viewer.setAttribute('aria-hidden', 'true');
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeImageViewer();
+});
 
 // Init
 document.addEventListener('DOMContentLoaded', function() { showHome(); });
