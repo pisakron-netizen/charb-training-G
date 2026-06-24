@@ -247,6 +247,8 @@
   .media-placeholder span { font-family: var(--mono); font-size: 18px; color: #92400E; }
   .media-placeholder small { font-size: 12px; line-height: 1.4; color: #8C8C86; }
   .media-caption { font-size: 14px; font-weight: 700; color: #374151; line-height: 1.35; }
+  .single-step-media .media-strip { display: block; }
+  .single-step-media .media-figure { width: min(100%, 320px); }
   .related-media { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
   .related-media img { width: 100%; border-radius: 10px; background: #F3F4F6; }
 
@@ -505,9 +507,10 @@ function renderVideoBlock(t) {
 }
 
 function renderMediaItem(item, idx) {
+  const itemNum = item.number || idx + 1;
   const visual = item.src
-    ? `<img src="${item.src}" alt="${item.caption}" onerror="this.parentElement.querySelector('.media-placeholder').style.display='flex';this.style.display='none'"><div class="media-placeholder" style="display:none"><span>${String(idx + 1).padStart(2,'0')}</span><small>ไม่พบไฟล์ภาพ</small></div>`
-    : `<div class="media-placeholder"><span>${String(idx + 1).padStart(2,'0')}</span><small>เตรียมใส่ภาพจริงของหัวข้อนี้</small></div>`;
+    ? `<img src="${item.src}" alt="${item.caption}" onerror="this.parentElement.querySelector('.media-placeholder').style.display='flex';this.style.display='none'"><div class="media-placeholder" style="display:none"><span>${String(itemNum).padStart(2,'0')}</span><small>ไม่พบไฟล์ภาพ</small></div>`
+    : `<div class="media-placeholder"><span>${String(itemNum).padStart(2,'0')}</span><small>เตรียมใส่ภาพจริงของขั้นตอนนี้</small></div>`;
 
   return `
     <figure class="media-figure">
@@ -518,6 +521,23 @@ function renderMediaItem(item, idx) {
 }
 
 function renderStepMedia(t, stepIndex) {
+  if (t.id >= 2 && t.id <= 10) {
+    const stepNo = stepIndex + 1;
+    const item = {
+      number: stepNo,
+      caption: `รูปประกอบขั้นตอนที่ ${String(stepNo).padStart(2,'0')}`
+    };
+
+    return `
+      <div class="step-media single-step-media">
+        <div class="media-title">รูปประกอบขั้นตอนตรวจสอบ</div>
+        <div class="media-strip">
+          ${renderMediaItem(item, stepIndex)}
+        </div>
+      </div>
+    `;
+  }
+
   const media = getTopicMedia(t.id);
   if (!media || media.stepIndex !== stepIndex || !media.items || media.items.length === 0) return '';
 
@@ -532,6 +552,8 @@ function renderStepMedia(t, stepIndex) {
 }
 
 function renderRelatedMedia(t) {
+  if (t.id >= 2 && t.id <= 10) return '';
+
   const media = getTopicMedia(t.id);
   if (!media || !media.related || media.related.length === 0) return '';
 
