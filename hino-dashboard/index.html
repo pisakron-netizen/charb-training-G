@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Target vs Actual Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<style>
+  :root{
+    --ink:#1a1a2e;--paper:#f8f8fb;--hino:#37474f;--cha:#2dc653;
+    --hino-soft:#eceff1;--cha-soft:#d4f5de;--line:#dde1ec;
+    --pos:#2dc653;--neg:#e63946;--muted:#7a7f99;--gold:#f4a800;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"DM Sans","Segoe UI",system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1280px;margin:0 auto;padding:32px 24px 64px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+  .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:8px}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1}
+  h1 .vs{color:var(--gold);font-style:italic;font-weight:600;padding:0 6px}
+  .legend{display:flex;gap:20px;font-size:13px;font-weight:600}
+  .legend .dot{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:7px;vertical-align:-1px}
+  .legend .h{background:var(--hino)}.legend .c{background:var(--cha)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+  .kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .kpi .label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .kpi .num{font-size:30px;font-weight:800;margin-top:6px;letter-spacing:-.02em}
+  .kpi .sub{font-size:12px;color:var(--muted);margin-top:2px}
+  .kpi.accent{border-top:3px solid var(--gold)}
+  .overview{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 22px 16px;margin-bottom:32px}
+  .overview h2{font-size:19px;font-weight:800;letter-spacing:-.01em;margin-bottom:2px}
+  .overview .cap{font-size:12px;color:var(--muted);margin-bottom:16px}
+  .ov-legend{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:14px;font-size:12px;font-weight:600}
+  .ov-legend span{display:inline-flex;align-items:center}
+  .ov-legend .sw{width:11px;height:11px;border-radius:2px;margin-right:6px;display:inline-block}
+  .ov-box{position:relative;height:1400px}
+  .section-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:4px 0 14px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px 14px;display:flex;flex-direction:column}
+  .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .card-head h2{font-size:18px;font-weight:800;letter-spacing:-.01em}
+  .badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:.04em}
+  .badge.over{background:var(--cha-soft);color:var(--cha)}
+  .badge.under{background:var(--hino-soft);color:var(--hino)}
+  .badge.even{background:#eee6cf;color:#9a7d2e}
+  .chart-box{position:relative;height:220px}
+  .diffs{display:flex;gap:6px;margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+  .diff{flex:1;text-align:center}
+  .diff .seg{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-bottom:3px}
+  .diff .val{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+  .diff .val.p{color:var(--pos)}.diff .val.n{color:var(--neg)}.diff .val.z{color:var(--muted)}
+  footer{margin-top:40px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+  @media(max-width:880px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .grid{grid-template-columns:1fr}
+    h1{font-size:26px}
+    .ov-box{height:340px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">HINO Technician Segment Standard</div>
+      <h1>Target <span class="vs">vs</span> Actual</h1>
+    </div>
+    <div></div>
+  </header>
+  <section class="kpis" id="kpis"></section>
+
+  <section style="background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin-bottom:24px;">
+    <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:12px">HINO Standard · สัดส่วนช่างที่กำหนด</div>
+    <div style="display:flex;gap:0;border-radius:8px;overflow:hidden;height:44px;">
+      <div style="flex:14;background:#e63946;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px">
+        <span style="font-size:11px;font-weight:800;color:#fff">14%</span>
+        <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">ASSI</span>
+      </div>
+      <div style="flex:40;background:#f4a800;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px">
+        <span style="font-size:13px;font-weight:800;color:#fff">40%</span>
+        <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">PRIMARY</span>
+      </div>
+      <div style="flex:20;background:#2dc653;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px">
+        <span style="font-size:12px;font-weight:800;color:#fff">20%</span>
+        <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">SECONDARY</span>
+      </div>
+      <div style="flex:16;background:#2979ff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px">
+        <span style="font-size:11px;font-weight:800;color:#fff">16%</span>
+        <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">PRO</span>
+      </div>
+      <div style="flex:10;background:#9c27b0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px">
+        <span style="font-size:11px;font-weight:800;color:#fff">10%</span>
+        <span style="font-size:9px;color:rgba(255,255,255,.8);font-weight:600">MASTER</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="overview">
+    <h2>ภาพรวมแต่ละสาขา</h2>
+    <div class="cap">CHA (Actual) แยกสีตาม 5 ระดับ ซ้อนเป็นแท่งเดียว · เทียบกับ HINO (Target) รวมสีเดียว</div>
+    <div class="ov-legend" id="ovLegend"></div>
+    <div class="ov-box"><canvas id="overview"></canvas></div>
+  </section>
+  <div class="section-label">รายละเอียดแต่ละสาขา</div>
+  <section class="grid" id="grid"></section>
+  <footer>
+    หน่วย: prs. · แท่งสี = Actual (CHA) · แท่งเทา = Target (HINO) · Diff. = Actual − Target
+  </footer>
+</div>
+<script>
+const SEGMENTS = ["Assistant","Primary","Secondary","Professional","Master"];
+const SEG_COLORS = ["#e63946","#f4a800","#2dc653","#2979ff","#9c27b0"];
+const SHEETS_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSlAoooRMYhPjxO6kf8c70HEUuNl8XqimSICORSkI3gS8woypYm-PmlrRrc7fGCaZTbQf11_vlKMGuZ/pub?gid=0&single=true&output=csv";
+const SHEETS_CSV_FALLBACKS = [
+  SHEETS_CSV_URL,
+  `https://api.allorigins.win/raw?url=${encodeURIComponent(SHEETS_CSV_URL)}`,
+  `https://corsproxy.io/?${encodeURIComponent(SHEETS_CSV_URL)}`
+];
+
+// Largest Remainder Method
+function largestRemainder(total, ratios) {
+  const exact = ratios.map(r => total * r);
+  const floors = exact.map(Math.floor);
+  const remainders = exact.map((v, i) => v - floors[i]);
+  let remaining = total - floors.reduce((a,b)=>a+b,0);
+  const indices = remainders.map((r,i)=>({r,i})).sort((a,b)=>b.r-a.r);
+  for(let k=0; k<remaining; k++) floors[indices[k].i]++;
+  return floors;
+}
+
+const RATIOS = [0.14, 0.40, 0.20, 0.16, 0.10];
+
+// แสดง loading
+document.getElementById("kpis").innerHTML = `<div style="color:var(--muted);font-size:14px;padding:16px">⏳ กำลังโหลดข้อมูลจาก Google Sheets...</div>`;
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (char === '"' && inQuotes && next === '"') {
+      value += '"';
+      i++;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      row.push(value);
+      value = "";
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && next === "\n") i++;
+      row.push(value);
+      rows.push(row);
+      row = [];
+      value = "";
+    } else {
+      value += char;
+    }
+  }
+
+  if (value || row.length) {
+    row.push(value);
+    rows.push(row);
+  }
+
+  return rows;
+}
+
+async function fetchWithTimeout(url, timeoutMs = 12000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(url, { cache: "no-store", signal: controller.signal });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.text();
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function loadSheetRows() {
+  let lastError;
+
+  for (const url of SHEETS_CSV_FALLBACKS) {
+    try {
+      const csv = await fetchWithTimeout(url);
+      const rows = parseCsv(csv.trim());
+      if (rows.length > 1) return rows.slice(1);
+    } catch (err) {
+      lastError = err;
+    }
+  }
+
+  throw new Error(lastError ? lastError.message : "Cannot load Google Sheets data");
+}
+
+loadSheetRows()
+  .then(rows => {
+    const DATA = rows.filter(r => r[0] && r[0].trim()).map(r => {
+      const actual = [1,2,3,4,5].map(i => parseInt(r[i])||0);
+      const total = actual.reduce((a,b)=>a+b,0);
+      const target = largestRemainder(total, RATIOS);
+      return { name: r[0].trim(), actual, target };
+    });
+    if (!DATA.length) throw new Error("No rows found in Google Sheets");
+    initDashboard(DATA);
+  })
+  .catch(err => {
+    document.getElementById("kpis").innerHTML = `<div style="color:#e63946;font-size:14px;padding:16px">❌ โหลดข้อมูลไม่สำเร็จ: ${err.message}</div>`;
+  });
+
+function initDashboard(DATA) {
+const sum = a => a.reduce((x,y)=>x+y,0);
+
+/* KPIs */
+const WEIGHTS = [1, 2, 3, 4, 5];
+const getScore = d => d.actual.reduce((s,a,i) => s + (a - d.target[i]) * WEIGHTS[i], 0);
+
+const totalMechanics = sum(DATA.map(d=>sum(d.actual)));
+const segMatch = DATA.flatMap(d=>d.target.map((t,i)=>d.actual[i]-t));
+const onTarget = segMatch.filter(v=>v===0).length;
+
+const scoredBranches = DATA.map(d => ({name: d.name, score: getScore(d)}));
+const bestBranch  = scoredBranches.reduce((a,b) => b.score > a.score ? b : a);
+const worstBranch = scoredBranches.reduce((a,b) => b.score < a.score ? b : a);
+
+document.getElementById("kpis").innerHTML=[
+  {label:"จำนวนช่างทั้งหมด", num:totalMechanics+" คน", sub:"รวมทุกสาขา / ทุกระดับ", accent:true},
+].map(k=>`<div class="kpi ${k.accent?'accent':''}">
+  <div class="label">${k.label}</div>
+  <div class="num">${k.num}</div>
+  <div class="sub">${k.sub}</div>
+</div>`).join("");
+
+/* ── OVERVIEW CHART — ใช้ custom plugin วาด label เองไม่พึ่ง datalabels ── */
+const sortedForChart = DATA;
+const labels = sortedForChart.map(d=>d.name);
+const chaDatasets = SEGMENTS.map((seg,i)=>({
+  label:"CHA · "+seg,
+  data:sortedForChart.map(d=>d.actual[i]),
+  backgroundColor:SEG_COLORS[i],
+  stack:"cha",
+  borderRadius:0,
+  barPercentage:0.95,
+  categoryPercentage:0.8,
+}));
+// HINO stacked แยก 5 segment — ใช้สีเดียวกับ CHA แต่ opacity ลดลง (เติม opacity ด้วย hex)
+const HINO_COLORS = SEG_COLORS;
+const hinoDatasets = SEGMENTS.map((seg,i)=>({
+  label:"HINO · "+seg,
+  data:sortedForChart.map(d=>d.target[i]),
+  backgroundColor:SEG_COLORS[i],
+  stack:"hino",
+  borderRadius:0,
+  barPercentage:0.95,
+  categoryPercentage:0.8,
+}));
+
+const chaDatasets2 = chaDatasets;
+const hinoDatasets2 = hinoDatasets;
+
+document.getElementById("ovLegend").innerHTML = "";
+
+// Custom inline plugin: เลขกลางแท่งทุกตัว + ข้อความ "HINO Target" บนแท่ง HINO
+const labelPlugin = {
+  id:"customLabels",
+  afterDatasetsDraw(chart){
+    const ctx = chart.ctx;
+    ctx.save();
+    chart.data.datasets.forEach((ds, dsIdx)=>{
+      const meta = chart.getDatasetMeta(dsIdx);
+      if(meta.hidden) return;
+      meta.data.forEach((bar, dataIdx)=>{
+        const val = ds.data[dataIdx];
+        if(!val || val <= 0) return;
+        const {x, y, height} = bar.getProps(["x","y","height"], true);
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 11px 'DM Sans',sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(val, x, y + height/2);
+      });
+    });
+    ctx.restore();
+  },
+  afterDraw(chart){
+    const ctx = chart.ctx;
+    ctx.save();
+    const hinoTopDs = chart.data.datasets.findIndex(ds => ds.stack==="hino" && ds.label==="HINO · Master");
+    if(hinoTopDs === -1) return;
+    const meta = chart.getDatasetMeta(hinoTopDs);
+    meta.data.forEach((bar, dataIdx)=>{
+      const {x, y} = bar.getProps(["x","y"], true);
+      ctx.save();
+      ctx.translate(x, y - 6);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillStyle = "#546e7a";
+      ctx.font = "bold 10px 'DM Sans',sans-serif";
+      ctx.textAlign = "left";
+      ctx.textBaseline = "middle";
+      ctx.fillText("HINO", 0, 0);
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+};
+
+new Chart(document.getElementById("overview"),{
+  type:"bar",
+  data:{labels, datasets:[...chaDatasets2, ...hinoDatasets2]},
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    layout:{padding:{top:36}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        callbacks:{
+          title:(items)=>items[0].label,
+          label:(ctx)=>{
+            const pct = ["14%","40%","20%","16%","10%"];
+            if(ctx.dataset.stack === "hino"){
+              const si = SEGMENTS.indexOf(ctx.dataset.label.replace("HINO · ",""));
+              return ctx.dataset.label.replace("HINO · "," ")+" (Target): "+ctx.parsed.y+" prs. ("+pct[si]+")";
+            }
+            return ctx.dataset.label.replace("CHA · "," ")+" (Actual): "+ctx.parsed.y+" prs.";
+          },
+          footer:(items)=>{
+            const idx = items[0].dataIndex;
+            const d = sortedForChart[idx];
+            return "Actual รวม: "+sum(d.actual)+" · Target รวม: "+sum(d.target)+" prs.";
+          }
+        }
+      }
+    },
+    scales:{
+      x:{
+        stacked:true,
+        grid:{display:false},
+        ticks:{
+          font:{size:11},
+          color:"#7a7f99",
+          maxRotation:45,
+          minRotation:45,
+          callback: function(val, i){
+            return sortedForChart[i].name;
+          }
+        }
+      },
+      y:{
+        stacked:true,
+        beginAtZero:true,
+        min:0,
+        max:37,
+        grid:{color:"#dde1ec"},
+        ticks:{font:{size:11},color:"#7a7f99"},
+        title:{display:true,text:"prs.",color:"#7a7f99"}
+      }
+    }
+  },
+  plugins:[labelPlugin]
+});
+
+/* ── CARD CHARTS ── */
+const cardLabelPlugin = {
+  id:"cardLabels",
+  afterDatasetsDraw(chart){
+    const ctx = chart.ctx;
+    ctx.save();
+    chart.data.datasets.forEach((ds, dsIdx)=>{
+      const meta = chart.getDatasetMeta(dsIdx);
+      if(meta.hidden) return;
+      meta.data.forEach((bar, dataIdx)=>{
+        const val = ds.data[dataIdx];
+        if(!val || val <= 0) return;
+        const {x, y} = bar.getProps(["x","y"], true);
+        ctx.fillStyle = dsIdx === 0 ? "#37474f" : "#1a1a2e";
+        ctx.font = "bold 11px 'DM Sans',sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "bottom";
+        ctx.fillText(val, x, y - 3);
+      });
+    });
+    ctx.restore();
+  }
+};
+
+const grid = document.getElementById("grid");
+
+const sortedData = DATA;
+
+sortedData.forEach((d,idx)=>{
+  const diffs = d.target.map((t,i)=>d.actual[i]-t);
+
+  const card=document.createElement("div");
+  card.className="card";
+  card.innerHTML=`
+    <div class="card-head">
+      <h2>${d.name}</h2>
+    </div>
+    <div class="chart-box"><canvas id="c${idx}"></canvas></div>
+    <div class="diffs">
+      ${SEGMENTS.map((s,i)=>{
+        const v=diffs[i];
+        const cls=v>0?'p':v<0?'n':'z';
+        const txt=v>0?'+'+v:v;
+        return `<div class="diff"><div class="seg">${s.slice(0,4)}</div><div class="val ${cls}">${txt}</div></div>`;
+      }).join("")}
+    </div>`;
+  grid.appendChild(card);
+
+  new Chart(document.getElementById("c"+idx),{
+    type:"bar",
+    data:{
+      labels:SEGMENTS,
+      datasets:[
+        {label:"Actual (CHA)",data:d.actual,backgroundColor:SEG_COLORS,borderRadius:3,barPercentage:.9,categoryPercentage:.7},
+        {label:"Target (HINO)",data:d.target,backgroundColor:"#37474f",borderRadius:3,barPercentage:.9,categoryPercentage:.7},
+      ]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      layout:{padding:{top:22}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          callbacks:{
+            afterBody:(items)=>{
+              const i=items[0].dataIndex;
+              const diff=d.actual[i]-d.target[i];
+              return "Diff: "+(diff>0?"+"+diff:diff)+" prs.";
+            }
+          }
+        }
+      },
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10},color:"#7a7f99"}},
+        y:{beginAtZero:true,grid:{color:"#dde1ec"},ticks:{stepSize:2,font:{size:10},color:"#7a7f99"}}
+      }
+    },
+    plugins:[cardLabelPlugin]
+  });
+});
+} // end initDashboard
+</script>
+</body>
+</html>
