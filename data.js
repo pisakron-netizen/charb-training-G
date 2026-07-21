@@ -83,6 +83,9 @@ window.trainingData = {
       2: [
         { src: "topic4-belt-twist-crack-closeup.jpg", caption: "บิดสายพานเบาๆ เพื่อดูรอยแตกบริเวณร่องด้านใน" },
         { src: "topic4-belt-bend-crack-check.jpg", caption: "ตัวอย่างรอยแตกเมื่อบิดหรืองอสายพานเพื่อตรวจสภาพ" }
+      ],
+      3: [
+        { src: "topic4-belt-tension-press-check.jpg", caption: "กดสายพานเพื่อตรวจความตึง ระยะยุบต้องไม่ต่ำกว่า 10 มม." }
       ]
     },
     title: "จุดตรวจสายพานและลูกลอก",
