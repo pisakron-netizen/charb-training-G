@@ -95,7 +95,7 @@ window.trainingData = {
       { caption: "3. ระยะยุบสายพานหย่อนหรือตึงเกินมาตรฐาน" }
     ],
     related: [
-      { caption: "ภาพแนวสายพาน เครื่องยนต์ และตำแหน่งลูกลอก" }
+      { src: "topic4-belt-routing-assembly.jpg", caption: "ภาพรวมแนวสายพาน เครื่องยนต์ และตำแหน่งลูกลอก" }
     ]
   },
   5: {
