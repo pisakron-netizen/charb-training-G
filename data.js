@@ -79,6 +79,10 @@ window.trainingData = {
         { src: "topic4-belt-scratch-check.jpg", caption: "ใช้ไขควงหรือปลายแหลมขีดแล้วเป็นรอยขูดขาว (เสื่อมสภาพ)" },
         { src: "topic4-belt-rib-closeup.jpg", caption: "มองร่องสายพานเพื่อสังเกตรอยแตกหรือรอยลายงา" },
         { src: "topic4-belt-white-wear-closeup.jpg", caption: "ตัวอย่างผิวสายพานเสื่อมสภาพ มีรอยขูดขาวและคราบสึก" }
+      ],
+      2: [
+        { src: "topic4-belt-twist-crack-closeup.jpg", caption: "บิดสายพานเบาๆ เพื่อดูรอยแตกบริเวณร่องด้านใน" },
+        { src: "topic4-belt-bend-crack-check.jpg", caption: "ตัวอย่างรอยแตกเมื่อบิดหรืองอสายพานเพื่อตรวจสภาพ" }
       ]
     },
     title: "จุดตรวจสายพานและลูกลอก",
