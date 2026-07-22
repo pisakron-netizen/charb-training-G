@@ -95,7 +95,7 @@ window.trainingData = {
       { caption: "3. ระยะยุบสายพานหย่อนหรือตึงเกินมาตรฐาน" }
     ],
     related: [
-      { src: "topic4-hino-vbelt-system-schematic.svg", caption: "ภาพประกอบ Assembly ระบบสายพานหน้าเครื่อง HINO ใช้อธิบายองค์ประกอบ ไม่ใช่ routing เฉพาะรุ่น" }
+      { caption: "ภาพ Assembly ระบบสายพานหน้าเครื่อง HINO" }
     ]
   },
   5: {
