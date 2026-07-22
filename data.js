@@ -95,7 +95,7 @@ window.trainingData = {
       { caption: "3. ระยะยุบสายพานหย่อนหรือตึงเกินมาตรฐาน" }
     ],
     related: [
-      { src: "topic4-belt-routing-assembly.jpg", caption: "ภาพรวมแนวสายพาน เครื่องยนต์ และตำแหน่งลูกลอก" }
+      { src: "topic4-hino-vbelt-system-schematic.svg", caption: "ภาพประกอบ Assembly ระบบสายพานหน้าเครื่อง HINO ใช้อธิบายองค์ประกอบ ไม่ใช่ routing เฉพาะรุ่น" }
     ]
   },
   5: {
