@@ -16,7 +16,7 @@ window.trainingData = {
   videoUrls: {
   1: 'https://youtu.be/g9F_ar_MyAg', // ตรวจเช็กการรั่วซึมของจารบีล้อ
   2: '', // สภาพของลูกหมากช่วงล่างทั้งหมด
-  3: 'videos/topic3-air-cleaner-closeup.mp4', // กรองอากาศ / ฝาครอบกรองอากาศ
+  3: 'https://www.canva.com/design/DAHQimd_f54/iPzt27fJrDhB-uZuMEG25A/watch?utm_content=DAHQimd_f54&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h2af6e739e6', // กรองอากาศ / ฝาครอบกรองอากาศ
   4: 'https://youtube.com/shorts/x0B-3oBAQ6M', // ตรวจเช็กสภาพสายพานเครื่อง / สายพานแอร์
   5: '', // ตรวจเช็กกระทะล้อ และสภาพของยาง
   6: '', // ตรวจรอยรั่วซึม ซีลเฟืองท้าย

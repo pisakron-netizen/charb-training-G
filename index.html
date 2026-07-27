@@ -672,7 +672,7 @@
   </div>
 </div>
 
-<script src="data.js?v=20260727-real-position-photos"></script>
+<script src="data.js?v=20260727-topic3-canva-video"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -690,6 +690,11 @@ function getYtId(url) {
   return m ? m[1] : '';
 }
 
+function getCanvaEmbedUrl(url) {
+  if (!url || !/^https:\/\/www\.canva\.com\/design\/[^/]+\/[^/]+\/watch(?:\?|$)/i.test(url)) return '';
+  return url + (url.includes('?') ? '&' : '?') + 'embed';
+}
+
 function getTopicMedia(topicId) {
   return topicMedia[topicId] || null;
 }
@@ -699,6 +704,11 @@ function renderVideoBlock(t) {
   const videoId = getYtId(rawUrl);
   if (videoId) {
     return '<div class="yt-wrap"><iframe class="yt-frame" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allowfullscreen></iframe></div>';
+  }
+
+  const canvaEmbedUrl = getCanvaEmbedUrl(rawUrl);
+  if (canvaEmbedUrl) {
+    return '<div class="yt-wrap"><iframe class="yt-frame" src="' + canvaEmbedUrl.replace(/&/g, '&amp;') + '" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe></div>';
   }
 
   if (rawUrl && /\.(mp4|webm|ogg)(\?.*)?$/i.test(rawUrl)) {
