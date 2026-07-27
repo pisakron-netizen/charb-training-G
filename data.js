@@ -74,7 +74,7 @@ window.trainingData = {
         { src: "topic3-step2-air-filter-dusty.png", caption: "ตัวอย่างกรองอากาศที่มีฝุ่นสะสมมาก" }
       ],
       3: [
-        { src: "topic3-step3-air-filter-seal.png", caption: "ตัวอย่างการตรวจขอบซีลไส้กรองอากาศ" }
+        { src: "topic3-step3-air-filter-seal.webp", caption: "ตัวอย่างการตรวจขอบซีลไส้กรองอากาศ" }
       ]
     },
     items: [
