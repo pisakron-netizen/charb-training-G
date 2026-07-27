@@ -68,6 +68,10 @@ window.trainingData = {
       1: [
         { src: "topic3-step1-restriction-location.png", caption: "ภาพจากหน้างาน: จุดที่ช่างกำลังชี้ตรวจอุปกรณ์แสดงการอุดตันของกรองอากาศ" },
         { src: "topic3-restriction-indicator-color-gauge.png", caption: "ตัวอย่าง Restriction Indicator แบบแถบสี สำหรับตรวจการอุดตันของไส้กรองอากาศ" }
+      ],
+      2: [
+        { src: "topic3-step2-air-filter-normal.png", caption: "ตัวอย่างไส้กรองอากาศสภาพปกติ: กระดาษกรองและตะแกรงอยู่ในรูปทรง ไม่พบรอยฉีกหรือรอยพับเสียรูป" },
+        { src: "topic3-step2-filter-tears.jpg", caption: "ตัวอย่างความเสียหาย: กระดาษกรองมีรอยทะลุบริเวณขอบและรอยพับเสียรูป (ภาพอ้างอิง ไม่ใช่ HINO เฉพาะรุ่น)", sourceUrl: "https://www.fleetguard.com/article/superior-air-filtration-is-your-ally-against-dirt-MCAOELYTFFZVH3PEIXTKBGXPL3II", sourceLabel: "แหล่งที่มา: Fleetguard / Atmus — Superior Air Filtration" }
       ]
     },
     items: [
