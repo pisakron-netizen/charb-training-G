@@ -70,7 +70,11 @@ window.trainingData = {
         { src: "topic3-restriction-indicator-color-gauge.png", caption: "ตัวอย่าง Restriction Indicator แบบแถบสี สำหรับตรวจการอุดตันของไส้กรองอากาศ" }
       ],
       2: [
-        { src: "topic3-step2-air-filter-normal.png", caption: "ไส้กรองอากาศสำหรับใช้ตรวจสภาพกระดาษกรอง ตะแกรง ขอบ และรอยพับ" }
+        { src: "topic3-step2-air-filter-normal.png", caption: "ตัวอย่างกรองอากาศสภาพปกติ" },
+        { src: "topic3-step2-air-filter-dusty.png", caption: "ตัวอย่างกรองอากาศที่มีฝุ่นสะสมมาก" }
+      ],
+      3: [
+        { src: "topic3-step3-air-filter-seal.png", caption: "ตัวอย่างการตรวจขอบซีลไส้กรองอากาศ" }
       ]
     },
     items: [
