@@ -461,14 +461,39 @@
     border: none;
     object-fit: contain;
   }
-  .step-item {
+  .step-accordion {
+    border-bottom: 1px solid var(--border);
+  }
+  .step-accordion:last-child { border-bottom: none; }
+  .step-summary {
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
+    padding: 15px 0;
+    cursor: pointer;
+    list-style: none;
   }
-  .step-item:last-child { border-bottom: none; }
+  .step-summary::-webkit-details-marker { display: none; }
+  .step-summary:focus-visible {
+    outline: 2px solid var(--accent-red);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .step-chevron {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: var(--accent-red);
+    font-size: 22px;
+    line-height: 24px;
+    transition: transform 0.2s ease;
+  }
+  .step-accordion[open] .step-chevron { transform: rotate(90deg); }
+  .step-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 0 16px 42px;
+  }
   .step-num {
     font-family: var(--mono);
     color: #FFFFFF;
@@ -713,7 +738,7 @@
   </div>
 </div>
 
-<script src="data.js?v=20260727-topic3-nine-steps"></script>
+<script src="data.js?v=20260727-topic3-steps-dropdown"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1136,13 +1161,16 @@ function showDetail(id) {
       <div class="info-box-label detail-section-label">ขั้นตอนตรวจสอบ</div>
       <div class="steps-list">
         ${t.steps.map((step, i) => `
-          <div class="step-item" style="flex-direction:column;align-items:stretch;gap:10px">
-            <div style="display:flex;align-items:flex-start;gap:14px">
+          <details class="step-accordion" ${i === 0 ? 'open' : ''}>
+            <summary class="step-summary">
               <span class="step-num">${String(i+1).padStart(2,'0')}</span>
               <span class="step-text">${step}</span>
+              <span class="step-chevron" aria-hidden="true">›</span>
+            </summary>
+            <div class="step-panel">
+              ${renderStepMedia(t, i)}
             </div>
-            ${renderStepMedia(t, i)}
-          </div>
+          </details>
         `).join('')}
       </div>
     </div>
@@ -1155,6 +1183,19 @@ function showDetail(id) {
 
   updateTopicUrl(id);
   showScreen('screen-detail');
+  bindStepAccordions();
+}
+
+function bindStepAccordions() {
+  const accordions = Array.from(document.querySelectorAll('.detail-section-box .step-accordion'));
+  accordions.forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (!item.open) return;
+      accordions.forEach(other => {
+        if (other !== item) other.open = false;
+      });
+    });
+  });
 }
 
 function toggleIssueRow(topicId, idx) {
