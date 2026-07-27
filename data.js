@@ -74,7 +74,25 @@ window.trainingData = {
         { src: "topic3-step2-air-filter-dusty.png", caption: "ตัวอย่างกรองอากาศที่มีฝุ่นสะสมมาก" }
       ],
       3: [
-        { src: "topic3-step3-air-filter-seal.webp", caption: "ตัวอย่างการตรวจขอบซีลไส้กรองอากาศ" }
+        { src: "topic3-step3-air-filter-seal.webp", caption: "ภาพประกอบจำลอง: ตัวอย่างการตรวจขอบซีลไส้กรองอากาศ" }
+      ],
+      4: [
+        { src: "topic3-step4-air-cleaner-cover.webp", caption: "ภาพประกอบจำลอง: การตรวจฝาครอบกรองอากาศและแนวประกบ" }
+      ],
+      5: [
+        { src: "topic3-step5-cover-gasket.webp", caption: "ภาพประกอบจำลอง: การตรวจยางซีลฝาครอบกรองอากาศ" }
+      ],
+      6: [
+        { src: "topic3-step6-cover-latches.webp", caption: "ภาพประกอบจำลอง: การตรวจตัวล็อกฝาครอบและจุดยึด" }
+      ],
+      7: [
+        { src: "topic3-step7-intake-duct-clamps.webp", caption: "ภาพประกอบจำลอง: การตรวจท่อทางเดินอากาศและแคลมป์รัดท่อ" }
+      ],
+      8: [
+        { src: "topic3-step8-restriction-indicator-reset.webp", caption: "ภาพประกอบจำลอง: การตรวจปุ่มรีเซ็ตและจุดต่อ Restriction Indicator" }
+      ],
+      9: [
+        { src: "topic3-step9-housing-contamination.webp", caption: "ภาพประกอบจำลอง: การตรวจน้ำ น้ำมัน และฝุ่นเปียกภายในเสื้อกรอง" }
       ]
     },
     items: [
