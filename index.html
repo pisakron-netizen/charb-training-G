@@ -672,7 +672,7 @@
   </div>
 </div>
 
-<script src="data.js?v=20260722-topic4-remove-assembly"></script>
+<script src="data.js?v=20260727-real-position-photos"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -782,9 +782,8 @@ function renderStepMedia(t, stepIndex) {
 function renderRelatedMedia(t) {
   const media = getTopicMedia(t.id);
   if (!media || !media.related || media.related.length === 0) return '';
-  const isAssemblyTopic = t.id >= 2 && t.id <= 10;
-  const label = isAssemblyTopic ? 'หัวข้อที่เกี่ยวข้อง' : 'ภาพประกอบชิ้นส่วนที่เกี่ยวข้อง';
-  const placeholderText = isAssemblyTopic ? 'เตรียมใส่รูป Assembly ที่เกี่ยวข้อง' : 'เตรียมใส่ภาพรวมของหัวข้อนี้';
+  const label = media.relatedTitle || 'ภาพตำแหน่งจริงบนรถ';
+  const placeholderText = media.relatedPlaceholder || 'เตรียมใส่ภาพตำแหน่งจริงบนรถ';
 
   return `
     <div class="info-box" style="margin-bottom:28px">
