@@ -551,6 +551,13 @@
   .media-placeholder span { font-family: var(--mono); font-size: 18px; color: var(--accent-red-dark); }
   .media-placeholder small { font-size: 12px; line-height: 1.4; color: #8C8C86; }
   .media-caption { font-size: 14px; font-weight: 600; color: #374151; line-height: 1.35; }
+  .media-source {
+    display: block;
+    margin-top: 4px;
+    color: var(--accent-red-dark);
+    font-size: 11px;
+    text-decoration: underline;
+  }
   .media-figure img,
   .related-media img { cursor: zoom-in; }
   .single-step-media .media-strip { display: block; }
@@ -798,6 +805,9 @@ function renderVideoBlock(t) {
 
 function renderMediaItem(item, idx) {
   const itemNum = item.number || idx + 1;
+  const source = item.sourceUrl
+    ? `<a class="media-source" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">${item.sourceLabel || 'แหล่งที่มา'}</a>`
+    : '';
   const visual = item.src
     ? `<img src="${item.src}" alt="${item.caption}" onclick="openImageViewer(this.src, this.alt)" onerror="this.parentElement.querySelector('.media-placeholder').style.display='flex';this.style.display='none'"><div class="media-placeholder" style="display:none"><span>${String(itemNum).padStart(2,'0')}</span><small>ไม่พบไฟล์ภาพ</small></div>`
     : `<div class="media-placeholder"><span>${String(itemNum).padStart(2,'0')}</span><small>เตรียมใส่ภาพจริงของขั้นตอนนี้</small></div>`;
@@ -805,7 +815,7 @@ function renderMediaItem(item, idx) {
   return `
     <figure class="media-figure">
       ${visual}
-      <figcaption class="media-caption">${item.caption}</figcaption>
+      <figcaption class="media-caption">${item.caption}${source}</figcaption>
     </figure>
   `;
 }
