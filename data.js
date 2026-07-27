@@ -67,7 +67,7 @@ window.trainingData = {
     stepItems: {
       1: [
         { src: "topic3-step1-restriction-location.png", caption: "ภาพจากหน้างาน: จุดที่ช่างกำลังชี้ตรวจอุปกรณ์แสดงการอุดตันของกรองอากาศ" },
-        { src: "topic3-restriction-indicator-reference.png", caption: "ภาพอ้างอิง Restriction Indicator สำหรับงานรถบรรทุก (Donaldson; ไม่ใช่ HINO เฉพาะรุ่น)", sourceUrl: "https://www.donaldson.com/content/dam/donaldson/engine-hydraulics-bulk/catalogs/air-intake/north-america/F110027-ENG/accessories/Air-Intake-Accessories.pdf", sourceLabel: "แหล่งที่มา: Donaldson Air Intake Accessories หน้า 214" }
+        { src: "topic3-restriction-indicator-color-gauge.png", caption: "ตัวอย่าง Restriction Indicator แบบแถบสี สำหรับตรวจการอุดตันของไส้กรองอากาศ" }
       ]
     },
     items: [
