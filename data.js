@@ -89,7 +89,7 @@ window.trainingData = {
         { src: "topic3-step7-intake-duct-clamps.webp", caption: "ภาพประกอบจำลอง: การตรวจท่อทางเดินอากาศและแคลมป์รัดท่อ" }
       ],
       8: [
-        { src: "topic3-step8-restriction-indicator-reset-v3.webp", caption: "ภาพประกอบจำลอง: การตรวจปุ่มรีเซ็ตและจุดต่อ Restriction Indicator" }
+        { src: "topic3-step8-restriction-indicator-user-v4.webp", caption: "ภาพประกอบจำลอง: การตรวจปุ่มรีเซ็ตและจุดต่อ Restriction Indicator" }
       ],
       9: [
         { src: "topic3-step9-housing-contamination.webp", caption: "ภาพประกอบจำลอง: การตรวจน้ำ น้ำมัน และฝุ่นเปียกภายในเสื้อกรอง" }
