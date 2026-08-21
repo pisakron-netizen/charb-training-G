@@ -753,7 +753,7 @@ const videoUrls = trainingData.videoUrls || {};
 const topicMedia = trainingData.topicMedia || {};
 const defaultCategoryOrder = ["ระบบรองรับน้ำหนัก", "เครื่องยนต์", "ระบบส่งกำลัง", "ระบบเบรก"];
 let categoryOrder = Array.isArray(trainingData.categoryOrder) ? trainingData.categoryOrder.slice() : defaultCategoryOrder.slice();
-let topics = Array.isArray(trainingData.topics) ? trainingData.topics.slice() : [];
+let topics = Array.isArray(trainingData.topics) ? trainingData.topics.filter(function(t) { return t.id <= 10; }) : [];
 let activeCategory = "all";
 let searchQuery = "";
 
