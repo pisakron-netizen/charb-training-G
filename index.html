@@ -509,6 +509,188 @@
     padding-top: 1px;
   }
   .step-text { font-size: 15px; line-height: 1.55; color: #2A2A28; font-weight: 500; }
+  .observation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 18px;
+  }
+  .observation-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 104px;
+    align-items: center;
+    gap: 16px;
+    min-height: 118px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .observation-item:last-child { border-bottom: none; }
+  .observation-copy { min-width: 0; }
+  .observation-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    margin-bottom: 8px;
+    padding: 3px 8px;
+    border: 1px solid #E7C5CB;
+    border-radius: 4px;
+    color: var(--accent-red-dark);
+    background: #FFF7F8;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .observation-title {
+    margin: 0 0 4px;
+    color: #20201E;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+  .observation-text {
+    margin: 0;
+    color: #585854;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .observation-figure {
+    width: 104px;
+    margin: 0;
+  }
+  .observation-image {
+    display: block;
+    width: 104px;
+    height: 88px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #F4F4F2;
+    object-fit: cover;
+    cursor: zoom-in;
+  }
+  .observation-item.has-gallery { grid-template-columns: minmax(0, 1fr); }
+  .observation-item.no-image {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+  }
+  .observation-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .observation-gallery figure { min-width: 0; margin: 0; }
+  .observation-gallery img {
+    display: block;
+    width: 100%;
+    height: 180px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #F4F4F2;
+    object-fit: contain;
+    cursor: zoom-in;
+  }
+  .observation-gallery figcaption {
+    margin-top: 6px;
+    color: #585854;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .sales-support-box {
+    margin-bottom: 28px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .sales-support-summary {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    padding: 12px 18px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+  .sales-support-summary::-webkit-details-marker { display: none; }
+  .sales-support-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: 6px;
+    color: #FFFFFF;
+    background: var(--accent-red);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .sales-support-copy { min-width: 0; flex: 1; }
+  .sales-support-title {
+    display: block;
+    color: #20201E;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+  .sales-support-meta {
+    display: block;
+    margin-top: 2px;
+    color: #777772;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .sales-support-chevron {
+    color: var(--accent-red);
+    font-size: 22px;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+  .sales-support-box[open] .sales-support-chevron { transform: rotate(90deg); }
+  .sales-support-body { border-top: 1px solid var(--border); }
+  .quick-sales-detail-panel { padding-left: 18px !important; }
+  .sales-talking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .sales-talking-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #2A2A28;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.55;
+  }
+  .sales-talking-item::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    margin-top: 7px;
+    border-radius: 50%;
+    background: var(--accent-red);
+  }
+  .sales-deep-detail {
+    border-top: 1px solid #DDDDD8;
+    padding-top: 10px;
+  }
+  .sales-deep-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 0;
+    color: var(--accent-red-dark);
+    cursor: pointer;
+    list-style: none;
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .sales-deep-summary::-webkit-details-marker { display: none; }
+  .sales-deep-summary::after { content: "+"; font-size: 18px; line-height: 1; }
+  .sales-deep-detail[open] .sales-deep-summary::after { content: "−"; }
+  .sales-deep-body { padding-top: 10px; }
   .step-media { display: flex; flex-direction: column; gap: 8px; }
   .media-title {
     font-size: 11px;
@@ -639,6 +821,16 @@
     .detail-section-label { min-height: 48px; padding: 12px 14px !important; font-size: 14px; }
     .detail-section-label::after { width: 28px; }
     .detail-section-box > .steps-list { padding: 0 14px; }
+    .observation-list { padding: 0 14px; }
+    .observation-item { grid-template-columns: minmax(0, 1fr) 88px; gap: 12px; }
+    .observation-figure,
+    .observation-image { width: 88px; }
+    .observation-image { height: 76px; }
+    .observation-gallery { gap: 8px; }
+    .observation-gallery img { height: 142px; }
+    .sales-support-summary { min-height: 60px; padding: 11px 14px; gap: 10px; }
+    .sales-support-title { font-size: 15px; }
+    .sales-support-meta { font-size: 11px; }
     .issue-detail-heading { font-size: 16px; }
     .issue-detail-text { font-size: 15px; }
     .info-box { padding: 16px; border-radius: 11px; }
@@ -681,12 +873,12 @@
     <div class="header-kicker">
       <img class="brand-logo" src="chairatchakarn-group-logo.png" alt="กลุ่มบริษัทชัยรัชการ CHAIRATCHAKARN GROUP">
       <div class="header-meta">
-        <span class="header-sub">TRAINING · สำนักงานใหญ่</span>
         <span class="header-company">ชัยรัชการ (กรุงเทพ) จำกัด</span>
+        <span class="header-sub">TRAINING · สำนักงานใหญ่</span>
       </div>
     </div>
     <div class="header-content">
-      <h1>ระบบฝึกอบรม <span>ช่าง & SA</span></h1>
+      <h1>ตรวจเช็ก <span>117 รายการ</span></h1>
     </div>
   </div>
 
@@ -745,7 +937,7 @@
   </div>
 </div>
 
-<script src="data.js?v=20260727-expanded-impacts-all-topics"></script>
+<script src="data.js?v=20260821-observation-wording-v15"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -765,7 +957,7 @@ function getYtId(url) {
 
 function getCanvaEmbedUrl(url) {
   if (!url || !/^https:\/\/www\.canva\.com\/design\/[^/]+\/[^/]+\/watch(?:\?|$)/i.test(url)) return '';
-  return url + (url.includes('?') ? '&' : '?') + 'embed';
+  return url.split('?')[0] + '?embed';
 }
 
 function getTopicMedia(topicId) {
@@ -860,6 +1052,78 @@ function renderStepMedia(t, stepIndex) {
       <div class="media-title">${media.title}</div>
       <div class="media-strip">
         ${media.items.map(renderMediaItem).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderInspectionSection(t) {
+  const observations = Array.isArray(t.quickObservations) && t.quickObservations.length > 0
+    ? t.quickObservations
+    : t.observationPoints;
+
+  if (Array.isArray(observations) && observations.length > 0) {
+    return `
+      <div class="info-box detail-section-box" style="margin-bottom:28px;padding:0;overflow:hidden">
+        <div class="info-box-label detail-section-label">จุดสังเกตในการตรวจ</div>
+        <div class="observation-list">
+          ${observations.map((item, observationIndex) => `
+            <article class="observation-item${Array.isArray(item.images) && item.images.length > 0 ? ' has-gallery' : !item.src ? ' no-image' : ''}">
+              <div class="observation-copy">
+                <span class="observation-label">จุดตรวจที่ ${observationIndex + 1}</span>
+                <h3 class="observation-title">${item.title}</h3>
+                <p class="observation-text">${item.text}</p>
+              </div>
+              ${Array.isArray(item.images) && item.images.length > 0 ? `
+                <div class="observation-gallery">
+                  ${item.images.map(image => `
+                    <figure>
+                      <img
+                        src="${image.src}"
+                        alt="${image.caption}"
+                        loading="lazy"
+                        onclick="openImageViewer(this.src, this.alt)"
+                        onerror="this.parentElement.style.display='none'"
+                      >
+                      <figcaption>${image.caption}</figcaption>
+                    </figure>
+                  `).join('')}
+                </div>
+              ` : item.src ? `
+                <figure class="observation-figure">
+                  <img
+                    class="observation-image"
+                    src="${item.src}"
+                    alt="${item.caption || item.title}"
+                    loading="lazy"
+                    onclick="openImageViewer(this.src, this.alt)"
+                    onerror="this.parentElement.style.display='none'"
+                  >
+                </figure>
+              ` : ''}
+            </article>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="info-box detail-section-box" style="margin-bottom:28px;padding:0;overflow:hidden">
+      <div class="info-box-label detail-section-label">ขั้นตอนตรวจสอบ</div>
+      <div class="steps-list">
+        ${t.steps.map((step, i) => `
+          <details class="step-accordion" ${i === 0 ? 'open' : ''}>
+            <summary class="step-summary">
+              <span class="step-num">${String(i+1).padStart(2,'0')}</span>
+              <span class="step-text">${step}</span>
+              <span class="step-chevron" aria-hidden="true">›</span>
+            </summary>
+            <div class="step-panel">
+              ${renderStepMedia(t, i)}
+            </div>
+          </details>
+        `).join('')}
       </div>
     </div>
   `;
@@ -1102,6 +1366,94 @@ function renderTopics() {
   } catch(e) { console.error('renderTopics error:', e); }
 }
 
+function renderTalkingPoints(iss) {
+  if (!Array.isArray(iss.talkingPoints) || iss.talkingPoints.length === 0) return '';
+  return `
+    <div class="sales-talking-list">
+      ${iss.talkingPoints.map(pt => `<div class="sales-talking-item">${pt}</div>`).join('')}
+    </div>
+  `;
+}
+
+function renderIssueDetail(t, iss, idx) {
+  if (t.detailMode === 'quick-sales-preview') {
+    return `
+      <div class="issue-detail-heading">ประเด็นคุยกับลูกค้า</div>
+      ${renderTalkingPoints(iss)}
+      <details class="sales-deep-detail">
+        <summary class="sales-deep-summary">ดูวิธีแก้และผลกระทบ</summary>
+        <div class="sales-deep-body">
+          <div class="issue-detail-heading">วิธีการแก้ไข</div>
+          <p class="issue-detail-text">${iss.solution}</p>
+          <div class="issue-detail-heading">ผลกระทบหากไม่แก้ไข</div>
+          <p class="issue-detail-text">${iss.fix}</p>
+        </div>
+      </details>
+    `;
+  }
+
+  return `
+    <div class="issue-detail-heading">วิธีการแก้ไข</div>
+    <p class="issue-detail-text">${iss.solution}</p>
+    <div class="issue-detail-heading">ผลกระทบหากไม่แก้ไข</div>
+    <p class="issue-detail-text">${iss.fix}</p>
+    ${iss.talkingPoints ? `
+    <button onclick="togglePoints(event,${t.id},${idx})" id="ptsbtn-${t.id}-${idx}" style="display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;border:1px solid #CBCBC6;color:#980C22;font-family:inherit;font-size:12px;font-weight:700;padding:7px 14px;border-radius:6px;cursor:pointer;margin-bottom:12px">
+      จุดที่ต้องพูดกับลูกค้า <span id="ptsarr-${t.id}-${idx}" style="transition:transform 0.2s">›</span>
+    </button>
+    <div id="pts-${t.id}-${idx}" style="display:none;margin-bottom:14px">
+      ${renderTalkingPoints(iss)}
+    </div>
+    ` : ''}
+  `;
+}
+
+function renderIssueRows(t) {
+  return t.issuesList.map((iss, idx) => `
+    <div style="border-top:1px solid #E7E7E3">
+      <div onclick="toggleIssueRow(${t.id},${idx})" style="display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none">
+        <span style="min-width:24px;height:24px;border-radius:4px;background:#C8102E;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${idx+1}</span>
+        <span style="font-size:15px;color:#2A2A28;flex:1;line-height:1.5;font-weight:600">${iss.issue}</span>
+        <span id="arr-${t.id}-${idx}" style="color:#C8102E;font-size:18px;transition:transform 0.2s;flex-shrink:0">›</span>
+      </div>
+      <div id="issrow-${t.id}-${idx}" style="display:none;border-top:1px solid #E7E7E3">
+        <div class="${t.detailMode === 'quick-sales-preview' ? 'quick-sales-detail-panel' : ''}" style="padding:15px 18px 15px 52px;background:#F7F7F5">
+          ${renderIssueDetail(t, iss, idx)}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderIssuesSection(t) {
+  if (t.detailMode === 'quick-sales-preview') {
+    return `
+      <details class="info-box sales-support-box">
+        <summary class="sales-support-summary">
+          <span class="sales-support-mark">SA</span>
+          <span class="sales-support-copy">
+            <span class="sales-support-title">ข้อมูลสำหรับแนะนำลูกค้า</span>
+            <span class="sales-support-meta">อาการที่พบ ${t.issuesList.length} รายการ</span>
+          </span>
+          <span class="sales-support-chevron" aria-hidden="true">›</span>
+        </summary>
+        <div class="sales-support-body">
+          ${renderIssueRows(t)}
+        </div>
+      </details>
+    `;
+  }
+
+  return `
+    <div style="margin-bottom:12px">
+      <div class="info-box detail-section-box" style="padding:0;overflow:hidden">
+        <div class="info-box-label detail-section-label">อาการเสีย / สิ่งที่พบ</div>
+        ${renderIssueRows(t)}
+      </div>
+    </div>
+  `;
+}
+
 function showDetail(id) {
   const t = topics.find(x => x.id === id);
   const severityColors = {
@@ -1110,6 +1462,15 @@ function showDetail(id) {
     critical: { color: '#EF4444', bg: '#FEF2F2' }
   };
   const sc = severityColors[t.severity];
+  const videoSection = `
+    <div class="info-box detail-section-box" style="margin-bottom:12px;padding:0;overflow:hidden;border-radius:14px;">
+      <div class="info-box-label detail-section-label">วิดีโอการตรวจ</div>
+      ${renderVideoBlock(t)}
+    </div>
+  `;
+  const detailSections = t.detailMode === 'quick-sales-preview'
+    ? `${renderInspectionSection(t)}${videoSection}${renderIssuesSection(t)}`
+    : `${videoSection}${renderIssuesSection(t)}${renderInspectionSection(t)}`;
 
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
@@ -1124,68 +1485,9 @@ function showDetail(id) {
       </div>
     </div>
 
-    <div class="info-box detail-section-box" style="margin-bottom:12px;padding:0;overflow:hidden;border-radius:14px;">
-      <div class="info-box-label detail-section-label">วิดีโอการตรวจ</div>
-      ${renderVideoBlock(t)}
-    </div>
+    ${detailSections}
 
-    <div style="margin-bottom:12px">
-      <div class="info-box detail-section-box" style="padding:0;overflow:hidden">
-        <div class="info-box-label detail-section-label">อาการเสีย / สิ่งที่พบ</div>
-        ${t.issuesList.map((iss, idx) => `
-          <div style="border-top:1px solid #E7E7E3">
-            <div onclick="toggleIssueRow(${t.id},${idx})" style="display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none">
-              <span style="min-width:24px;height:24px;border-radius:4px;background:#C8102E;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${idx+1}</span>
-              <span style="font-size:15px;color:#2A2A28;flex:1;line-height:1.5;font-weight:600">${iss.issue}</span>
-              <span id="arr-${t.id}-${idx}" style="color:#C8102E;font-size:18px;transition:transform 0.2s;flex-shrink:0">›</span>
-            </div>
-            <div id="issrow-${t.id}-${idx}" style="display:none;border-top:1px solid #E7E7E3">
-              <div style="padding:15px 18px 15px 52px;background:#F7F7F5">
-                <div class="issue-detail-heading">วิธีการแก้ไข</div>
-                <p class="issue-detail-text">${iss.solution}</p>
-                <div class="issue-detail-heading">ผลกระทบหากไม่แก้ไข</div>
-                <p class="issue-detail-text">${iss.fix}</p>
-                ${iss.talkingPoints ? `
-                <button onclick="togglePoints(event,${t.id},${idx})" id="ptsbtn-${t.id}-${idx}" style="display:inline-flex;align-items:center;gap:6px;background:#FFFFFF;border:1px solid #CBCBC6;color:#980C22;font-family:inherit;font-size:12px;font-weight:700;padding:7px 14px;border-radius:6px;cursor:pointer;margin-bottom:12px">
-                  จุดที่ต้องพูดกับลูกค้า <span id="ptsarr-${t.id}-${idx}" style="transition:transform 0.2s">›</span>
-                </button>
-                <div id="pts-${t.id}-${idx}" style="display:none;margin-bottom:14px">
-                  <div style="display:flex;flex-direction:column;gap:8px">
-                    ${iss.talkingPoints.map(pt => `
-                      <div style="display:flex;align-items:flex-start;gap:10px">
-                        <span style="width:6px;height:6px;border-radius:50%;background:#C8102E;margin-top:7px;flex-shrink:0"></span>
-                        <span style="font-size:14px;font-weight:700;line-height:1.55;color:#2A2A28">${pt}</span>
-                      </div>
-                    `).join('')}
-                  </div>
-                </div>
-                ` : ''}
-              </div>
-            </div>
-          </div>
-        `).join('')}
-      </div>
-    </div>
-
-    <div class="info-box detail-section-box" style="margin-bottom:28px;padding:0;overflow:hidden">
-      <div class="info-box-label detail-section-label">ขั้นตอนตรวจสอบ</div>
-      <div class="steps-list">
-        ${t.steps.map((step, i) => `
-          <details class="step-accordion" ${i === 0 ? 'open' : ''}>
-            <summary class="step-summary">
-              <span class="step-num">${String(i+1).padStart(2,'0')}</span>
-              <span class="step-text">${step}</span>
-              <span class="step-chevron" aria-hidden="true">›</span>
-            </summary>
-            <div class="step-panel">
-              ${renderStepMedia(t, i)}
-            </div>
-          </details>
-        `).join('')}
-      </div>
-    </div>
-
-    <button class="floating-home" type="button" onclick="showHome()">รายการ</button>
+    ${t.detailMode === 'quick-sales-preview' ? '' : '<button class="floating-home" type="button" onclick="showHome()">รายการ</button>'}
 
   `;
 
