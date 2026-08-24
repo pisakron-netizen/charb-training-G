@@ -351,7 +351,7 @@
   }
 
   .detail-section-box {
-    border-color: #E8D3D7;
+    border-color: #D9C6CA;
     box-shadow: 0 8px 20px rgba(200, 16, 46, 0.04);
   }
   .detail-section-label {
@@ -361,9 +361,9 @@
     min-height: 50px;
     margin: 0;
     padding: 14px 18px !important;
-    color: #980C22;
-    background: #FFF7F8;
-    border-bottom: 1px solid #F0D4D9;
+    color: #FFFFFF;
+    background: var(--accent-red-dark);
+    border-bottom: 0;
     font-size: 15px;
     letter-spacing: 0;
     line-height: 1.4;
@@ -375,14 +375,14 @@
     height: 22px;
     flex: 0 0 4px;
     border-radius: 2px;
-    background: var(--accent-red);
+    background: #FFFFFF;
   }
   .detail-section-label::after {
     content: "";
     width: 44px;
     height: 1px;
     margin-left: auto;
-    background: #D85A6D;
+    background: rgba(255, 255, 255, 0.42);
   }
   .detail-section-box > .steps-list {
     padding: 0 18px;
@@ -598,6 +598,8 @@
     margin-bottom: 28px;
     padding: 0;
     overflow: hidden;
+    border-color: #D8D8D3;
+    box-shadow: 0 8px 24px rgba(32, 32, 30, 0.05);
   }
   .sales-support-summary {
     display: flex;
@@ -608,6 +610,7 @@
     cursor: pointer;
     list-style: none;
     user-select: none;
+    background: #FFFFFF;
   }
   .sales-support-summary::-webkit-details-marker { display: none; }
   .sales-support-mark {
@@ -646,51 +649,119 @@
   }
   .sales-support-box[open] .sales-support-chevron { transform: rotate(90deg); }
   .sales-support-body { border-top: 1px solid var(--border); }
-  .quick-sales-detail-panel { padding-left: 18px !important; }
+  .sales-issue-row + .sales-issue-row { border-top: 1px solid #E7E7E3; }
+  .sales-issue-summary {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 0;
+    color: inherit;
+    background: #FFFFFF;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+  }
+  .sales-issue-summary:hover { background: #FAFAF8; }
+  .sales-issue-summary[aria-expanded="true"] { background: #F7F7F5; }
+  .sales-issue-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    background: var(--accent-red);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .sales-issue-title {
+    min-width: 0;
+    flex: 1;
+    color: #2A2A28;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .sales-issue-chevron {
+    flex: 0 0 auto;
+    color: var(--accent-red);
+    font-size: 20px;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+  .sales-issue-summary[aria-expanded="true"] .sales-issue-chevron {
+    transform: rotate(90deg);
+  }
+  .sales-issue-body {
+    border-top: 1px solid #E7E7E3;
+    background: #F7F7F5;
+  }
+  .quick-sales-detail-panel { padding: 18px !important; }
+  .sales-content-heading {
+    margin-bottom: 8px;
+    color: var(--accent-red-dark);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
   .sales-talking-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    border-top: 1px solid #E0E0DB;
   }
   .sales-talking-item {
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #E0E0DB;
     color: #2A2A28;
     font-size: 14px;
-    font-weight: 700;
-    line-height: 1.55;
+    font-weight: 600;
+    line-height: 1.6;
   }
   .sales-talking-item::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    flex: 0 0 6px;
-    margin-top: 7px;
-    border-radius: 50%;
-    background: var(--accent-red);
-  }
-  .sales-deep-detail {
-    border-top: 1px solid #DDDDD8;
-    padding-top: 10px;
-  }
-  .sales-deep-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 6px 0;
-    color: var(--accent-red-dark);
-    cursor: pointer;
-    list-style: none;
-    font-size: 13px;
+    content: "—";
+    flex: 0 0 auto;
+    color: var(--accent-red);
     font-weight: 800;
   }
-  .sales-deep-summary::-webkit-details-marker { display: none; }
-  .sales-deep-summary::after { content: "+"; font-size: 18px; line-height: 1; }
-  .sales-deep-detail[open] .sales-deep-summary::after { content: "−"; }
-  .sales-deep-body { padding-top: 10px; }
+  .sales-resolution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .sales-resolution-block {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #DDDDD8;
+    border-left: 3px solid var(--accent-red);
+    border-radius: 6px;
+    background: #FFFFFF;
+  }
+  .sales-resolution-block.impact {
+    border-left-color: #555550;
+  }
+  .sales-resolution-label {
+    margin-bottom: 6px;
+    color: var(--accent-red-dark);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+  .sales-resolution-block.impact .sales-resolution-label { color: #444440; }
+  .sales-resolution-text {
+    margin: 0;
+    color: #3D3D39;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7;
+  }
   .step-media { display: flex; flex-direction: column; gap: 8px; }
   .media-title {
     font-size: 11px;
@@ -831,6 +902,14 @@
     .sales-support-summary { min-height: 60px; padding: 11px 14px; gap: 10px; }
     .sales-support-title { font-size: 15px; }
     .sales-support-meta { font-size: 11px; }
+    .sales-issue-summary { align-items: flex-start; padding: 13px 14px; gap: 10px; }
+    .sales-issue-number { width: 26px; height: 26px; flex-basis: 26px; }
+    .sales-issue-title { font-size: 15px; line-height: 1.55; }
+    .quick-sales-detail-panel { padding: 15px 14px !important; }
+    .sales-talking-item { font-size: 15px; }
+    .sales-resolution-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    .sales-resolution-block { padding: 12px; }
+    .sales-resolution-text { font-size: 15px; line-height: 1.65; }
     .issue-detail-heading { font-size: 16px; }
     .issue-detail-text { font-size: 15px; }
     .info-box { padding: 16px; border-radius: 11px; }
@@ -937,7 +1016,7 @@
   </div>
 </div>
 
-<script src="data.js?v=20260821-observation-wording-v15"></script>
+<script src="data.js?v=20260824-image-compress-sa-redesign-v34"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1378,17 +1457,18 @@ function renderTalkingPoints(iss) {
 function renderIssueDetail(t, iss, idx) {
   if (t.detailMode === 'quick-sales-preview') {
     return `
-      <div class="issue-detail-heading">ประเด็นคุยกับลูกค้า</div>
+      <div class="sales-content-heading">ประเด็นคุยกับลูกค้า</div>
       ${renderTalkingPoints(iss)}
-      <details class="sales-deep-detail">
-        <summary class="sales-deep-summary">ดูวิธีแก้และผลกระทบ</summary>
-        <div class="sales-deep-body">
-          <div class="issue-detail-heading">วิธีการแก้ไข</div>
-          <p class="issue-detail-text">${iss.solution}</p>
-          <div class="issue-detail-heading">ผลกระทบหากไม่แก้ไข</div>
-          <p class="issue-detail-text">${iss.fix}</p>
-        </div>
-      </details>
+      <div class="sales-resolution-grid">
+        <section class="sales-resolution-block">
+          <div class="sales-resolution-label">วิธีการแก้ไข</div>
+          <p class="sales-resolution-text">${iss.solution}</p>
+        </section>
+        <section class="sales-resolution-block impact">
+          <div class="sales-resolution-label">ผลกระทบหากไม่แก้ไข</div>
+          <p class="sales-resolution-text">${iss.fix}</p>
+        </section>
+      </div>
     `;
   }
 
@@ -1410,14 +1490,19 @@ function renderIssueDetail(t, iss, idx) {
 
 function renderIssueRows(t) {
   return t.issuesList.map((iss, idx) => `
-    <div style="border-top:1px solid #E7E7E3">
-      <div onclick="toggleIssueRow(${t.id},${idx})" style="display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;user-select:none">
-        <span style="min-width:24px;height:24px;border-radius:4px;background:#C8102E;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">${idx+1}</span>
-        <span style="font-size:15px;color:#2A2A28;flex:1;line-height:1.5;font-weight:600">${iss.issue}</span>
-        <span id="arr-${t.id}-${idx}" style="color:#C8102E;font-size:18px;transition:transform 0.2s;flex-shrink:0">›</span>
-      </div>
-      <div id="issrow-${t.id}-${idx}" style="display:none;border-top:1px solid #E7E7E3">
-        <div class="${t.detailMode === 'quick-sales-preview' ? 'quick-sales-detail-panel' : ''}" style="padding:15px 18px 15px 52px;background:#F7F7F5">
+    <div class="sales-issue-row">
+      <button id="issbtn-${t.id}-${idx}"
+        class="sales-issue-summary"
+        type="button"
+        aria-expanded="false"
+        aria-controls="issrow-${t.id}-${idx}"
+        onclick="toggleIssueRow(${t.id},${idx})">
+        <span class="sales-issue-number">${idx+1}</span>
+        <span class="sales-issue-title">${iss.issue}</span>
+        <span id="arr-${t.id}-${idx}" class="sales-issue-chevron" aria-hidden="true">›</span>
+      </button>
+      <div id="issrow-${t.id}-${idx}" class="sales-issue-body" style="display:none">
+        <div class="${t.detailMode === 'quick-sales-preview' ? 'quick-sales-detail-panel' : ''}" style="padding:15px 18px 15px 52px">
           ${renderIssueDetail(t, iss, idx)}
         </div>
       </div>
@@ -1510,11 +1595,11 @@ function bindStepAccordions() {
 
 function toggleIssueRow(topicId, idx) {
   const row = document.getElementById('issrow-' + topicId + '-' + idx);
-  const arr = document.getElementById('arr-' + topicId + '-' + idx);
+  const button = document.getElementById('issbtn-' + topicId + '-' + idx);
   if (!row) return;
   const isOpen = row.style.display !== 'none';
   row.style.display = isOpen ? 'none' : 'block';
-  if (arr) arr.style.transform = isOpen ? '' : 'rotate(90deg)';
+  if (button) button.setAttribute('aria-expanded', String(!isOpen));
 }
 
 function togglePoints(e, topicId, idx) {
