@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ชัยรัชการ (กรุงเทพ) จำกัด - Training System</title>
+<title>ชัยรัชการ (กรุงเทพ) จำกัด - ระบบตรวจเช็ก 117 รายการ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -617,13 +617,13 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
+    width: 64px;
     height: 36px;
-    flex: 0 0 36px;
+    flex: 0 0 64px;
     border-radius: 6px;
     color: #FFFFFF;
     background: var(--accent-red);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 800;
   }
   .sales-support-copy { min-width: 0; flex: 1; }
@@ -953,7 +953,7 @@
       <img class="brand-logo" src="chairatchakarn-group-logo.png" alt="กลุ่มบริษัทชัยรัชการ CHAIRATCHAKARN GROUP">
       <div class="header-meta">
         <span class="header-company">ชัยรัชการ (กรุงเทพ) จำกัด</span>
-        <span class="header-sub">TRAINING · สำนักงานใหญ่</span>
+        <span class="header-sub">การฝึกอบรม · สำนักงานใหญ่</span>
       </div>
     </div>
     <div class="header-content">
@@ -966,12 +966,12 @@
   <div class="info-box home-intro">
     <div class="info-box-label">คู่มือการใช้งาน</div>
     <p style="font-size:15px;line-height:1.8;color:#555">
-      ระบบนี้จัดทำขึ้นเพื่อช่วยให้ช่างและ SA สามารถอธิบายอาการเสีย วิเคราะห์ปัญหา และแนะนำลูกค้าได้อย่างมืออาชีพ
+      ระบบนี้จัดทำขึ้นเพื่อช่วยให้ช่างและที่ปรึกษาด้านบริการสามารถอธิบายอาการเสีย วิเคราะห์ปัญหา และแนะนำลูกค้าได้อย่างมืออาชีพ
       โดยเน้นการสื่อสารที่เข้าใจง่าย เห็นภาพ และช่วยให้ลูกค้าตัดสินใจซ่อมได้อย่างมั่นใจมากขึ้น
     </p>
 
     <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-      <span class="pill-badge">ใช้งานสำหรับ SA</span>
+      <span class="pill-badge">สำหรับที่ปรึกษาด้านบริการ</span>
       <span class="pill-badge">ใช้งานสำหรับช่าง</span>
     </div>
   </div>
@@ -1016,7 +1016,7 @@
   </div>
 </div>
 
-<script src="data.js?v=20260824-image-compress-sa-redesign-v34"></script>
+  <script src="data.js?v=20260902-thai-visible-terms-v35"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1069,7 +1069,7 @@ function renderVideoBlock(t) {
   return `
     <div class="vdo-upload-box" style="border:none;border-radius:0;background:#F7F7F5;margin:0 0 4px">
       <span class="upload-label">ยังไม่มีวิดีโอหัวข้อ ${String(t.id).padStart(2,'0')}</span>
-      <div class="vdo-note">ใส่ลิงก์ YouTube ของหัวข้อ “${t.title}” ที่ videoUrls[${t.id}]</div>
+      <div class="vdo-note">กรุณาเพิ่มลิงก์วิดีโอสำหรับหัวข้อ “${t.title}” ในไฟล์ข้อมูล</div>
     </div>
   `;
 }
@@ -1515,7 +1515,7 @@ function renderIssuesSection(t) {
     return `
       <details class="info-box sales-support-box">
         <summary class="sales-support-summary">
-          <span class="sales-support-mark">SA</span>
+          <span class="sales-support-mark">ที่ปรึกษา</span>
           <span class="sales-support-copy">
             <span class="sales-support-title">ข้อมูลสำหรับแนะนำลูกค้า</span>
             <span class="sales-support-meta">อาการที่พบ ${t.issuesList.length} รายการ</span>
