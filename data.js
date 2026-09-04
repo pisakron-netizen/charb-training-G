@@ -14,10 +14,10 @@ window.trainingData = {
     "อื่นๆ"
   ],
   videoUrls: {
-  1: 'https://youtu.be/g9F_ar_MyAg', // ตรวจเช็กการรั่วซึมของจารบีล้อ
+  1: 'https://www.canva.com/design/DAHUMqQBFYc/OSB6IqRffXtZUaCQDC3T-w/watch?utm_content=DAHUMqQBFYc&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h7c1d62d976', // ตรวจเช็กการรั่วซึมของจารบีล้อ
   2: 'https://www.canva.com/design/DAHS6KSzgI8/zwi3Mxe43x_1Ybg2xfrNQw/watch?utm_content=DAHS6KSzgI8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h30d2a3c67d', // สภาพของลูกหมากช่วงล่างทั้งหมด
   3: 'https://www.canva.com/design/DAHQimd_f54/iPzt27fJrDhB-uZuMEG25A/watch?utm_content=DAHQimd_f54&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h2af6e739e6', // กรองอากาศ / ฝาครอบกรองอากาศ
-  4: 'https://youtube.com/shorts/x0B-3oBAQ6M', // ตรวจเช็กสภาพสายพานเครื่อง / สายพานแอร์
+  4: 'https://www.canva.com/design/DAHUMsTcUCs/oiW9IAWsR_qxkAS9mKPDMA/watch?utm_content=DAHUMsTcUCs&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h03ef30fea1', // ตรวจเช็กสภาพสายพานเครื่อง / สายพานแอร์
   5: 'https://www.canva.com/design/DAHS6ZAM5sU/CPlUYwlv-hkibB39O9W_kw/watch?utm_content=DAHS6ZAM5sU&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6c6dcb133d', // ตรวจเช็กกระทะล้อ และสภาพของยาง
   6: 'https://www.canva.com/design/DAHS5wn4KLw/_e6-DxzzlbYnHxlw5yIizw/watch?utm_content=DAHS5wn4KLw&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h7fc5d637cd', // ตรวจรอยรั่วซึม ซีลเฟืองท้าย
   7: 'https://www.canva.com/design/DAHS6TBe-7M/PfhPdY_pynca-9IVMEjk5g/watch?utm_content=DAHS6TBe-7M&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha1a11b529e', // ตรวจสภาพจุดอัดจารบี
