@@ -1262,6 +1262,8 @@ function showScreen(id) {
 
 function showHome() {
   closeExpandedVideo();
+  // Release embedded players so audio cannot continue behind the topic list.
+  document.getElementById('detail-content').innerHTML = '';
   renderTopics();
   updateTopicUrl(null);
   showScreen('screen-home');
