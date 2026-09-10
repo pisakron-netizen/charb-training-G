@@ -1058,7 +1058,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260910-11"></script>
+  <script src="data.js?v=20260910-12"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1309,12 +1309,9 @@ function showHome() {
 function updateTopicUrl(topicId) {
   if (!window.history || !window.history.replaceState) return;
   const url = new URL(window.location.href);
-  if (topicId) {
-    url.search = '';
-    url.searchParams.set('topic', topicId);
-  } else {
-    url.search = '';
-  }
+  url.search = '';
+  if (topicId) url.searchParams.set('topic', topicId);
+  if (previewPending) url.searchParams.set('preview', '1');
   window.history.replaceState(null, '', url.pathname + url.search + url.hash);
 }
 
@@ -1450,8 +1447,11 @@ function renderTopicControls() {
   }
 }
 
+// ?preview=1 opens the unfinished topics so drafts can be reviewed on the real site.
+const previewPending = new URLSearchParams(window.location.search).get('preview') === '1';
+
 function isTopicReady(t) {
-  return !t || t.ready !== false;
+  return !t || t.ready !== false || previewPending;
 }
 
 function renderTopics() {
@@ -1477,6 +1477,11 @@ function renderTopics() {
     });
 
     if (summary) {
+      if (previewPending) {
+        summary.textContent = 'โหมดตรวจร่าง · เปิดดูหัวข้อที่ยังไม่เสร็จได้ทุกข้อ';
+        summary.style.color = 'var(--accent-red-dark)';
+        summary.style.fontWeight = '700';
+      } else {
       const readyCount = visibleTopics.filter(isTopicReady).length;
       const base = visibleTopics.length === topics.length
         ? 'ทั้งหมด ' + topics.length + ' หัวข้อ'
@@ -1484,6 +1489,7 @@ function renderTopics() {
       summary.textContent = readyCount === visibleTopics.length
         ? base
         : base + ' · เปิดดูได้แล้ว ' + readyCount + ' หัวข้อ';
+      }
     }
 
     if (visibleTopics.length === 0) {
