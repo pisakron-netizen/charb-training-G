@@ -949,7 +949,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 11, icon: "", title: "ตรวจเช็กซุ้มล้อ และบังโคลนหลัง", severity: "medium",
+    id: 11, ready: false, icon: "", title: "ตรวจเช็กซุ้มล้อ และบังโคลนหลัง", severity: "medium",
     category: "ระบบหัวเก๋งและ BODY PART",
     issuesList: [
       {
@@ -972,7 +972,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 12, icon: "", title: "สภาพของแผ่นแหนบ", severity: "critical",
+    id: 12, ready: false, icon: "", title: "สภาพของแผ่นแหนบ", severity: "critical",
     category: "ระบบรองรับน้ำหนัก",
     issuesList: [
       {
@@ -995,7 +995,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 13, icon: "", title: "ตรวจรอยรั่วซึมซีลหน้าเกียร์และท้ายเกียร์", severity: "high",
+    id: 13, ready: false, icon: "", title: "ตรวจรอยรั่วซึมซีลหน้าเกียร์และท้ายเกียร์", severity: "high",
     category: "ระบบส่งกำลัง",
     issuesList: [
       {
@@ -1018,7 +1018,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 14, icon: "", title: "ตรวจเช็กกรองแอร์", severity: "medium",
+    id: 14, ready: false, icon: "", title: "ตรวจเช็กกรองแอร์", severity: "medium",
     category: "ระบบหัวเก๋งและ BODY PART",
     issuesList: [
       {
@@ -1041,7 +1041,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 15, icon: "", title: "ตรวจท่อระบายแรงดันเฟืองท้ายและเกียร์", severity: "high",
+    id: 15, ready: false, icon: "", title: "ตรวจท่อระบายแรงดันเฟืองท้ายและเกียร์", severity: "high",
     category: "ระบบส่งกำลัง",
     issuesList: [
       {
@@ -1064,7 +1064,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 16, icon: "", title: "ตรวจเช็กท่อยางหม้อน้ำ รอยรั่วหม้อพักน้ำ สภาพหม้อน้ำ ฝาหม้อน้ำ", severity: "critical",
+    id: 16, ready: false, icon: "", title: "ตรวจเช็กท่อยางหม้อน้ำ รอยรั่วหม้อพักน้ำ สภาพหม้อน้ำ ฝาหม้อน้ำ", severity: "critical",
     category: "ตรวจการรั่วซึมของเครื่องยนต์และระบบหล่อเย็น",
     issuesList: [
       {
@@ -1087,7 +1087,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 17, icon: "", title: "ตรวจรอยรั่วกระปุกพวงมาลัย", severity: "high",
+    id: 17, ready: false, icon: "", title: "ตรวจรอยรั่วกระปุกพวงมาลัย", severity: "high",
     category: "ระบบบังคับเลี้ยว",
     issuesList: [
       {
@@ -1110,7 +1110,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 18, icon: "", title: "ตรวจเช็กน้ำมันเครื่องรั่วผ่านหน้าเครื่องและท้ายเครื่องและบริเวณรอบเครื่อง", severity: "high",
+    id: 18, ready: false, icon: "", title: "ตรวจเช็กน้ำมันเครื่องรั่วผ่านหน้าเครื่องและท้ายเครื่องและบริเวณรอบเครื่อง", severity: "high",
     category: "ตรวจการรั่วซึมของเครื่องยนต์และระบบหล่อเย็น",
     issuesList: [
       {
@@ -1133,7 +1133,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 19, icon: "", title: "ตรวจเช็กรอยรั่วซึมระบบเบรคและระบบคลัทช์", severity: "critical",
+    id: 19, ready: false, icon: "", title: "ตรวจเช็กรอยรั่วซึมระบบเบรคและระบบคลัทช์", severity: "critical",
     category: "ระบบเบรคและระบบคลัทช์",
     issuesList: [
       {
@@ -1156,7 +1156,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 20, icon: "", title: "ตรวจเช็กรั่วซึมปั๊มเชื้อเพลิง หัวฉีด และปั๊มแรงดันต่ำ (ปั๊มแย็ก)", severity: "critical",
+    id: 20, ready: false, icon: "", title: "ตรวจเช็กรั่วซึมปั๊มเชื้อเพลิง หัวฉีด และปั๊มแรงดันต่ำ (ปั๊มแย็ก)", severity: "critical",
     category: "ตรวจการรั่วซึมของเครื่องยนต์และระบบหล่อเย็น",
     issuesList: [
       {

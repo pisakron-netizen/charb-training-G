@@ -268,6 +268,26 @@
   .topic-card .pill-badge { flex-shrink: 0; }
   .topic-card-arrow { color: var(--accent-red); font-size: 16px; flex-shrink: 0; }
 
+  /* Listed but not yet written up: shown so the full scope is visible. */
+  .topic-card.is-locked {
+    background: #F2F2F0;
+    cursor: default;
+  }
+  .topic-card.is-locked:hover { background: #F2F2F0; }
+  .topic-card.is-locked .topic-title { color: #9A9A94; }
+  .topic-card.is-locked .topic-bullet { color: #C2C2BC; }
+  .topic-pending {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border: 1px solid var(--border2);
+    border-radius: 999px;
+    background: #FFFFFF;
+    color: #8C8C86;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
   .topic-group-header {
     padding: 16px 18px 11px;
     font-size: 16px;
@@ -957,8 +977,8 @@
   .footer span:first-child { color: #777771; font-size: 13px; }
   .footer span:last-child { font-family: var(--mono); color: #AAAAA4; font-size: 11px; }
 </style>
-<link rel="stylesheet" href="video-player.css?v=20260910-6">
-<script src="video-player.js?v=20260910-6" defer></script>
+<link rel="stylesheet" href="video-player.css?v=20260910-7">
+<script src="video-player.js?v=20260910-7" defer></script>
 </head>
 <body>
 <div class="container">
@@ -1032,7 +1052,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260904-canva-mobile-video-v37"></script>
+  <script src="data.js?v=20260910-7"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1424,6 +1444,10 @@ function renderTopicControls() {
   }
 }
 
+function isTopicReady(t) {
+  return !t || t.ready !== false;
+}
+
 function renderTopics() {
   try {
     const grid = document.getElementById('topic-grid');
@@ -1443,9 +1467,13 @@ function renderTopics() {
     });
 
     if (summary) {
-      summary.textContent = visibleTopics.length === topics.length
+      const readyCount = visibleTopics.filter(isTopicReady).length;
+      const base = visibleTopics.length === topics.length
         ? 'ทั้งหมด ' + topics.length + ' หัวข้อ'
         : 'แสดง ' + visibleTopics.length + ' จาก ' + topics.length + ' หัวข้อ';
+      summary.textContent = readyCount === visibleTopics.length
+        ? base
+        : base + ' · เปิดดูได้แล้ว ' + readyCount + ' หัวข้อ';
     }
 
     if (visibleTopics.length === 0) {
@@ -1461,6 +1489,19 @@ function renderTopics() {
       if (!grouped[cat] || grouped[cat].length === 0) return;
       html += '<div class="topic-group-header">' + escapeHtml(cat) + '</div>';
       grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
+        if (!isTopicReady(t)) {
+          // Listed so the full scope is visible, but not openable until it has content.
+          html += '<div class="topic-card is-locked" aria-disabled="true">' +
+            '<div class="topic-card-top">' +
+            '<span class="topic-bullet"></span>' +
+            '<h3 class="topic-title-line">' +
+              '<span class="topic-title">' + escapeHtml(t.title) + '</span>' +
+            '</h3>' +
+            '</div>' +
+            '<span class="topic-pending">กำลังจัดทำ</span>' +
+            '</div>';
+          return;
+        }
         html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
           '<div class="topic-card-top">' +
           '<span class="topic-bullet"></span>' +
@@ -1572,6 +1613,8 @@ function renderIssuesSection(t) {
 
 function showDetail(id) {
   const t = topics.find(x => x.id === id);
+  // A shared link to a topic still being written lands on the list instead.
+  if (!isTopicReady(t)) { showHome(); return; }
   const severityColors = {
     medium: { color: '#C8102E', bg: '#FFFFFF' },
     high: { color: '#C8102E', bg: '#FFFFFF' },
@@ -1693,7 +1736,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   renderTopics();
   const topicId = Number(new URLSearchParams(window.location.search).get('topic'));
-  if (topics.some(function(t) { return t.id === topicId; })) {
+  if (topics.some(function(t) { return t.id === topicId && isTopicReady(t); })) {
     showDetail(topicId);
   } else {
     showScreen('screen-home');
