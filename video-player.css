@@ -1,26 +1,28 @@
-.video-shell { background: #17181c; border-radius: 0 0 12px 12px; overflow: hidden; }
-.video-toolbar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; padding: 12px; background: #f7f7f5; border-top: 1px solid #e5e5e2; }
-.video-toolbar button { min-height: 48px; padding: 10px 16px; border: 0; border-radius: 8px; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
-.video-expand { order: 2; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #c8102e; color: white; }
-.video-expand svg { width: 20px; height: 20px; flex: 0 0 auto; }
-.video-expand:hover { background: #a60d26; }
-.video-toolbar .video-reload { order: 1; background: transparent; color: #555; border: 1px solid #ccc; }
-.video-close { order: 3; display: none; background: white; color: #17181c; margin-left: auto; }
-.video-toolbar button:focus-visible { outline: 3px solid #ffc857; outline-offset: 2px; }
+.video-shell { position: relative; background: #17181c; border-radius: 0 0 12px 12px; overflow: hidden; }
 
-/* Canva drops its own full-screen control on phones, so the page carries one
-   over the clip where it is reachable without scrolling past a tall video. */
-.video-expand-float {
-  position: absolute; top: 10px; right: 10px; z-index: 3;
+/* Canva drops its own full-screen control on phones, and a toolbar under a tall
+   portrait clip lands off-screen, so both controls ride on the clip itself. */
+.video-expand-float, .video-close {
+  position: absolute; z-index: 3;
   display: flex; align-items: center; justify-content: center;
   width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
   background: rgba(17, 18, 22, 0.72); color: #fff; cursor: pointer;
   touch-action: manipulation; backdrop-filter: blur(2px);
 }
-.video-expand-float svg { width: 21px; height: 21px; }
-.video-expand-float:hover { background: #c8102e; }
-.video-expand-float:focus-visible { outline: 3px solid #ffc857; outline-offset: 2px; }
+.video-expand-float { top: 10px; right: 10px; }
+.video-expand-float svg, .video-close svg { width: 21px; height: 21px; }
+.video-expand-float:hover, .video-close:hover { background: #c8102e; }
+.video-expand-float:focus-visible, .video-close:focus-visible { outline: 3px solid #ffc857; outline-offset: 2px; }
+
+.video-close { display: none; }
 .video-shell.is-expanded .video-expand-float { display: none; }
+.video-shell.is-expanded .video-close {
+  display: flex;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  width: 48px; height: 48px;
+  background: rgba(17, 18, 22, 0.86);
+}
 
 body.video-expanded { overflow: hidden; }
 body.video-expanded .screen { animation: none; }
@@ -33,16 +35,7 @@ body.video-expanded .screen { animation: none; }
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
 }
-.video-shell.is-expanded .video-toolbar { flex: 0 0 auto; order: -1; background: #17181c; border-top: 0; }
-.video-shell.is-expanded .video-reload { color: #eee; border-color: #666; }
-.video-shell.is-expanded .video-expand { display: none; }
-.video-shell.is-expanded .video-close { display: block; }
 .video-shell.is-expanded .yt-wrap {
   flex: 1 1 0; min-height: 0; width: 100%; max-width: none;
   height: auto; padding: 0; margin: 0; aspect-ratio: auto; border-radius: 0;
-}
-@media (max-width: 360px) {
-  .video-toolbar { padding: 8px; gap: 6px; }
-  .video-toolbar button { padding: 8px 10px; }
-  .video-toolbar .video-reload { font-size: 13px; }
 }
