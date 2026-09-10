@@ -1,0 +1,33 @@
+.video-shell { background: #17181c; border-radius: 0 0 12px 12px; overflow: hidden; }
+.video-toolbar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; padding: 12px; background: #f7f7f5; border-top: 1px solid #e5e5e2; }
+.video-toolbar button { min-height: 48px; padding: 10px 16px; border: 0; border-radius: 8px; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+.video-expand { order: 2; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #c8102e; color: white; }
+.video-expand svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.video-expand:hover { background: #a60d26; }
+.video-toolbar .video-reload { order: 1; background: transparent; color: #555; border: 1px solid #ccc; }
+.video-close { order: 3; display: none; background: white; color: #17181c; margin-left: auto; }
+.video-toolbar button:focus-visible { outline: 3px solid #ffc857; outline-offset: 2px; }
+body.video-expanded { overflow: hidden; }
+body.video-expanded .screen { animation: none; }
+.video-shell.is-expanded {
+  position: fixed; inset: 0; z-index: 10000; width: 100%; height: 100%;
+  height: 100dvh; box-sizing: border-box; border-radius: 0; padding: 0;
+  display: flex; flex-direction: column; background: #000;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+.video-shell.is-expanded .video-toolbar { flex: 0 0 auto; order: -1; background: #17181c; border-top: 0; }
+.video-shell.is-expanded .video-reload { color: #eee; border-color: #666; }
+.video-shell.is-expanded .video-expand { display: none; }
+.video-shell.is-expanded .video-close { display: block; }
+.video-shell.is-expanded .yt-wrap {
+  flex: 1 1 0; min-height: 0; width: 100%; max-width: none;
+  height: auto; padding: 0; margin: 0; aspect-ratio: auto; border-radius: 0;
+}
+@media (max-width: 360px) {
+  .video-toolbar { padding: 8px; gap: 6px; }
+  .video-toolbar button { padding: 8px 10px; }
+  .video-toolbar .video-reload { font-size: 13px; }
+}

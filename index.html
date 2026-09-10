@@ -459,20 +459,6 @@
     overflow: hidden;
   }
   .canva-video-wrap { border-radius: 0; }
-  .video-open-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    padding: 10px 16px;
-    background: var(--accent-red);
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 700;
-    text-decoration: none;
-    touch-action: manipulation;
-  }
-  .video-open-button:hover { background: var(--accent-red-dark); }
   .local-video {
     position: absolute;
     top: 0; left: 0;
@@ -943,10 +929,6 @@
       padding-bottom: 0;
       margin: 0 auto;
     }
-    .video-open-button {
-      min-height: 52px;
-      font-size: 16px;
-    }
     .media-figure { width: calc(50% - 4px); }
   }
 
@@ -975,6 +957,8 @@
   .footer span:first-child { color: #777771; font-size: 13px; }
   .footer span:last-child { font-family: var(--mono); color: #AAAAA4; font-size: 11px; }
 </style>
+<link rel="stylesheet" href="video-player.css?v=20260910-1">
+<script src="video-player.js?v=20260910-1" defer></script>
 </head>
 <body>
 <div class="container">
@@ -1079,25 +1063,24 @@ function renderVideoBlock(t) {
   const rawUrl = (videoUrls[t.id] || '').trim();
   const videoId = getYtId(rawUrl);
   if (videoId) {
-    return '<div class="yt-wrap"><iframe class="yt-frame" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allowfullscreen></iframe></div>';
+    return wrapVideoPlayer('<div class="yt-wrap"><iframe class="yt-frame" title="วิดีโอการตรวจ" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>');
   }
 
   const canvaEmbedUrl = getCanvaEmbedUrl(rawUrl);
   if (canvaEmbedUrl) {
     const safeEmbedUrl = canvaEmbedUrl.replace(/&/g, '&amp;');
-    const safeWatchUrl = rawUrl.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-    return '<div class="canva-video-shell"><div class="yt-wrap canva-video-wrap"><iframe class="yt-frame" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div><a class="video-open-button" href="' + safeWatchUrl + '" target="_blank" rel="noopener noreferrer">เปิดวิดีโอขนาดเต็ม</a></div>';
+    return wrapVideoPlayer('<div class="yt-wrap canva-video-wrap"><iframe class="yt-frame" title="วิดีโอการตรวจ" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>', 'canva-video-shell');
   }
 
   if (rawUrl && /\.(mp4|webm|ogg)(\?.*)?$/i.test(rawUrl)) {
-    return `
+    return wrapVideoPlayer(`
       <div class="yt-wrap">
         <video class="local-video" controls preload="metadata" playsinline>
           <source src="${rawUrl}">
           เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ
         </video>
       </div>
-    `;
+    `);
   }
 
   return `
@@ -1278,6 +1261,7 @@ function showScreen(id) {
 }
 
 function showHome() {
+  closeExpandedVideo();
   renderTopics();
   updateTopicUrl(null);
   showScreen('screen-home');
