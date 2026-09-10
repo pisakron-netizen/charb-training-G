@@ -274,6 +274,12 @@
     cursor: default;
   }
   .topic-card.is-locked:hover { background: #F2F2F0; }
+  .topic-group-header.is-pending-group {
+    color: var(--text3);
+    background: #F2F2F0;
+    border-top-color: var(--border2);
+    border-left-color: var(--border2);
+  }
   .topic-card.is-locked .topic-title { color: #9A9A94; }
   .topic-card.is-locked .topic-bullet { color: #C2C2BC; }
   .topic-pending {
@@ -1052,7 +1058,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260910-10"></script>
+  <script src="data.js?v=20260910-11"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1460,8 +1466,12 @@ function renderTopics() {
     const visibleTopics = getFilteredTopics();
     const categories = getCategoryList();
     const grouped = {};
+    const pendingTopics = [];
     categories.forEach(function(c) { grouped[c] = []; });
     visibleTopics.forEach(function(t) {
+      // Unfinished topics gather in their own group so the categories only
+      // list what a technician can actually open.
+      if (!isTopicReady(t)) { pendingTopics.push(t); return; }
       if (!grouped[t.category]) grouped[t.category] = [];
       grouped[t.category].push(t);
     });
@@ -1489,19 +1499,6 @@ function renderTopics() {
       if (!grouped[cat] || grouped[cat].length === 0) return;
       html += '<div class="topic-group-header">' + escapeHtml(cat) + '</div>';
       grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
-        if (!isTopicReady(t)) {
-          // Listed so the full scope is visible, but not openable until it has content.
-          html += '<div class="topic-card is-locked" aria-disabled="true">' +
-            '<div class="topic-card-top">' +
-            '<span class="topic-bullet"></span>' +
-            '<h3 class="topic-title-line">' +
-              '<span class="topic-title">' + escapeHtml(t.title) + '</span>' +
-            '</h3>' +
-            '</div>' +
-            '<span class="topic-pending">กำลังจัดทำ</span>' +
-            '</div>';
-          return;
-        }
         html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
           '<div class="topic-card-top">' +
           '<span class="topic-bullet"></span>' +
@@ -1513,6 +1510,23 @@ function renderTopics() {
           '</button>';
       });
     });
+
+    if (pendingTopics.length > 0) {
+      html += '<div class="topic-group-header is-pending-group">กำลังจัดทำ</div>';
+      pendingTopics.sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
+        // Listed so the full scope is visible, but not openable until it has content.
+        html += '<div class="topic-card is-locked" aria-disabled="true">' +
+          '<div class="topic-card-top">' +
+          '<span class="topic-bullet"></span>' +
+          '<h3 class="topic-title-line">' +
+            '<span class="topic-title">' + escapeHtml(t.title) + '</span>' +
+          '</h3>' +
+          '</div>' +
+          '<span class="topic-pending">' + escapeHtml(t.category) + '</span>' +
+          '</div>';
+      });
+    }
+
     grid.innerHTML = html;
   } catch(e) { console.error('renderTopics error:', e); }
 }
