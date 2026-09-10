@@ -289,20 +289,28 @@
   }
 
   .topic-group-header {
-    padding: 16px 18px 11px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 13px 18px;
     font-size: 16px;
     font-weight: 800;
     letter-spacing: 0;
     line-height: 1.45;
     text-transform: uppercase;
-    color: var(--text);
-    background: #FFFFFF;
-    border-top: 2px solid var(--accent-red);
-    border-bottom: 1px solid #E7E7E3;
-    border-left: 4px solid var(--accent-red);
+    color: #FFFFFF;
+    background: var(--accent-red);
+    border: none;
     margin-top: 0;
   }
   .topic-group-header:first-child { margin-top: 0; }
+  .topic-group-number {
+    flex: 0 0 auto;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.72);
+  }
 
   /* Detail View */
   .detail-hero {
@@ -913,7 +921,7 @@
     .topic-card-top { gap: 10px; }
     .topic-card h3 { font-size: 15px; }
     .topic-card-arrow { display: none; }
-    .topic-group-header { padding: 15px 12px 10px; font-size: 15px; }
+    .topic-group-header { padding: 12px 14px; font-size: 15px; gap: 10px; }
     .info-box-label { font-size: 14px; }
     .detail-section-label { min-height: 48px; padding: 12px 14px !important; font-size: 14px; }
     .detail-section-label::after { width: 28px; }
@@ -1052,7 +1060,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260910-7"></script>
+  <script src="data.js?v=20260910-8"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1485,9 +1493,14 @@ function renderTopics() {
     }
 
     let html = '';
+    let groupNumber = 0;
     categories.forEach(function(cat) {
       if (!grouped[cat] || grouped[cat].length === 0) return;
-      html += '<div class="topic-group-header">' + escapeHtml(cat) + '</div>';
+      groupNumber += 1;
+      html += '<div class="topic-group-header">' +
+        '<span class="topic-group-number">' + groupNumber + '</span>' +
+        '<span>' + escapeHtml(cat) + '</span>' +
+        '</div>';
       grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
         if (!isTopicReady(t)) {
           // Listed so the full scope is visible, but not openable until it has content.
