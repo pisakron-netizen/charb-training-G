@@ -4,50 +4,20 @@ let videoReturnFocus = null;
 let videoScrollY = 0;
 let videoBodyStyle = '';
 
-// A real <video> is placed straight into the page: its own play button is the
-// single tap, and `preload="none"` keeps the topic free until that tap.
-// Embeds cannot be driven from here, so they keep a cover that loads on tap.
+// Every player sits directly in the page: the clip's own play button is the
+// only tap needed. Full screen stays a separate, deliberate choice.
 function wrapVideoPlayer(player, options) {
   const opts = options || {};
   const wrapClass = opts.wrapClass ? ' ' + opts.wrapClass : '';
   const shellClass = opts.shellClass ? ' ' + opts.shellClass : '';
-  const poster = opts.poster ? ' style="background-image:url(&quot;' + opts.poster + '&quot;)"' : '';
-  const stage = opts.deferred === false
-    ? player
-    : '<button type="button" class="video-facade" aria-label="เล่นวิดีโอ"' + poster + '>' +
-        '<span class="video-facade-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg></span>' +
-      '</button>' +
-      '<template class="video-source">' + player + '</template>';
 
   return '<section class="video-shell' + shellClass + '" aria-label="วิดีโอการตรวจ">' +
-    '<div class="yt-wrap video-stage' + wrapClass + '">' + stage + '</div>' +
+    '<div class="yt-wrap video-stage' + wrapClass + '">' + player + '</div>' +
     '<div class="video-toolbar">' +
     '<button type="button" class="video-expand" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg>ขยายเต็มจอ</button>' +
     '<button type="button" class="video-reload">โหลดวิดีโอใหม่</button>' +
     '<button type="button" class="video-close">ปิดจอขยาย</button>' +
     '</div></section>';
-}
-
-// Swap the facade for the real player. Runs inside the tap so browsers accept play().
-function activateVideo(shell) {
-  const stage = shell.querySelector('.video-stage');
-  const template = stage && stage.querySelector('template.video-source');
-  if (!stage || !template) return false;
-
-  const facade = stage.querySelector('.video-facade');
-  stage.appendChild(template.content.cloneNode(true));
-  template.remove();
-  if (facade) facade.remove();
-  shell.classList.add('is-loaded');
-
-  const video = stage.querySelector('video');
-  if (video) {
-    // Metadata is only worth fetching once the viewer has committed to watching.
-    video.preload = 'auto';
-    const started = video.play();
-    if (started && started.catch) started.catch(() => {});
-  }
-  return true;
 }
 
 function closeExpandedVideo() {
@@ -105,23 +75,12 @@ function expandVideo(shell, trigger) {
 }
 
 document.addEventListener('click', event => {
-  const facade = event.target.closest('.video-facade');
-  if (facade) {
-    // Play in place. Full screen stays a separate, deliberate choice.
-    activateVideo(facade.closest('.video-shell'));
-    return;
-  }
-
   const button = event.target.closest('.video-toolbar button');
   if (!button) return;
   const shell = button.closest('.video-shell');
-  if (button.classList.contains('video-expand')) {
-    activateVideo(shell);
-    expandVideo(shell, button);
-  }
+  if (button.classList.contains('video-expand')) expandVideo(shell, button);
   if (button.classList.contains('video-close')) closeExpandedVideo();
   if (button.classList.contains('video-reload')) {
-    if (activateVideo(shell)) return;
     const frame = shell.querySelector('iframe');
     const video = shell.querySelector('video');
     if (frame) frame.src = frame.src;

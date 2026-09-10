@@ -957,8 +957,8 @@
   .footer span:first-child { color: #777771; font-size: 13px; }
   .footer span:last-child { font-family: var(--mono); color: #AAAAA4; font-size: 11px; }
 </style>
-<link rel="stylesheet" href="video-player.css?v=20260910-3">
-<script src="video-player.js?v=20260910-3" defer></script>
+<link rel="stylesheet" href="video-player.css?v=20260910-4">
+<script src="video-player.js?v=20260910-4" defer></script>
 </head>
 <body>
 <div class="container">
@@ -1070,8 +1070,8 @@ function renderVideoBlock(t) {
   const videoId = getYtId(rawUrl);
   if (videoId) {
     return wrapVideoPlayer(
-      '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&amp;rel=0&amp;playsinline=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>',
-      { poster: poster }
+      '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="https://www.youtube.com/embed/' + videoId + '?rel=0&amp;playsinline=1" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>',
+      {}
     );
   }
 
@@ -1080,7 +1080,7 @@ function renderVideoBlock(t) {
     const safeEmbedUrl = canvaEmbedUrl.replace(/&/g, '&amp;');
     return wrapVideoPlayer(
       '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>',
-      { shellClass: 'canva-video-shell', wrapClass: 'canva-video-wrap', poster: poster }
+      { shellClass: 'canva-video-shell', wrapClass: 'canva-video-wrap' }
     );
   }
 
@@ -1090,7 +1090,7 @@ function renderVideoBlock(t) {
       '<video class="local-video" controls playsinline preload="none"' + (poster ? ' poster="' + poster + '"' : '') + '>' +
         '<source src="' + rawUrl + '">เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ' +
       '</video>',
-      { shellClass: 'portrait-video-shell', wrapClass: 'portrait-video-wrap', deferred: false }
+      { shellClass: 'portrait-video-shell', wrapClass: 'portrait-video-wrap' }
     );
   }
 
