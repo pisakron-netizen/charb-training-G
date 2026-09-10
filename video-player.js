@@ -12,7 +12,9 @@ function wrapVideoPlayer(player, options) {
   const shellClass = opts.shellClass ? ' ' + opts.shellClass : '';
 
   return '<section class="video-shell' + shellClass + '" aria-label="วิดีโอการตรวจ">' +
-    '<div class="yt-wrap video-stage' + wrapClass + '">' + player + '</div>' +
+    '<div class="yt-wrap video-stage' + wrapClass + '">' + player +
+      '<button type="button" class="video-expand-float" aria-label="ขยายเต็มจอ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button>' +
+    '</div>' +
     '<div class="video-toolbar">' +
     '<button type="button" class="video-expand" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg>ขยายเต็มจอ</button>' +
     '<button type="button" class="video-reload">โหลดวิดีโอใหม่</button>' +
@@ -75,6 +77,12 @@ function expandVideo(shell, trigger) {
 }
 
 document.addEventListener('click', event => {
+  const floating = event.target.closest('.video-expand-float');
+  if (floating) {
+    expandVideo(floating.closest('.video-shell'), floating);
+    return;
+  }
+
   const button = event.target.closest('.video-toolbar button');
   if (!button) return;
   const shell = button.closest('.video-shell');
