@@ -453,12 +453,12 @@
     width: 100%; height: 100%;
     border: none;
   }
-  .canva-video-shell {
+  .canva-video-shell, .portrait-video-shell {
     background: #17181C;
     border-radius: 0 0 12px 12px;
     overflow: hidden;
   }
-  .canva-video-wrap { border-radius: 0; }
+  .canva-video-wrap, .portrait-video-wrap { border-radius: 0; }
   .local-video {
     position: absolute;
     top: 0; left: 0;
@@ -921,8 +921,8 @@
     .info-box { padding: 16px; border-radius: 11px; }
     .detail-hero h2 { font-size: 24px; }
     .floating-home { right: 12px; bottom: 12px; }
-    .canva-video-shell { padding-top: 12px; }
-    .canva-video-wrap {
+    .canva-video-shell, .portrait-video-shell { padding-top: 12px; }
+    .canva-video-wrap, .portrait-video-wrap {
       width: min(100%, 405px);
       height: auto;
       aspect-ratio: 9 / 16;
@@ -957,8 +957,8 @@
   .footer span:first-child { color: #777771; font-size: 13px; }
   .footer span:last-child { font-family: var(--mono); color: #AAAAA4; font-size: 11px; }
 </style>
-<link rel="stylesheet" href="video-player.css?v=20260910-1">
-<script src="video-player.js?v=20260910-1" defer></script>
+<link rel="stylesheet" href="video-player.css?v=20260910-3">
+<script src="video-player.js?v=20260910-3" defer></script>
 </head>
 <body>
 <div class="container">
@@ -1059,28 +1059,39 @@ function getTopicMedia(topicId) {
   return topicMedia[topicId] || null;
 }
 
+function getVideoPoster(topicId) {
+  const posters = trainingData.videoPosters || {};
+  return posters[topicId] || '';
+}
+
 function renderVideoBlock(t) {
   const rawUrl = (videoUrls[t.id] || '').trim();
+  const poster = getVideoPoster(t.id);
   const videoId = getYtId(rawUrl);
   if (videoId) {
-    return wrapVideoPlayer('<div class="yt-wrap"><iframe class="yt-frame" title="วิดีโอการตรวจ" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe></div>');
+    return wrapVideoPlayer(
+      '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&amp;rel=0&amp;playsinline=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>',
+      { poster: poster }
+    );
   }
 
   const canvaEmbedUrl = getCanvaEmbedUrl(rawUrl);
   if (canvaEmbedUrl) {
     const safeEmbedUrl = canvaEmbedUrl.replace(/&/g, '&amp;');
-    return wrapVideoPlayer('<div class="yt-wrap canva-video-wrap"><iframe class="yt-frame" title="วิดีโอการตรวจ" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>', 'canva-video-shell');
+    return wrapVideoPlayer(
+      '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>',
+      { shellClass: 'canva-video-shell', wrapClass: 'canva-video-wrap', poster: poster }
+    );
   }
 
   if (rawUrl && /\.(mp4|webm|ogg)(\?.*)?$/i.test(rawUrl)) {
-    return wrapVideoPlayer(`
-      <div class="yt-wrap">
-        <video class="local-video" controls preload="metadata" playsinline>
-          <source src="${rawUrl}">
-          เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ
-        </video>
-      </div>
-    `);
+    // The video's own play button is the one tap; nothing downloads before it.
+    return wrapVideoPlayer(
+      '<video class="local-video" controls playsinline preload="none"' + (poster ? ' poster="' + poster + '"' : '') + '>' +
+        '<source src="' + rawUrl + '">เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ' +
+      '</video>',
+      { shellClass: 'portrait-video-shell', wrapClass: 'portrait-video-wrap', deferred: false }
+    );
   }
 
   return `

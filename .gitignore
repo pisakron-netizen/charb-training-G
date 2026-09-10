@@ -1,2 +1,6 @@
 backups/
 server-*.log
+videos/
+posters/
+test-video.html
+.claude/

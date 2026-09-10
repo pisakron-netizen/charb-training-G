@@ -7,6 +7,30 @@
 .video-toolbar .video-reload { order: 1; background: transparent; color: #555; border: 1px solid #ccc; }
 .video-close { order: 3; display: none; background: white; color: #17181c; margin-left: auto; }
 .video-toolbar button:focus-visible { outline: 3px solid #ffc857; outline-offset: 2px; }
+
+/* Facade: one tap loads the player and fills the screen. */
+.video-facade {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  padding: 20px; border: 0; margin: 0; cursor: pointer; touch-action: manipulation;
+  font: inherit; color: #fff; text-align: center;
+  background-color: #17181c; background-position: center; background-size: cover; background-repeat: no-repeat;
+}
+.video-facade::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.55));
+}
+.video-facade > * { position: relative; }
+.video-facade-play {
+  display: flex; align-items: center; justify-content: center;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: #c8102e; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease;
+}
+.video-facade-play svg { width: 34px; height: 34px; margin-left: 3px; }
+.video-facade:hover .video-facade-play { transform: scale(1.06); }
+.video-facade:focus-visible { outline: 3px solid #ffc857; outline-offset: -3px; }
+
 body.video-expanded { overflow: hidden; }
 body.video-expanded .screen { animation: none; }
 .video-shell.is-expanded {
@@ -30,4 +54,6 @@ body.video-expanded .screen { animation: none; }
   .video-toolbar { padding: 8px; gap: 6px; }
   .video-toolbar button { padding: 8px 10px; }
   .video-toolbar .video-reload { font-size: 13px; }
+  .video-facade-play { width: 62px; height: 62px; }
+  .video-facade-play svg { width: 30px; height: 30px; }
 }
