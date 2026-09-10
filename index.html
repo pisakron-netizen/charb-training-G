@@ -288,28 +288,37 @@
     white-space: nowrap;
   }
 
+  /* A quiet section label: ranked below the rows by size, above them by colour. */
   .topic-group-header {
     display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding: 13px 18px;
-    font-size: 16px;
-    font-weight: 800;
-    letter-spacing: 0;
-    line-height: 1.45;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    background: var(--accent-red);
-    border: none;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 18px 11px;
+    background: #FBFAF8;
+    border-top: 1px solid #EDECE9;
     margin-top: 0;
   }
-  .topic-group-header:first-child { margin-top: 0; }
-  .topic-group-number {
+  .topic-group-header:first-child { padding-top: 16px; border-top: none; }
+  .topic-group-mark {
     flex: 0 0 auto;
-    font-family: var(--mono);
-    font-size: 14px;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.72);
+    width: 7px;
+    height: 7px;
+    border-radius: 2px;
+    background: var(--accent-red);
+  }
+  .topic-group-title {
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--accent-red-dark);
+  }
+  .topic-group-rule {
+    flex: 1 1 auto;
+    min-width: 12px;
+    height: 1px;
+    background: linear-gradient(90deg, #E4E3DF, rgba(228, 227, 223, 0));
   }
 
   /* Detail View */
@@ -921,7 +930,7 @@
     .topic-card-top { gap: 10px; }
     .topic-card h3 { font-size: 15px; }
     .topic-card-arrow { display: none; }
-    .topic-group-header { padding: 12px 14px; font-size: 15px; gap: 10px; }
+    .topic-group-header { padding: 17px 14px 10px; gap: 9px; }
     .info-box-label { font-size: 14px; }
     .detail-section-label { min-height: 48px; padding: 12px 14px !important; font-size: 14px; }
     .detail-section-label::after { width: 28px; }
@@ -1060,7 +1069,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260910-8"></script>
+  <script src="data.js?v=20260910-9"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1493,13 +1502,12 @@ function renderTopics() {
     }
 
     let html = '';
-    let groupNumber = 0;
     categories.forEach(function(cat) {
       if (!grouped[cat] || grouped[cat].length === 0) return;
-      groupNumber += 1;
       html += '<div class="topic-group-header">' +
-        '<span class="topic-group-number">' + groupNumber + '</span>' +
-        '<span>' + escapeHtml(cat) + '</span>' +
+        '<span class="topic-group-mark" aria-hidden="true"></span>' +
+        '<span class="topic-group-title">' + escapeHtml(cat) + '</span>' +
+        '<span class="topic-group-rule" aria-hidden="true"></span>' +
         '</div>';
       grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
         if (!isTopicReady(t)) {
