@@ -1058,7 +1058,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260910-12"></script>
+  <script src="data.js?v=20260910-22"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1463,7 +1463,10 @@ function renderTopics() {
 
     renderTopicControls();
     const summary = document.getElementById('topic-summary');
-    const visibleTopics = getFilteredTopics();
+    // Review mode lists only the drafts, so the finished topics stay out of the way.
+    const visibleTopics = previewPending
+      ? getFilteredTopics().filter(function(t) { return t.ready === false; })
+      : getFilteredTopics();
     const categories = getCategoryList();
     const grouped = {};
     const pendingTopics = [];
@@ -1478,7 +1481,7 @@ function renderTopics() {
 
     if (summary) {
       if (previewPending) {
-        summary.textContent = 'โหมดตรวจร่าง · เปิดดูหัวข้อที่ยังไม่เสร็จได้ทุกข้อ';
+        summary.textContent = 'โหมดตรวจร่าง · แสดงเฉพาะ ' + visibleTopics.length + ' หัวข้อที่กำลังจัดทำ';
         summary.style.color = 'var(--accent-red-dark)';
         summary.style.fontWeight = '700';
       } else {
