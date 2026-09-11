@@ -93,14 +93,6 @@ document.addEventListener('keydown', event => {
   }
 });
 
-let videoWasNativeFullscreen = false;
-function syncVideoFullscreen() {
-  const current = document.fullscreenElement || document.webkitFullscreenElement;
-  if (expandedVideo && current === expandedVideo) videoWasNativeFullscreen = true;
-  else if (!current && videoWasNativeFullscreen) {
-    videoWasNativeFullscreen = false;
-    closeExpandedVideo();
-  }
-}
-document.addEventListener('fullscreenchange', syncVideoFullscreen);
-document.addEventListener('webkitfullscreenchange', syncVideoFullscreen);
+// Some mobile and in-app browsers leave the native Fullscreen API as soon as
+// the embedded Canva player receives focus. Keep the viewport-filling overlay
+// active in that case; the visible close button remains the reliable exit.
