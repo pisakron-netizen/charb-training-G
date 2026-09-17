@@ -541,146 +541,184 @@
     padding-top: 1px;
   }
   .step-text { font-size: 15px; line-height: 1.55; color: #2A2A28; font-weight: 500; }
+  /* Each point is a collapsible row, matching the SA panel's row pattern. */
   .observation-list {
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding: 0 18px;
   }
-  .observation-item {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 104px;
+  .observation-item + .observation-item { border-top: 1px solid #E7E7E3; }
+  .observation-summary {
+    display: flex;
     align-items: center;
-    gap: 16px;
-    min-height: 118px;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    padding: 14px 18px;
+    background: #FFFFFF;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
   }
-  .observation-item:last-child { border-bottom: none; }
-  .observation-copy { min-width: 0; }
-  .observation-label {
+  .observation-summary::-webkit-details-marker { display: none; }
+  .observation-summary:hover { background: #FAFAF8; }
+  .observation-item[open] .observation-summary { background: #F7F7F5; }
+  .observation-num {
     display: inline-flex;
     align-items: center;
-    min-height: 24px;
-    margin-bottom: 8px;
-    padding: 3px 8px;
-    border: 1px solid #E7C5CB;
-    border-radius: 4px;
-    color: var(--accent-red-dark);
-    background: #FFF7F8;
-    font-size: 11px;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    border-radius: 5px;
+    background: var(--accent-red);
+    color: #FFFFFF;
+    font-size: 12px;
     font-weight: 800;
   }
   .observation-title {
-    margin: 0 0 4px;
-    color: #20201E;
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 1.45;
+    min-width: 0;
+    flex: 1;
+    margin: 0;
+    color: #2A2A28;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .observation-chevron {
+    flex: 0 0 auto;
+    color: var(--accent-red);
+    font-size: 20px;
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
+  .observation-item[open] .observation-chevron { transform: rotate(90deg); }
+  .observation-body {
+    padding: 15px 18px 18px 52px;
+    border-top: 1px solid #E7E7E3;
+    background: #F7F7F5;
   }
   .observation-text {
     margin: 0;
-    color: #585854;
-    font-size: 14px;
-    line-height: 1.65;
+    color: #4A4A46;
+    font-size: 14.5px;
+    line-height: 1.7;
   }
-  .observation-figure {
-    width: 104px;
-    margin: 0;
-  }
-  .observation-image {
-    display: block;
-    width: 104px;
-    height: 88px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    background: #F4F4F2;
-    object-fit: cover;
-    cursor: zoom-in;
-  }
-  .observation-item.has-gallery { grid-template-columns: minmax(0, 1fr); }
-  .observation-item.no-image {
-    grid-template-columns: minmax(0, 1fr);
-    min-height: auto;
-  }
-  .observation-gallery {
+  .observation-media {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    align-items: start;
+    gap: 12px;
+    margin-top: 14px;
   }
-  .observation-gallery figure { min-width: 0; margin: 0; }
-  .observation-gallery img {
+  .observation-media figure { min-width: 0; margin: 0; }
+  .observation-frame {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #F4F4F2;
+  }
+  .observation-media img {
     display: block;
     width: 100%;
-    height: 180px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
+    height: auto;
+    max-height: 420px;
     background: #F4F4F2;
     object-fit: contain;
     cursor: zoom-in;
   }
-  .observation-gallery figcaption {
-    margin-top: 6px;
+  .observation-zoom {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(17, 18, 22, 0.62);
+    color: #FFFFFF;
+    font-size: 14px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .observation-media figcaption {
+    margin-top: 7px;
     color: #585854;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.45;
   }
   .sales-support-box {
     margin-bottom: 28px;
     padding: 0;
     overflow: hidden;
-    border-color: #D8D8D3;
-    box-shadow: 0 8px 24px rgba(32, 32, 30, 0.05);
+    border: 1px solid var(--accent-red-dark);
+    border-top: 4px solid var(--accent-red);
+    box-shadow: 0 12px 28px rgba(200, 16, 46, 0.14);
   }
   .sales-support-summary {
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-height: 64px;
-    padding: 12px 18px;
+    gap: 14px;
+    min-height: 76px;
+    padding: 16px 20px;
     cursor: pointer;
     list-style: none;
     user-select: none;
-    background: #FFFFFF;
+    background: linear-gradient(180deg, var(--accent-red) 0%, var(--accent-red-dark) 100%);
   }
   .sales-support-summary::-webkit-details-marker { display: none; }
   .sales-support-mark {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 64px;
-    height: 36px;
-    flex: 0 0 64px;
+    width: 52px;
+    height: 44px;
+    flex: 0 0 52px;
     border-radius: 6px;
-    color: #FFFFFF;
-    background: var(--accent-red);
-    font-size: 11px;
+    color: var(--accent-red-dark);
+    background: #FFFFFF;
+    font-size: 20px;
     font-weight: 800;
+    letter-spacing: 0.04em;
   }
   .sales-support-copy { min-width: 0; flex: 1; }
   .sales-support-title {
     display: block;
-    color: #20201E;
-    font-size: 16px;
+    color: #FFFFFF;
+    font-size: 19px;
     font-weight: 800;
     line-height: 1.4;
   }
   .sales-support-meta {
     display: block;
     margin-top: 2px;
-    color: #777772;
-    font-size: 12px;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 12.5px;
     line-height: 1.4;
   }
   .sales-support-chevron {
-    color: var(--accent-red);
+    color: #FFFFFF;
     font-size: 22px;
     font-weight: 700;
     transition: transform 0.2s ease;
   }
   .sales-support-box[open] .sales-support-chevron { transform: rotate(90deg); }
   .sales-support-body { border-top: 1px solid var(--border); }
+  /* Technician panel mirrors the SA dropdown in a darker tone so SA still leads. */
+  .tech-support-box {
+    border-color: #34342F;
+    border-top-color: #4E4E4A;
+    box-shadow: 0 8px 20px rgba(32, 32, 30, 0.10);
+  }
+  .tech-support-box .sales-support-summary {
+    background: linear-gradient(180deg, #4E4E4A 0%, #2F2F2B 100%);
+  }
+  .tech-support-box .sales-support-mark {
+    color: #2F2F2B;
+    font-size: 15px;
+  }
   .sales-issue-row + .sales-issue-row { border-top: 1px solid #E7E7E3; }
   .sales-issue-summary {
     display: flex;
@@ -924,13 +962,11 @@
     .detail-section-label { min-height: 48px; padding: 12px 14px !important; font-size: 14px; }
     .detail-section-label::after { width: 28px; }
     .detail-section-box > .steps-list { padding: 0 14px; }
-    .observation-list { padding: 0 14px; }
-    .observation-item { grid-template-columns: minmax(0, 1fr) 88px; gap: 12px; }
-    .observation-figure,
-    .observation-image { width: 88px; }
-    .observation-image { height: 76px; }
-    .observation-gallery { gap: 8px; }
-    .observation-gallery img { height: 142px; }
+    .observation-summary { gap: 10px; padding: 13px 14px; }
+    .observation-body { padding: 14px 14px 16px 14px; }
+    .observation-title { font-size: 14.5px; }
+    .observation-text { font-size: 14px; }
+    .observation-media { gap: 10px; margin-top: 12px; }
     .sales-support-summary { min-height: 60px; padding: 11px 14px; gap: 10px; }
     .sales-support-title { font-size: 15px; }
     .sales-support-meta { font-size: 11px; }
@@ -1058,7 +1094,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260916-1"></script>
+  <script src="data.js?v=20260916-2"></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1197,47 +1233,54 @@ function renderInspectionSection(t) {
 
   if (Array.isArray(observations) && observations.length > 0) {
     return `
-      <div class="info-box detail-section-box" style="margin-bottom:28px;padding:0;overflow:hidden">
-        <div class="info-box-label detail-section-label">จุดสังเกตในการตรวจ</div>
-        <div class="observation-list">
-          ${observations.map((item, observationIndex) => `
-            <article class="observation-item${Array.isArray(item.images) && item.images.length > 0 ? ' has-gallery' : !item.src ? ' no-image' : ''}">
-              <div class="observation-copy">
-                <span class="observation-label">จุดตรวจที่ ${observationIndex + 1}</span>
+      <details class="info-box sales-support-box tech-support-box" open>
+        <summary class="sales-support-summary">
+          <span class="sales-support-mark">ช่าง</span>
+          <span class="sales-support-copy">
+            <span class="sales-support-title">จุดสังเกตในการตรวจ</span>
+            <span class="sales-support-meta">จุดตรวจ ${observations.length} จุด</span>
+          </span>
+          <span class="sales-support-chevron" aria-hidden="true">›</span>
+        </summary>
+        <div class="observation-list sales-support-body">
+          ${observations.map((item, observationIndex) => {
+            // Single image and gallery share one layout: media always sits below the copy.
+            const images = Array.isArray(item.images) && item.images.length > 0
+              ? item.images
+              : item.src ? [{ src: item.src, caption: item.caption || '' }] : [];
+            return `
+            <details class="observation-item">
+              <summary class="observation-summary">
+                <span class="observation-num">${observationIndex + 1}</span>
                 <h3 class="observation-title">${item.title}</h3>
+                <span class="observation-chevron" aria-hidden="true">›</span>
+              </summary>
+              <div class="observation-body">
                 <p class="observation-text">${item.text}</p>
+                ${images.length > 0 ? `
+                  <div class="observation-media">
+                    ${images.map(image => `
+                      <figure>
+                        <div class="observation-frame">
+                          <img
+                            src="${image.src}"
+                            alt="${image.caption || item.title}"
+                            loading="lazy"
+                            onclick="openImageViewer(this.src, this.alt)"
+                            onerror="this.closest('figure').style.display='none'"
+                          >
+                          <span class="observation-zoom" aria-hidden="true">&#10530;</span>
+                        </div>
+                        ${image.caption ? `<figcaption>${image.caption}</figcaption>` : ''}
+                      </figure>
+                    `).join('')}
+                  </div>
+                ` : ''}
               </div>
-              ${Array.isArray(item.images) && item.images.length > 0 ? `
-                <div class="observation-gallery">
-                  ${item.images.map(image => `
-                    <figure>
-                      <img
-                        src="${image.src}"
-                        alt="${image.caption}"
-                        loading="lazy"
-                        onclick="openImageViewer(this.src, this.alt)"
-                        onerror="this.parentElement.style.display='none'"
-                      >
-                      <figcaption>${image.caption}</figcaption>
-                    </figure>
-                  `).join('')}
-                </div>
-              ` : item.src ? `
-                <figure class="observation-figure">
-                  <img
-                    class="observation-image"
-                    src="${item.src}"
-                    alt="${item.caption || item.title}"
-                    loading="lazy"
-                    onclick="openImageViewer(this.src, this.alt)"
-                    onerror="this.parentElement.style.display='none'"
-                  >
-                </figure>
-              ` : ''}
-            </article>
-          `).join('')}
+            </details>
+          `;}).join('')}
         </div>
-      </div>
+      </details>
     `;
   }
 
@@ -1608,9 +1651,9 @@ function renderIssueRows(t) {
 function renderIssuesSection(t) {
   if (t.detailMode === 'quick-sales-preview') {
     return `
-      <details class="info-box sales-support-box">
+      <details class="info-box sales-support-box" open>
         <summary class="sales-support-summary">
-          <span class="sales-support-mark">ที่ปรึกษา</span>
+          <span class="sales-support-mark">SA</span>
           <span class="sales-support-copy">
             <span class="sales-support-title">ข้อมูลสำหรับแนะนำลูกค้า</span>
             <span class="sales-support-meta">อาการที่พบ ${t.issuesList.length} รายการ</span>
@@ -1650,9 +1693,10 @@ function showDetail(id) {
       ${renderVideoBlock(t)}
     </div>
   `;
+  // SA-facing advice leads the page; the technician procedure follows.
   const detailSections = t.detailMode === 'quick-sales-preview'
-    ? `${renderInspectionSection(t)}${videoSection}${renderIssuesSection(t)}`
-    : `${videoSection}${renderIssuesSection(t)}${renderInspectionSection(t)}`;
+    ? `${renderIssuesSection(t)}${videoSection}${renderInspectionSection(t)}`
+    : `${renderIssuesSection(t)}${videoSection}${renderInspectionSection(t)}`;
 
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
