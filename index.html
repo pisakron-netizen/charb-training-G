@@ -1693,10 +1693,8 @@ function showDetail(id) {
       ${renderVideoBlock(t)}
     </div>
   `;
-  // SA-facing advice leads the page; the technician procedure follows.
-  const detailSections = t.detailMode === 'quick-sales-preview'
-    ? `${renderIssuesSection(t)}${videoSection}${renderInspectionSection(t)}`
-    : `${renderIssuesSection(t)}${videoSection}${renderInspectionSection(t)}`;
+  // SA-facing advice leads the page, the technician points sit right under it, then the video.
+  const detailSections = `${renderIssuesSection(t)}${renderInspectionSection(t)}${videoSection}`;
 
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
