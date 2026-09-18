@@ -85,7 +85,6 @@
     const issues = Array.isArray(t.issuesList) ? t.issuesList : [];
     const obs = Array.isArray(t.quickObservations) && t.quickObservations.length
       ? t.quickObservations : (t.observationPoints || []);
-    const steps = Array.isArray(t.steps) ? t.steps : [];
     const rawVideo = ((window.trainingData.videoUrls || {})[t.id] || '').trim();
     const videoLink = rawVideo.replace(/\?embed$/, '');
     const pageLink = new URL('./?topic=' + t.id, location.href).toString();
@@ -108,8 +107,7 @@
     }).join('');
 
     // Like the page: no technician section until the topic has photographed points.
-    const techHtml = !obs.length ? '' : obs.length
-      ? obs.map(function(item, i) {
+    const techHtml = obs.map(function(item, i) {
           const imgs = observationImages(item);
           return '<div class="pdf-item pdf-avoid">' +
             '<div class="pdf-item-head"><span class="pdf-num">' + (i + 1) + '</span><span>' + item.title + '</span></div>' +
@@ -121,10 +119,6 @@
               }).join('') + '</div>' : '') +
             '</div>' +
           '</div>';
-        }).join('')
-      : steps.map(function(step, i) {
-          return '<div class="pdf-item pdf-avoid"><div class="pdf-item-head"><span class="pdf-num">' +
-            (i + 1) + '</span><span>' + step + '</span></div></div>';
         }).join('');
 
     const el = document.createElement('div');
@@ -138,7 +132,7 @@
         '<span class="pdf-cat">' + esc(t.category) + '</span>' +
         (saHtml ? '<div class="pdf-section"><div class="pdf-bar"><span class="pdf-bar-mark">SA</span>ข้อมูลสำหรับแนะนำลูกค้า</div>' + saHtml + '</div>' : '') +
         (techHtml ? '<div class="pdf-section"><div class="pdf-bar tech"><span class="pdf-bar-mark">ช่าง</span>' +
-          (obs.length ? 'จุดสังเกตในการตรวจ' : 'ขั้นตอนตรวจสอบ') +
+          'จุดสังเกตในการตรวจ' +
           (t.techDraft ? (t.sources ? ' (อ้างอิงเอกสาร รอคลิปยืนยัน)' : ' (ข้อมูลเบื้องต้น รอคลิปยืนยัน)') : '') + '</div>' + techHtml + '</div>' : '') +
         (Array.isArray(t.sources) && t.sources.length
           ? '<div class="pdf-foot pdf-avoid"><b>แหล่งอ้างอิง:</b> ' + t.sources.map(function(k) {
