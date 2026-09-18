@@ -1261,8 +1261,8 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260918-14"></script>
-  <script src="topic-pdf.js?v=20260918-7" defer></script>
+  <script src="data.js?v=20260918-15"></script>
+  <script src="topic-pdf.js?v=20260918-8" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1783,17 +1783,17 @@ function renderDialogueScript(s) {
         <div class="script-card-head tech">ช่างถ่ายคลิปพูดกับลูกค้า</div>
         ${line('ช่าง', 'tech', 'สวัสดีครับคุณลูกค้า ผมช่าง ___ รถทะเบียน ___ ครับ')}
         ${line('ช่าง', 'tech', s.clip)}
-        ${line('ช่าง', 'tech', `ช่างแนะนำให้${s.recommend}ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ`)}
+        ${line('ช่าง', 'tech', s.noQuote ? `ช่างแนะนำให้${s.recommend}ครับ` : `ช่างแนะนำให้${s.recommend}ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ`)}
       </div>
       <div class="script-card">
         <div class="script-card-head sa">SA คุยกับลูกค้า (ใช้คลิปของช่าง)</div>
         ${line('SA', 'sa', 'คุณลูกค้าครับ นี่คือคลิปที่ช่างตรวจรถของคุณลูกค้าครับ (เปิดคลิปให้ลูกค้าดู)')}
         ${line('SA', 'sa', s.explain)}
         ${line('SA', 'sa', s.risk)}
-        ${line('SA', 'sa', `ผมแนะนำให้${s.recommend}ครับ ใช้เวลาประมาณ ___ ค่าใช้จ่ายประมาณ ___ ครับ`)}
+        ${line('SA', 'sa', s.noQuote ? `ศูนย์ของเรา${s.recommend}ทุกครั้งครับ` : `ผมแนะนำให้${s.recommend}ครับ ใช้เวลาประมาณ ___ ค่าใช้จ่ายประมาณ ___ ครับ`)}
         ${q[0] ? line('ลูกค้า', 'customer', q[0]) : ''}
         ${q[1] ? line('SA', 'sa', q[1]) : ''}
-        ${line('SA', 'sa', 'ให้ผมแจ้งช่างเริ่มงานเลยไหมครับ')}
+        ${line('SA', 'sa', s.close || 'ให้ผมแจ้งช่างเริ่มงานเลยไหมครับ')}
       </div>
     </details>
   `;
