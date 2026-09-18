@@ -107,7 +107,8 @@
       '</div>';
     }).join('');
 
-    const techHtml = t.saOnly && !obs.length ? '' : obs.length
+    // Like the page: no technician section until the topic has photographed points.
+    const techHtml = !obs.length ? '' : obs.length
       ? obs.map(function(item, i) {
           const imgs = observationImages(item);
           return '<div class="pdf-item pdf-avoid">' +

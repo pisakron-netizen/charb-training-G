@@ -1317,9 +1317,9 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260918-17"></script>
+  <script src="data.js?v=20260918-18"></script>
   <script src="dialogue.js?v=20260918-2"></script>
-  <script src="topic-pdf.js?v=20260918-10" defer></script>
+  <script src="topic-pdf.js?v=20260918-11" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1971,10 +1971,8 @@ function showDetail(id) {
   `;
   // SA-facing advice leads the page, the technician points sit right under it, then the video.
   // SA-only topics (text from the master Excel) have no technician footage yet.
-  const hasTechPoints = Array.isArray(t.quickObservations) && t.quickObservations.length > 0;
-  const detailSections = t.saOnly
-    ? `${renderIssuesSection(t)}${hasTechPoints ? renderInspectionSection(t) : renderPendingTechNote()}`
-    : `${renderIssuesSection(t)}${renderInspectionSection(t)}${videoSection}`;
+  const hasTechPoints = [t.quickObservations, t.observationPoints].some(a => Array.isArray(a) && a.length > 0);
+  const detailSections = `${renderIssuesSection(t)}${hasTechPoints ? renderInspectionSection(t) : renderPendingTechNote()}${t.saOnly ? '' : videoSection}`;
 
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
