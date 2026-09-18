@@ -1161,6 +1161,7 @@
 </div>
 
   <script src="data.js?v=20260916-2"></script>
+  <script src="topic-pdf.js?v=20260918-1" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1771,6 +1772,7 @@ function showDetail(id) {
         </div>
         <div class="detail-actions">
           <button class="share-button" type="button" id="share-topic-btn" onclick="copyShareLink(${t.id})">แชร์หัวข้อนี้</button>
+          <button class="share-button" type="button" onclick="downloadTopicPdf(${t.id}, this)">ดาวน์โหลด PDF</button>
         </div>
       </div>
     </div>
