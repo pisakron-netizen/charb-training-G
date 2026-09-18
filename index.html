@@ -1262,7 +1262,7 @@
 </div>
 
   <script src="data.js?v=20260918-16"></script>
-  <script src="topic-pdf.js?v=20260918-8" defer></script>
+  <script src="topic-pdf.js?v=20260918-9" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1783,7 +1783,7 @@ function renderDialogueScript(s) {
         <div class="script-card-head tech">ช่างถ่ายคลิปพูดกับลูกค้า</div>
         ${line('ช่าง', 'tech', 'สวัสดีครับคุณลูกค้า ผมช่าง ___ รถทะเบียน ___ ครับ')}
         ${line('ช่าง', 'tech', s.clip)}
-        ${line('ช่าง', 'tech', s.noQuote ? `ช่างแนะนำให้${s.recommend}ครับ` : `ช่างแนะนำให้${s.recommend}ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ`)}
+        ${line('ช่าง', 'tech', s.noQuote ? `ช่าง${s.recommend}เรียบร้อยแล้วครับ` : `ช่างแนะนำให้${s.recommend}ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ`)}
       </div>
       <div class="script-card">
         <div class="script-card-head sa">SA คุยกับลูกค้า (ใช้คลิปของช่าง)</div>
@@ -2093,6 +2093,28 @@ document.addEventListener('DOMContentLoaded', function() {
     showScreen('screen-home');
   }
 });
+
+// Offline: register the service worker, then quietly cache every topic photo
+// so the checklist still opens in the workshop without signal (clips need internet).
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js').then(function() {
+      if (!window.caches) return;
+      const urls = new Set();
+      (function collect(v) {
+        if (typeof v === 'string') { if (/^[^:]+\.(webp|jpe?g|png)$/i.test(v)) urls.add(v); }
+        else if (v && typeof v === 'object') Object.values(v).forEach(collect);
+      })(window.trainingData);
+      caches.open('charb-training-v1').then(function(cache) {
+        Array.from(urls).reduce(function(p, url) {
+          return p.then(function() {
+            return cache.match(url).then(function(hit) { return hit || cache.add(url); }).catch(function() {});
+          });
+        }, Promise.resolve());
+      });
+    }).catch(function() {});
+  });
+}
 </script>
 </body>
 </html>
