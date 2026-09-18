@@ -79,7 +79,7 @@
       '</div>';
     }).join('');
 
-    const techHtml = t.saOnly ? '' : obs.length
+    const techHtml = t.saOnly && !obs.length ? '' : obs.length
       ? obs.map(function(item, i) {
           const imgs = observationImages(item);
           return '<div class="pdf-item pdf-avoid">' +
@@ -109,7 +109,8 @@
         '<span class="pdf-cat">' + esc(t.category) + '</span>' +
         (saHtml ? '<div class="pdf-section"><div class="pdf-bar"><span class="pdf-bar-mark">SA</span>ข้อมูลสำหรับแนะนำลูกค้า</div>' + saHtml + '</div>' : '') +
         (techHtml ? '<div class="pdf-section"><div class="pdf-bar tech"><span class="pdf-bar-mark">ช่าง</span>' +
-          (obs.length ? 'จุดสังเกตในการตรวจ' : 'ขั้นตอนตรวจสอบ') + '</div>' + techHtml + '</div>' : '') +
+          (obs.length ? 'จุดสังเกตในการตรวจ' : 'ขั้นตอนตรวจสอบ') +
+          (t.techDraft ? ' (ข้อมูลเบื้องต้น รอคลิปยืนยัน)' : '') + '</div>' + techHtml + '</div>' : '') +
         '<div class="pdf-foot pdf-avoid">' +
           'หน้าหัวข้อออนไลน์: ' + esc(pageLink) +
           (videoLink ? '<br>วิดีโอการตรวจ: ' + esc(videoLink) : '') +

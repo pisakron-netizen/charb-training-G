@@ -1196,8 +1196,8 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260918-1"></script>
-  <script src="topic-pdf.js?v=20260918-4" defer></script>
+  <script src="data.js?v=20260918-2"></script>
+  <script src="topic-pdf.js?v=20260918-5" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1341,7 +1341,7 @@ function renderInspectionSection(t) {
           <span class="sales-support-mark">ช่าง</span>
           <span class="sales-support-copy">
             <span class="sales-support-title">จุดสังเกตในการตรวจ</span>
-            <span class="sales-support-meta">จุดตรวจ ${observations.length} จุด</span>
+            <span class="sales-support-meta">จุดตรวจ ${observations.length} จุด${t.techDraft ? ' · ข้อมูลเบื้องต้น รอคลิปยืนยัน' : ''}</span>
           </span>
           <span class="sales-support-chevron" aria-hidden="true">›</span>
         </summary>
@@ -1799,8 +1799,9 @@ function showDetail(id) {
   `;
   // SA-facing advice leads the page, the technician points sit right under it, then the video.
   // SA-only topics (text from the master Excel) have no technician footage yet.
+  const hasTechPoints = Array.isArray(t.quickObservations) && t.quickObservations.length > 0;
   const detailSections = t.saOnly
-    ? `${renderIssuesSection(t)}${renderPendingTechNote()}`
+    ? `${renderIssuesSection(t)}${hasTechPoints ? renderInspectionSection(t) : renderPendingTechNote()}`
     : `${renderIssuesSection(t)}${renderInspectionSection(t)}${videoSection}`;
 
   document.getElementById('detail-content').innerHTML = `
