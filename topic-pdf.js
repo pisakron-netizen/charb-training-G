@@ -20,7 +20,9 @@
 
   const STYLE = `
     .pdf-doc { width: 718px; padding: 0; color: #1D1D1B; background: #FFFFFF;
-      font-family: 'IBM Plex Sans Thai', 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6; }
+      font-family: 'IBM Plex Sans Thai', 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6;
+      /* A non-zero spacing makes html2canvas place Thai text per character instead of per space-split word, which otherwise overlaps. */
+      letter-spacing: 0.01px; }
     .pdf-doc * { box-sizing: border-box; }
     .pdf-head { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 3px solid #C8102E; }
     .pdf-head img { width: 120px; height: auto; }
