@@ -54,7 +54,7 @@
   function voiceText(text, voice) {
     if (voice !== 'f') return text;
     return text
-      .replace(/คุณลูกค้าครับ/g, 'คุณลูกค้าคะ')
+      .replace(/^คุณลูกค้าครับ/, 'คุณลูกค้าคะ')
       .replace(/นะครับ/g, 'นะคะ')
       .replace(/(ไหม|หรือเปล่า|หรือยัง|อะไร|ไหน|ยังไง|เท่าไหร่)ครับ/g, '$1คะ')
       .replace(/ครับ/g, 'ค่ะ')
