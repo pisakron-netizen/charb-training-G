@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ชัยรัชการ (กรุงเทพ) จำกัด - ระบบตรวจเช็ก 117 รายการ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://www.canva.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -134,6 +135,66 @@
     margin-bottom: 24px;
   }
   .btn-back:hover { background: #F7F7F5; border-color: var(--accent-red); }
+  .detail-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 -4px 20px;
+    padding: 10px 4px;
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .detail-toolbar .btn-back { flex: 0 0 auto; margin-bottom: 0; }
+  .detail-search {
+    min-width: 0;
+    flex: 1;
+    height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 16px;
+  }
+  .detail-search:focus { outline: none; border-color: var(--accent-red); box-shadow: 0 0 0 3px var(--accent-red-soft); }
+  .topic-pager {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 20px 0 8px;
+  }
+  .topic-pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    background: #FFFFFF;
+    color: var(--text);
+    cursor: pointer;
+    font-family: var(--font);
+    text-align: left;
+  }
+  .topic-pager-link:hover { border-color: var(--accent-red); background: #FFFBFB; }
+  .topic-pager-link.is-next { grid-column: 2; text-align: right; }
+  .topic-pager-dir { color: var(--accent-red-dark); font-size: 12px; font-weight: 800; }
+  .topic-pager-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+  }
 
   /* Section Header */
   .section-header { margin-bottom: 18px; }
@@ -1084,7 +1145,12 @@
 
   <!-- Screen: Topic Detail -->
   <div id="screen-detail" class="screen">
-    <button class="btn-back" onclick="showHome()">← รายการ</button>
+    <!-- Sticky so an SA mid-conversation can jump to another topic without scrolling up. -->
+    <form class="detail-toolbar" role="search" onsubmit="searchFromDetail(event)">
+      <button class="btn-back" type="button" onclick="showHome()">← รายการ</button>
+      <input class="detail-search" id="detail-search" type="search" enterkeyhint="search"
+        placeholder="ค้นหาหัวข้ออื่น..." aria-label="ค้นหาหัวข้ออื่น" autocomplete="off">
+    </form>
     <div id="detail-content"></div>
   </div>
 
@@ -1132,7 +1198,7 @@ function renderVideoBlock(t) {
   const videoId = getYtId(rawUrl);
   if (videoId) {
     return wrapVideoPlayer(
-      '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="https://www.youtube.com/embed/' + videoId + '?rel=0&amp;playsinline=1" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>',
+      '<iframe class="yt-frame" title="วิดีโอการตรวจ" loading="lazy" src="https://www.youtube.com/embed/' + videoId + '?rel=0&amp;playsinline=1" frameborder="0" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>',
       {}
     );
   }
@@ -1141,7 +1207,7 @@ function renderVideoBlock(t) {
   if (canvaEmbedUrl) {
     const safeEmbedUrl = canvaEmbedUrl.replace(/&/g, '&amp;');
     return wrapVideoPlayer(
-      '<iframe class="yt-frame" title="วิดีโอการตรวจ" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>',
+      '<iframe class="yt-frame" title="วิดีโอการตรวจ" loading="lazy" src="' + safeEmbedUrl + '" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>',
       { shellClass: 'canva-video-shell', wrapClass: 'canva-video-wrap' }
     );
   }
@@ -1711,13 +1777,62 @@ function showDetail(id) {
 
     ${detailSections}
 
+    ${renderTopicPager(t)}
+
     ${t.detailMode === 'quick-sales-preview' ? '' : '<button class="floating-home" type="button" onclick="showHome()">รายการ</button>'}
 
   `;
 
+  const detailSearch = document.getElementById('detail-search');
+  if (detailSearch) detailSearch.value = '';
   updateTopicUrl(id);
   showScreen('screen-detail');
   bindStepAccordions();
+}
+
+// Same order as the topic list: category order first, then id.
+function getOpenTopicsInListOrder() {
+  const categories = getCategoryList();
+  return topics
+    .filter(function(t) { return t.ready !== false; })
+    .sort(function(a, b) {
+      const ca = categories.indexOf(a.category);
+      const cb = categories.indexOf(b.category);
+      return (ca === -1 ? 999 : ca) - (cb === -1 ? 999 : cb) || a.id - b.id;
+    });
+}
+
+function renderTopicPager(t) {
+  const list = getOpenTopicsInListOrder();
+  const index = list.findIndex(function(x) { return x.id === t.id; });
+  if (index === -1) return '';
+  const prev = list[index - 1];
+  const next = list[index + 1];
+  const link = function(topic, dir, cls) {
+    return '<button type="button" class="topic-pager-link ' + cls + '" onclick="showDetail(' + topic.id + ')">' +
+      '<span class="topic-pager-dir">' + dir + '</span>' +
+      '<span class="topic-pager-title">' + escapeHtml(topic.title) + '</span>' +
+    '</button>';
+  };
+  return '<nav class="topic-pager" aria-label="หัวข้ออื่น">' +
+    (prev ? link(prev, '‹ หัวข้อก่อนหน้า', 'is-prev') : '') +
+    (next ? link(next, 'หัวข้อถัดไป ›', 'is-next') : '') +
+  '</nav>';
+}
+
+function searchFromDetail(event) {
+  event.preventDefault();
+  const query = (document.getElementById('detail-search').value || '').trim();
+  const homeSearch = document.getElementById('topic-search');
+  if (homeSearch) homeSearch.value = query;
+  activeCategory = 'all';
+  showHome();
+  if (query) {
+    setTimeout(function() {
+      const grid = document.getElementById('topic-summary') || document.getElementById('topic-grid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 350);
+  }
 }
 
 function bindStepAccordions() {
