@@ -527,6 +527,24 @@
     margin-top: 0;
   }
   .topic-group-header:first-child { margin-top: 0; }
+  /* Categories fold like the SA dropdowns: tap a category to list its topics. */
+  button.topic-group-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 18px;
+    border-right: 0;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s;
+  }
+  button.topic-group-header:hover { background: #FAFAF8; }
+  .topic-group-name { flex: 1; min-width: 0; }
+  .topic-group-count { flex-shrink: 0; color: var(--text3); font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .topic-group-chevron { flex-shrink: 0; color: var(--accent-red); font-size: 20px; font-weight: 700; transition: transform 0.2s ease; }
+  .topic-group-header.is-open .topic-group-chevron { transform: rotate(90deg); }
 
   /* Detail View */
   .detail-hero {
@@ -1176,6 +1194,7 @@
     .topic-card h3 { font-size: 15px; }
     .topic-card-arrow { display: none; }
     .topic-group-header { padding: 15px 12px 10px; font-size: 15px; }
+    button.topic-group-header { padding: 15px 12px; gap: 10px; }
     .info-box-label { font-size: 14px; }
     .detail-section-label { min-height: 48px; padding: 12px 14px !important; font-size: 14px; }
     .detail-section-label::after { width: 28px; }
@@ -1285,7 +1304,7 @@
 
     <div class="section-header">
       <h2>หัวข้อการตรวจสอบ</h2>
-      <p>เลือกหัวข้อเพื่อดูขั้นตอนการตรวจสอบ</p>
+      <p>กดที่หมวดหมู่ แล้วเลือกหัวข้อที่ต้องการ</p>
     </div>
 
     <div class="topic-tools">
@@ -1329,6 +1348,8 @@ const defaultCategoryOrder = ["ระบบรองรับน้ำหนั�
 let categoryOrder = Array.isArray(trainingData.categoryOrder) ? trainingData.categoryOrder.slice() : defaultCategoryOrder.slice();
 let topics = Array.isArray(trainingData.topics) ? trainingData.topics.slice() : [];
 let activeCategory = "all";
+// Categories the user has unfolded on the list; searching or filtering unfolds matches.
+const openCategories = new Set();
 let searchQuery = "";
 
 function getYtId(url) {
@@ -1566,6 +1587,12 @@ function showScreen(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function toggleCategory(catIndex) {
+  const cat = getCategoryList()[catIndex];
+  if (openCategories.has(cat)) openCategories.delete(cat); else openCategories.add(cat);
+  renderTopics();
+}
+
 function showHome() {
   closeExpandedVideo();
   // Release embedded players so audio cannot continue behind the topic list.
@@ -1778,10 +1805,18 @@ function renderTopics() {
       return (categories.indexOf(a.category) - categories.indexOf(b.category)) || a.id - b.id;
     }).forEach(function(t, i) { topicNumbers[t.id] = i + 1; });
 
+    const filtering = searchQuery.trim() !== '' || activeCategory !== 'all';
     let html = '';
-    categories.forEach(function(cat) {
+    categories.forEach(function(cat, catIndex) {
       if (!grouped[cat] || grouped[cat].length === 0) return;
-      html += '<div class="topic-group-header">' + escapeHtml(cat) + '</div>';
+      const open = filtering || openCategories.has(cat);
+      html += '<button type="button" class="topic-group-header' + (open ? ' is-open' : '') + '"' +
+        ' aria-expanded="' + open + '" onclick="toggleCategory(' + catIndex + ')">' +
+        '<span class="topic-group-name">' + escapeHtml(cat) + '</span>' +
+        '<span class="topic-group-count">' + grouped[cat].length + ' หัวข้อ</span>' +
+        '<span class="topic-group-chevron" aria-hidden="true">›</span>' +
+        '</button>';
+      if (!open) return;
       grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
         html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
           '<div class="topic-card-top">' +
@@ -1957,6 +1992,8 @@ function showDetail(id) {
   const t = topics.find(x => x.id === id);
   // A shared link to a topic still being written lands on the list instead.
   if (!isTopicReady(t)) { showHome(); return; }
+  // Coming back to the list shows this topic's category unfolded.
+  openCategories.add(t.category);
   const severityColors = {
     medium: { color: '#C8102E', bg: '#FFFFFF' },
     high: { color: '#C8102E', bg: '#FFFFFF' },
