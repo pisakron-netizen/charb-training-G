@@ -53,9 +53,9 @@ window.trainingData = {
     stepIndex: 2,
     title: "จุดตรวจลูกหมากและยางหุ้มกันฝุ่น",
     items: [
-      { src: "topic2-balljoint-play.jpg.webp", caption: "1. ลูกหมากมีระยะฟรีหรือขยับผิดปกติ" },
-      { src: "topic2-torn-dust-boot.jpg.webp", caption: "2. ยางหุ้มลูกหมากฉีกขาดหรือมีจารบีซึม" },
-      { src: "topic2-dry-grease-nipple.jpg.webp", caption: "3. จุดอัดจารบีแห้งหรือจารบีเก่าเปลี่ยนสี" }
+      { src: "topic2-balljoint-play.png.webp", caption: "1. ลูกหมากมีระยะฟรีหรือขยับผิดปกติ" },
+      { src: "topic2-torn-dust-boot.png.webp", caption: "2. ยางหุ้มลูกหมากฉีกขาดหรือมีจารบีซึม" },
+      { src: "topic2-dry-grease-nipple.png.webp", caption: "3. จุดอัดจารบีแห้งหรือจารบีเก่าเปลี่ยนสี" }
     ],
     related: [
       { caption: "ภาพตำแหน่งลูกหมากช่วงล่างและจุดอัดจารบี" }
@@ -66,12 +66,12 @@ window.trainingData = {
     title: "จุดตรวจกรองอากาศและทางเดินอากาศ",
     stepItems: {
       1: [
-        { src: "topic3-step1-restriction-location.jpg.webp", caption: "ภาพจากหน้างาน: จุดที่ช่างกำลังชี้ตรวจอุปกรณ์แสดงการอุดตันของกรองอากาศ" },
+        { src: "topic3-step1-restriction-location.png.webp", caption: "ภาพจากหน้างาน: จุดที่ช่างกำลังชี้ตรวจอุปกรณ์แสดงการอุดตันของกรองอากาศ" },
         { src: "topic3-restriction-indicator-color-gauge.png.webp", caption: "ตัวอย่างตัวบอกการอุดตันของไส้กรองอากาศแบบแถบสี" }
       ],
       2: [
-        { src: "topic3-step2-air-filter-normal.jpg.webp", caption: "ตัวอย่างกรองอากาศสภาพปกติ" },
-        { src: "topic3-step2-air-filter-dusty.jpg.webp", caption: "ตัวอย่างกรองอากาศที่มีฝุ่นสะสมมาก" }
+        { src: "topic3-step2-air-filter-normal.png.webp", caption: "ตัวอย่างกรองอากาศสภาพปกติ" },
+        { src: "topic3-step2-air-filter-dusty.png.webp", caption: "ตัวอย่างกรองอากาศที่มีฝุ่นสะสมมาก" }
       ],
       3: [
         { src: "topic3-step3-air-filter-seal.webp", caption: "ภาพประกอบจำลอง: ตัวอย่างการตรวจขอบซีลไส้กรองอากาศ" }
@@ -361,28 +361,28 @@ window.trainingData = {
         label: "ตรวจสอบ",
         title: "ตรวจเช็กสภาพแหนบ",
         text: "สังเกตแหนบแต่ละแผ่น ต้องไม่มีรอยร้าว หัก ขาด หาย หรือเลื่อนออกจากแนว และคลิปรัดแหนบกับอุปกรณ์ยึดต้องอยู่ครบ ไม่แตกหรือหลวมผิดปกติ",
-        src: "topic2-leaf-spring-inspection-real.jpg.webp",
+        src: "topic2-leaf-spring-inspection-real.png.webp",
         caption: "ตรวจสภาพแผ่นแหนบ แนวแหนบ และคลิปรัดแหนบ"
       },
       {
         label: "ตรวจสอบ",
         title: "จุดอัดจารบีแห้งหรือผิดปกติ",
         text: "สังเกตหัวอัดจารบีและบริเวณรอบข้อต่อ หากแห้งมาก มีคราบเก่าแข็งตัว หรือหัวอัดชำรุด ควรตรวจการหล่อลื่นเพิ่มเติม",
-        src: "topic2-grease-point-inspection-real.jpg.webp",
+        src: "topic2-grease-point-inspection-real.png.webp",
         caption: "ตรวจสภาพจุดอัดจารบีและการหล่อลื่นบริเวณข้อต่อช่วงล่าง"
       },
       {
         label: "ตรวจสอบ",
         title: "ตรวจเช็กบูทเพลาโบกี้",
         text: "สังเกตบูทและบริเวณฝาครอบเพลาโบกี้ ต้องไม่แตกร้าว ฉีกขาด หลุด หรือเคลื่อนออกจากตำแหน่ง และจุดยึดต้องไม่หลวมผิดปกติ",
-        src: "topic2-bogie-shaft-boot-inspection-real.jpg.webp",
+        src: "topic2-bogie-shaft-boot-inspection-real.png.webp",
         caption: "ตรวจสภาพบูท ฝาครอบ และจุดยึดเพลาโบกี้"
       },
       {
         label: "ตรวจสอบ",
         title: "ตรวจเช็กลูกหมากเพลาโบกี้",
         text: "สังเกตยางรอบลูกหมากเพลาโบกี้ ต้องไม่ฉีก ขาด ปริออก เสียรูปเป็นวงรี หรือเลื่อนออกจากเบ้า และต้องไม่มีรอยโลหะสัมผัสกันหรือจุดยึดหลวมผิดปกติ",
-        src: "topic2-bogie-shaft-balljoint-inspection-real.jpg.webp",
+        src: "topic2-bogie-shaft-balljoint-inspection-real.png.webp",
         caption: "ตรวจสภาพยางรอบลูกหมากและจุดยึดเพลาโบกี้"
       }
     ],
@@ -403,7 +403,7 @@ window.trainingData = {
         label: "จุดที่ 1",
         title: "เช็กตัวแสดงการอุดตัน",
         text: "ตรวจสอบตัวบอกการอุดตันของไส้กรองอากาศ หากขึ้นแถบสีแดงค้างหรือมีสภาพผิดปกติ",
-        src: "topic3-step1-restriction-location.jpg.webp",
+        src: "topic3-step1-restriction-location.png.webp",
         caption: "ตำแหน่งตัวบอกการอุดตันบริเวณชุดกรองอากาศ"
       },
       {
@@ -638,21 +638,21 @@ window.trainingData = {
         label: "จุดที่ 1",
         title: "ตรวจสอบหน้ายาง",
         text: "ตรวจสอบรอยบาด รอยฉีก ดอกยางหลุดหรือเสียรูป สิ่งแปลกปลอมฝัง และการสึกไม่สม่ำเสมอ",
-        src: "topic5-tire-tread-inspection-real.jpg.webp",
+        src: "topic5-tire-tread-inspection-real.png.webp",
         alt: "ตรวจสอบหน้ายางและดอกยางรถบรรทุก"
       },
       {
         label: "จุดที่ 2",
         title: "ตรวจสอบแก้มยาง",
         text: "ตรวจสอบรอยบาด รอยแตก รอยปริ บวมปูด หรือชั้นโครงยางโผล่ ทั้งแก้มยางด้านนอกและด้านในเท่าที่สามารถตรวจสอบได้",
-        src: "topic5-tire-sidewall-inspection-real.jpg.webp",
+        src: "topic5-tire-sidewall-inspection-real.png.webp",
         alt: "ตรวจสอบแก้มยางรถบรรทุก"
       },
       {
         label: "จุดที่ 3",
         title: "ตรวจสอบกระทะล้อ",
         text: "ตรวจสอบรอยคดงอ รอยบุบ รอยแตกร้าว และสนิมหรือการกัดกร่อนรุนแรง โดยเฉพาะรอบรูน็อตและช่องกระทะล้อ",
-        src: "topic5-wheel-rim-inspection-real.jpg.webp",
+        src: "topic5-wheel-rim-inspection-real.png.webp",
         alt: "ตรวจสอบกระทะล้อรถบรรทุก"
       },
       {
@@ -733,7 +733,7 @@ window.trainingData = {
         label: "จุดที่ 1",
         title: "ตรวจสอบรอบซีลเดือยหมู",
         text: "ตรวจหารอยน้ำมันเปียก รอยไหล หรือหยดรอบซีลและหน้าแปลนเพลากลาง หากพบเพียงคราบชื้นหรือฝุ่นจับตัว ให้ทำความสะอาดและตรวจซ้ำเพื่อยืนยันการรั่ว",
-        src: "topic6-pinion-seal-inspection-real.jpg.webp",
+        src: "topic6-pinion-seal-inspection-real.png.webp",
         alt: "ตรวจรอยรั่วซึมบริเวณซีลเดือยหมูและหน้าแปลนเพลากลาง"
       },
       {
@@ -789,7 +789,7 @@ window.trainingData = {
         label: "จุดที่ 1",
         title: "ตรวจเช็กจุดอัดจารบี",
         text: "สังเกตหัวอัดจารบีต้องอยู่ครบ ไม่หัก งอ หลวม หรือมีสิ่งสกปรกและจารบีเก่าแข็งปิดรู ก่อนอัดควรเช็ดรอบหัวอัดให้สะอาด เพื่อป้องกันสิ่งสกปรกถูกดันเข้าไปในข้อต่อ",
-        src: "topic7-grease-fitting-inspection-real.jpg.webp",
+        src: "topic7-grease-fitting-inspection-real.png.webp",
         caption: "ตรวจสภาพหัวอัดจารบีและทำความสะอาดบริเวณรอบหัวอัดก่อนหล่อลื่น"
       }
     ],
@@ -935,14 +935,14 @@ window.trainingData = {
         label: "จุดที่ 1",
         title: "ตรวจเช็กตัวโช้คอัพและรอยรั่วซึม",
         text: "ตรวจตัวโช้คอัพและแกนโช้ค หากเห็นน้ำมันไหลเป็นทางหรือมีหยดถือว่าผิดปกติ ส่วนคราบละอองน้ำมันบาง ๆ อาจเกิดจากการทำงานตามปกติ ให้ทำความสะอาดและตรวจยืนยัน พร้อมดูว่าตัวเรือนไม่บุบ คดงอ หรือมีรอยกระแทก",
-        src: "topic2-shock-absorber-leak-inspection-real.jpg.webp",
+        src: "topic2-shock-absorber-leak-inspection-real.png.webp",
         caption: "ภาพจากคลิป: ตรวจคราบน้ำมันรั่วซึมบริเวณตัวโช้คอัพและแกนโช้ค"
       },
       {
         label: "จุดที่ 2",
         title: "ตรวจเช็กบูชหูโช้คอัพ",
         text: "สังเกตบูชยางบริเวณหูโช้ค ต้องไม่มีรอยแตก ฉีก บวม ยุบ บี้ เยื้องศูนย์ หรือสึกผิดปกติ และไม่ควรมีรอยขยับรอบจุดยึด",
-        src: "topic2-shock-bushing-inspection-real.jpg.webp",
+        src: "topic2-shock-bushing-inspection-real.png.webp",
         caption: "ภาพจากคลิป: ตรวจสภาพบูชยางและจุดยึดบริเวณหูโช้คอัพ"
       }
     ],
