@@ -527,24 +527,74 @@
     margin-top: 0;
   }
   .topic-group-header:first-child { margin-top: 0; }
-  /* Categories fold like the SA dropdowns: tap a category to list its topics. */
-  button.topic-group-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 16px 18px;
-    border-right: 0;
-    text-align: left;
-    cursor: pointer;
-    font-family: inherit;
-    transition: background 0.15s;
-  }
-  button.topic-group-header:hover { background: #FAFAF8; }
+  .topic-group-header { display: flex; align-items: center; gap: 12px; }
   .topic-group-name { flex: 1; min-width: 0; }
   .topic-group-count { flex-shrink: 0; color: var(--text3); font-size: 13px; font-weight: 600; white-space: nowrap; }
-  .topic-group-chevron { flex-shrink: 0; color: var(--accent-red); font-size: 20px; font-weight: 700; transition: transform 0.2s ease; }
-  .topic-group-header.is-open .topic-group-chevron { transform: rotate(90deg); }
+
+  /* Home shows the categories as picture cards; a card opens that category's topics. */
+  .topic-grid.is-categories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+  }
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #FFFFFF;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    box-shadow: 0 6px 16px rgba(17, 17, 16, 0.05);
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+  .category-card:hover { border-color: var(--accent-red); box-shadow: 0 10px 22px rgba(200, 16, 46, 0.12); }
+  .category-card:active { transform: scale(0.98); }
+  .category-media {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, var(--accent-red-pale) 0%, var(--accent-red-soft) 100%);
+  }
+  .category-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .category-placeholder { color: rgba(200, 16, 46, 0.22); font-size: clamp(56px, 16vw, 96px); font-weight: 800; line-height: 1; }
+  .category-num {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+  }
+  .category-info { display: block; padding: 10px 12px 12px; border-top: 3px solid var(--accent-red); }
+  .category-name { display: block; color: var(--text); font-size: 14.5px; font-weight: 800; line-height: 1.4; }
+  .category-count { display: block; margin-top: 2px; color: var(--text3); font-size: 12.5px; font-weight: 600; }
+  .category-nav:empty { display: none; }
+  .category-nav .btn-back { margin-bottom: 12px; }
+  @media (min-width: 640px) {
+    .topic-grid.is-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  }
+  @media (min-width: 900px) {
+    .topic-grid.is-categories { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
 
   /* Detail View */
   .detail-hero {
@@ -1194,7 +1244,9 @@
     .topic-card h3 { font-size: 15px; }
     .topic-card-arrow { display: none; }
     .topic-group-header { padding: 15px 12px 10px; font-size: 15px; }
-    button.topic-group-header { padding: 15px 12px; gap: 10px; }
+    .topic-grid.is-categories { gap: 10px; }
+    .category-info { padding: 9px 10px 11px; }
+    .category-name { font-size: 13.5px; }
     .info-box-label { font-size: 14px; }
     .detail-section-label { min-height: 48px; padding: 12px 14px !important; font-size: 14px; }
     .detail-section-label::after { width: 28px; }
@@ -1316,6 +1368,7 @@
     </div>
 
     <div class="topic-summary" id="topic-summary"></div>
+    <div class="category-nav" id="category-nav"></div>
     <div class="topic-grid" id="topic-grid"></div>
   </div>
 
@@ -1348,8 +1401,6 @@ const defaultCategoryOrder = ["ระบบรองรับน้ำหนั�
 let categoryOrder = Array.isArray(trainingData.categoryOrder) ? trainingData.categoryOrder.slice() : defaultCategoryOrder.slice();
 let topics = Array.isArray(trainingData.topics) ? trainingData.topics.slice() : [];
 let activeCategory = "all";
-// Categories the user has unfolded on the list; searching or filtering unfolds matches.
-const openCategories = new Set();
 let searchQuery = "";
 
 function getYtId(url) {
@@ -1587,10 +1638,22 @@ function showScreen(id) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function toggleCategory(catIndex) {
-  const cat = getCategoryList()[catIndex];
-  if (openCategories.has(cat)) openCategories.delete(cat); else openCategories.add(cat);
+function openCategory(catIndex) {
+  activeCategory = getCategoryList()[catIndex] || 'all';
   renderTopics();
+  scrollToTopicList();
+}
+
+function closeCategory() {
+  activeCategory = 'all';
+  renderTopics();
+  scrollToTopicList();
+}
+
+// Keep the list's top in view after switching between cards and a category.
+function scrollToTopicList() {
+  const el = document.getElementById('topic-summary');
+  if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ block: 'start' });
 }
 
 function showHome() {
@@ -1791,6 +1854,36 @@ function renderTopics() {
       }
     }
 
+    // Home shows category cards; a picked category (or a search) lists its topics.
+    const showCards = !previewPending && activeCategory === 'all' && !searchQuery.trim();
+    grid.classList.toggle('is-categories', showCards);
+    const nav = document.getElementById('category-nav');
+    if (nav) nav.innerHTML = activeCategory !== 'all'
+      ? '<button class="btn-back" type="button" onclick="closeCategory()">← หมวดหมู่ทั้งหมด</button>'
+      : '';
+
+    if (showCards) {
+      // Photos per category go in trainingData.categoryImages; until then the card shows its number.
+      const images = window.trainingData.categoryImages || {};
+      grid.innerHTML = categories.map(function(cat, i) {
+        const count = grouped[cat] ? grouped[cat].length : 0;
+        if (!count) return '';
+        const img = images[cat];
+        return '<button type="button" class="category-card" onclick="openCategory(' + i + ')">' +
+          '<span class="category-media">' +
+            (img
+              ? '<img src="' + escapeHtml(img) + '" alt="" loading="lazy"><span class="category-num">' + (i + 1) + '</span>'
+              : '<span class="category-placeholder">' + (i + 1) + '</span>') +
+          '</span>' +
+          '<span class="category-info">' +
+            '<span class="category-name">' + escapeHtml(cat) + '</span>' +
+            '<span class="category-count">' + count + ' หัวข้อ</span>' +
+          '</span>' +
+        '</button>';
+      }).join('');
+      return;
+    }
+
     if (visibleTopics.length === 0) {
       const emptyMessage = activeCategory !== 'all' && !searchQuery
         ? 'ยังไม่มีหัวข้อในหมวดนี้'
@@ -1805,18 +1898,13 @@ function renderTopics() {
       return (categories.indexOf(a.category) - categories.indexOf(b.category)) || a.id - b.id;
     }).forEach(function(t, i) { topicNumbers[t.id] = i + 1; });
 
-    const filtering = searchQuery.trim() !== '' || activeCategory !== 'all';
     let html = '';
-    categories.forEach(function(cat, catIndex) {
+    categories.forEach(function(cat) {
       if (!grouped[cat] || grouped[cat].length === 0) return;
-      const open = filtering || openCategories.has(cat);
-      html += '<button type="button" class="topic-group-header' + (open ? ' is-open' : '') + '"' +
-        ' aria-expanded="' + open + '" onclick="toggleCategory(' + catIndex + ')">' +
+      html += '<div class="topic-group-header">' +
         '<span class="topic-group-name">' + escapeHtml(cat) + '</span>' +
         '<span class="topic-group-count">' + grouped[cat].length + ' หัวข้อ</span>' +
-        '<span class="topic-group-chevron" aria-hidden="true">›</span>' +
-        '</button>';
-      if (!open) return;
+        '</div>';
       grouped[cat].sort(function(a,b){ return a.id - b.id; }).forEach(function(t) {
         html += '<button class="topic-card" onclick="showDetail(' + t.id + ')">' +
           '<div class="topic-card-top">' +
@@ -1992,8 +2080,8 @@ function showDetail(id) {
   const t = topics.find(x => x.id === id);
   // A shared link to a topic still being written lands on the list instead.
   if (!isTopicReady(t)) { showHome(); return; }
-  // Coming back to the list shows this topic's category unfolded.
-  openCategories.add(t.category);
+  // Coming back to the list opens this topic's category (a search result list stays as it was).
+  if (!searchQuery.trim()) activeCategory = t.category;
   const severityColors = {
     medium: { color: '#C8102E', bg: '#FFFFFF' },
     high: { color: '#C8102E', bg: '#FFFFFF' },
