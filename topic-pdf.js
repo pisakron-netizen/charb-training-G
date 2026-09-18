@@ -45,7 +45,9 @@
     .pdf-script-head { margin: 6px 0 2px; font-size: 11px; font-weight: 800; color: #3C3C38; }
     .pdf-script-head.sa { color: #980C22; }
     .pdf-script p { margin: 2px 0; font-size: 12px; }
-    .pdf-script b { display: inline-block; min-width: 42px; }
+    .pdf-script .pdf-who { display: inline-block; min-width: 42px; font-weight: 800; }
+    .pdf-script .script-blank { display: inline-block; min-width: 56px; border-bottom: 1px dashed #999994; color: transparent; }
+    .pdf-script .script-act { color: #777772; }
   `;
 
   function esc(v) {
@@ -54,23 +56,23 @@
     });
   }
 
-  // Same fixed lines as renderDialogueScript() in index.html.
+  // Same lines as renderDialogueScript() in index.html (both come from dialogue.js).
   function scriptHtml(s) {
-    if (!s) return '';
-    const q = Array.isArray(s.objection) ? s.objection : [];
-    const line = function(who, text) { return '<p><b>' + who + '</b> ' + esc(text).replace(/___/g, '________') + '</p>'; };
+    if (!s || !window.Dialogue) return '';
+    const d = Dialogue.parts(s);
+    const v = Dialogue.getVoice();
+    const line = function(who, text) {
+      return '<p><span class="pdf-who">' + who + '</span> ' + Dialogue.toHtml(text, v) + '</p>';
+    };
     return '<div class="pdf-script">' +
-      '<div class="pdf-label" style="margin-top:0">บทสนทนามาตรฐาน</div>' +
-      '<div class="pdf-script-head">ช่างถ่ายคลิปพูดกับลูกค้า</div>' +
-      line('ช่าง', 'สวัสดีครับคุณลูกค้า ผมช่าง ___ รถทะเบียน ___ ครับ') +
-      line('ช่าง', s.clip) +
-      line('ช่าง', s.noQuote ? 'ช่าง' + s.recommend + 'เรียบร้อยแล้วครับ' : 'ช่างแนะนำให้' + s.recommend + 'ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ') +
+      '<div class="pdf-label" style="margin-top:0">บทสนทนามาตรฐาน' +
+        (d.urgency ? ' · ' + Dialogue.URGENCY[d.urgency].label : '') + '</div>' +
       '<div class="pdf-script-head sa">SA คุยกับลูกค้า (ใช้คลิปของช่าง)</div>' +
-      line('SA', 'คุณลูกค้าครับ นี่คือคลิปที่ช่างตรวจรถของคุณลูกค้าครับ (เปิดคลิปให้ลูกค้าดู)') +
-      line('SA', s.explain) + line('SA', s.risk) +
-      line('SA', s.noQuote ? 'ศูนย์ของเรา' + s.recommend + 'ทุกครั้งครับ' : 'ผมแนะนำให้' + s.recommend + 'ครับ ใช้เวลาประมาณ ___ ค่าใช้จ่ายประมาณ ___ ครับ') +
-      (q[0] ? line('ลูกค้า', q[0]) : '') + (q[1] ? line('SA', q[1]) : '') +
-      line('SA', s.close || 'ให้ผมแจ้งช่างเริ่มงานเลยไหมครับ') +
+      d.main.map(function(t) { return line('SA', t); }).join('') +
+      (d.replies.length
+        ? '<div class="pdf-script-head sa">ถ้าลูกค้าตอบว่า…</div>' +
+          d.replies.map(function(r) { return line('ลูกค้า', r[0]) + line('SA', r[1]); }).join('')
+        : '') +
     '</div>';
   }
 

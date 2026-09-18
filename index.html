@@ -167,48 +167,104 @@
   .script-box {
     margin-top: 14px;
     border: 1px solid #E3D3D6;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #FFFFFF;
     overflow: hidden;
   }
   .script-summary {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    padding: 10px 14px;
+    gap: 10px;
+    padding: 11px 14px;
     background: #FFF7F8;
     color: var(--accent-red-dark);
     cursor: pointer;
     list-style: none;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
   }
   .script-summary::-webkit-details-marker { display: none; }
   .script-chevron { margin-left: auto; font-size: 18px; transition: transform 0.2s ease; }
   .script-box[open] .script-chevron { transform: rotate(90deg); }
-  .script-card { padding: 10px 14px 12px; border-top: 1px solid #F0E4E6; }
-  .script-card-head {
-    display: inline-block;
-    margin-bottom: 8px;
-    padding: 2px 10px;
+  .urgency {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
     border-radius: 999px;
-    font-size: 12px;
-    font-weight: 800;
+    font-size: 12.5px;
+    font-weight: 700;
+    white-space: nowrap;
   }
-  .script-card-head.tech { background: #3C3C38; color: #FFFFFF; }
-  .script-card-head.sa { background: var(--accent-red); color: #FFFFFF; }
-  .script-line { display: flex; gap: 10px; align-items: flex-start; margin: 6px 0; }
+  .urgency::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; }
+  .urgency.now { background: #FDE8EB; color: #B40E29; }
+  .urgency.soon { background: #FFF1D6; color: #A15C00; }
+  .urgency.later { background: #E3F4E8; color: #17803D; }
+  .script-step { padding: 12px 14px 14px; border-top: 1px solid #F0E4E6; }
+  .script-step-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .script-step-no {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .script-step-name { color: var(--text); font-size: 14px; font-weight: 700; }
+  .script-voice { display: inline-flex; margin-left: auto; border: 1px solid var(--border2); border-radius: 8px; overflow: hidden; }
+  .script-voice button {
+    border: 0;
+    padding: 5px 12px;
+    background: #FFFFFF;
+    color: var(--text2);
+    cursor: pointer;
+    font: 600 13px var(--font);
+  }
+  .script-voice button.on { background: var(--accent-red); color: #FFFFFF; }
+  .script-line { display: flex; gap: 10px; align-items: flex-start; margin: 7px 0; }
   .script-who {
-    flex: 0 0 48px;
+    flex: 0 0 44px;
     padding-top: 2px;
+    color: var(--accent-red-dark);
     font-size: 12px;
     font-weight: 800;
-    color: var(--text3);
   }
-  .script-line.sa .script-who { color: var(--accent-red-dark); }
-  .script-line.tech .script-who { color: #3C3C38; }
-  .script-line p { margin: 0; color: #2A2A28; font-size: 14px; line-height: 1.65; }
-  .script-line.customer p { color: #5C5C57; font-style: italic; }
+  .script-line p { margin: 0; color: #2A2A28; font-size: 14.5px; line-height: 1.7; }
   .script-blank { display: inline-block; min-width: 56px; border-bottom: 1px dashed #A8A8A2; color: transparent; }
+  .script-act { color: var(--text3); font-size: 13px; }
+  .script-reply { margin: 8px 0; border: 1px solid var(--border); border-radius: 8px; background: #FFFFFF; }
+  .script-reply summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    list-style: none;
+    color: #5C5C57;
+    font-size: 14px;
+  }
+  .script-reply summary::-webkit-details-marker { display: none; }
+  .script-reply summary .script-who { padding-top: 0; color: var(--text3); }
+  .script-q { flex: 1; font-style: italic; }
+  .script-reply summary::after { content: "›"; color: var(--accent-red); font-size: 18px; transition: transform 0.2s ease; }
+  .script-reply[open] summary::after { transform: rotate(90deg); }
+  .script-reply .script-line { margin: 0; padding: 0 12px 10px; }
+  .script-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-top: 1px solid #F0E4E6;
+    background: #FAFAF8;
+    color: var(--text3);
+    font-size: 12px;
+  }
   .source-note {
     display: flex;
     flex-direction: column;
@@ -1261,8 +1317,9 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260918-16"></script>
-  <script src="topic-pdf.js?v=20260918-9" defer></script>
+  <script src="data.js?v=20260918-17"></script>
+  <script src="dialogue.js?v=20260918-1"></script>
+  <script src="topic-pdf.js?v=20260918-10" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1768,35 +1825,46 @@ function renderTalkingPoints(iss) {
   `;
 }
 
-// Standard dialogue: the technician films a clip for the customer, then SA walks
-// the customer through the same clip. Shared lines are fixed; per-finding lines come from data.
+// Standard dialogue: SA walks the customer through the technician's clip, then picks
+// the reply that matches what the customer says. Lines come from dialogue.js.
 function renderDialogueScript(s) {
-  if (!s) return '';
-  const blank = text => escapeHtml(text).replace(/___/g, '<span class="script-blank">______</span>');
-  const line = (who, cls, text) =>
-    `<div class="script-line ${cls}"><span class="script-who">${who}</span><p>${blank(text)}</p></div>`;
-  const q = Array.isArray(s.objection) ? s.objection : [];
+  if (!s || !window.Dialogue) return '';
+  const d = Dialogue.parts(s);
+  const v = Dialogue.getVoice();
+  const line = text =>
+    `<div class="script-line"><span class="script-who">SA</span><p data-say="${escapeHtml(text)}">${Dialogue.toHtml(text, v)}</p></div>`;
+  const badge = u => `<span class="urgency ${u}">${Dialogue.URGENCY[u].label}</span>`;
   return `
     <details class="script-box">
-      <summary class="script-summary">บทสนทนามาตรฐาน<span class="script-chevron" aria-hidden="true">›</span></summary>
-      <div class="script-card">
-        <div class="script-card-head tech">ช่างถ่ายคลิปพูดกับลูกค้า</div>
-        ${line('ช่าง', 'tech', 'สวัสดีครับคุณลูกค้า ผมช่าง ___ รถทะเบียน ___ ครับ')}
-        ${line('ช่าง', 'tech', s.clip)}
-        ${line('ช่าง', 'tech', s.noQuote ? `ช่าง${s.recommend}เรียบร้อยแล้วครับ` : `ช่างแนะนำให้${s.recommend}ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ`)}
-      </div>
-      <div class="script-card">
-        <div class="script-card-head sa">SA คุยกับลูกค้า (ใช้คลิปของช่าง)</div>
-        ${line('SA', 'sa', 'คุณลูกค้าครับ นี่คือคลิปที่ช่างตรวจรถของคุณลูกค้าครับ (เปิดคลิปให้ลูกค้าดู)')}
-        ${line('SA', 'sa', s.explain)}
-        ${line('SA', 'sa', s.risk)}
-        ${line('SA', 'sa', s.noQuote ? `ศูนย์ของเรา${s.recommend}ทุกครั้งครับ` : `ผมแนะนำให้${s.recommend}ครับ ใช้เวลาประมาณ ___ ค่าใช้จ่ายประมาณ ___ ครับ`)}
-        ${q[0] ? line('ลูกค้า', 'customer', q[0]) : ''}
-        ${q[1] ? line('SA', 'sa', q[1]) : ''}
-        ${line('SA', 'sa', s.close || 'ให้ผมแจ้งช่างเริ่มงานเลยไหมครับ')}
-      </div>
+      <summary class="script-summary">บทสนทนามาตรฐาน${d.urgency ? badge(d.urgency) : ''}<span class="script-chevron" aria-hidden="true">›</span></summary>
+      <section class="script-step">
+        <div class="script-step-head">
+          <span class="script-step-no">1</span><span class="script-step-name">SA คุยกับลูกค้า (ใช้คลิปของช่าง)</span>
+          <span class="script-voice" role="group" aria-label="ผู้พูด">
+            <button type="button" data-voice="m" class="${v === 'm' ? 'on' : ''}" onclick="setScriptVoice('m')">ผู้ชาย</button>
+            <button type="button" data-voice="f" class="${v === 'f' ? 'on' : ''}" onclick="setScriptVoice('f')">ผู้หญิง</button>
+          </span>
+        </div>
+        ${d.main.map(line).join('')}
+      </section>
+      ${d.replies.length ? `
+      <section class="script-step">
+        <div class="script-step-head"><span class="script-step-no">2</span><span class="script-step-name">ถ้าลูกค้าตอบว่า… (กดเลือก)</span></div>
+        ${d.replies.map(r => `
+          <details class="script-reply">
+            <summary><span class="script-who">ลูกค้า</span><span class="script-q">${escapeHtml(r[0])}</span></summary>
+            ${line(r[1])}
+          </details>`).join('')}
+      </section>` : ''}
+      ${d.urgency ? `<div class="script-legend">ระดับความเร่งด่วน: ${badge('now')}${badge('soon')}${badge('later')}</div>` : ''}
     </details>
   `;
+}
+
+function setScriptVoice(v) {
+  Dialogue.setVoice(v);
+  document.querySelectorAll('[data-say]').forEach(el => { el.innerHTML = Dialogue.toHtml(el.dataset.say, v); });
+  document.querySelectorAll('.script-voice button').forEach(b => b.classList.toggle('on', b.dataset.voice === v));
 }
 
 function renderIssueDetail(t, iss, idx) {
