@@ -1,28 +1,11 @@
-// Builds a printable A4 handout for one topic and saves it as a PDF.
-// html2pdf is loaded on first use so it never slows down normal page loads.
+// Builds a printable A4 handout for one topic. It opens in print.html and uses the
+// browser's own "Save as PDF", which is the only renderer that keeps Thai vowels and
+// tone marks in place (canvas-based PDF libraries drop or misplace them).
 (function() {
-  const LIB_URL = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
-  let libPromise = null;
-
-  function loadLib() {
-    if (window.html2pdf) return Promise.resolve();
-    if (!libPromise) {
-      libPromise = new Promise(function(resolve, reject) {
-        const s = document.createElement('script');
-        s.src = LIB_URL;
-        s.onload = resolve;
-        s.onerror = function() { libPromise = null; reject(new Error('load failed')); };
-        document.head.appendChild(s);
-      });
-    }
-    return libPromise;
-  }
-
   const STYLE = `
-    .pdf-doc { width: 718px; padding: 0; color: #1D1D1B; background: #FFFFFF;
+    .pdf-doc { max-width: 718px; margin: 0 auto; padding: 0; color: #1D1D1B; background: #FFFFFF;
       font-family: 'IBM Plex Sans Thai', 'IBM Plex Sans', sans-serif; font-size: 13px; line-height: 1.6;
-      /* A non-zero spacing makes html2canvas place Thai text per character instead of per space-split word, which otherwise overlaps. */
-      letter-spacing: 0.01px; }
+      -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .pdf-doc * { box-sizing: border-box; }
     .pdf-head { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; border-bottom: 3px solid #C8102E; }
     .pdf-head img { width: 120px; height: auto; }
@@ -60,7 +43,11 @@
     .pdf-avoid { page-break-inside: avoid; break-inside: avoid; }
   `;
 
-  function esc(v) { return window.escapeHtml ? window.escapeHtml(v) : String(v || ''); }
+  function esc(v) {
+    return String(v || '').replace(/[&<>"']/g, function(ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
 
   function observationImages(item) {
     if (Array.isArray(item.images) && item.images.length) return item.images;
@@ -74,7 +61,7 @@
     const steps = Array.isArray(t.steps) ? t.steps : [];
     const rawVideo = ((window.trainingData.videoUrls || {})[t.id] || '').trim();
     const videoLink = rawVideo.replace(/\?embed$/, '');
-    const pageLink = typeof buildShareUrl === 'function' ? buildShareUrl(t.id) : location.href;
+    const pageLink = new URL('./?topic=' + t.id, location.href).toString();
 
     const saHtml = issues.map(function(iss, i) {
       const pts = Array.isArray(iss.talkingPoints) && iss.talkingPoints.length
@@ -131,27 +118,19 @@
     return el;
   }
 
-  window.downloadTopicPdf = async function(topicId, button) {
-    const t = (window.trainingData.topics || []).find(function(x) { return x.id === topicId; });
-    if (!t) return;
-    const label = button ? button.textContent : '';
-    if (button) { button.disabled = true; button.textContent = 'กำลังสร้าง PDF...'; }
-    try {
-      await loadLib();
-      if (document.fonts && document.fonts.ready) await document.fonts.ready;
-      const small = window.innerWidth < 700;
-      await window.html2pdf().set({
-        margin: [10, 10, 12, 10],
-        filename: 'ตรวจเช็ก-' + t.id + '-' + t.title.replace(/[\\/:*?"<>|]/g, '').slice(0, 60) + '.pdf',
-        image: { type: 'jpeg', quality: 0.9 },
-        html2canvas: { scale: small ? 1.5 : 2, useCORS: true, backgroundColor: '#FFFFFF' },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['css', 'legacy'], avoid: '.pdf-avoid' }
-      }).from(buildDoc(t)).save();
-    } catch (err) {
-      alert('สร้าง PDF ไม่สำเร็จ ลองใหม่อีกครั้ง');
-    } finally {
-      if (button) { button.disabled = false; button.textContent = label; }
-    }
+  // Called from print.html: renders the handout for ?topic= and opens the print dialog.
+  window.renderTopicHandout = function(mount) {
+    const id = Number(new URLSearchParams(location.search).get('topic'));
+    const t = (window.trainingData.topics || []).find(function(x) { return x.id === id && x.ready !== false; });
+    if (!t) { mount.textContent = 'ไม่พบหัวข้อนี้'; return null; }
+    document.title = 'ตรวจเช็ก-' + t.id + '-' + t.title.replace(/[\/:*?"<>|]/g, '').slice(0, 60);
+    mount.appendChild(buildDoc(t));
+    return t;
+  };
+
+  // Opened synchronously from the click so popup blockers allow it.
+  window.downloadTopicPdf = function(topicId) {
+    const win = window.open('print.html?topic=' + topicId, '_blank');
+    if (!win) location.href = 'print.html?topic=' + topicId;
   };
 })();

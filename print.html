@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>ดาวน์โหลด PDF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 12mm 10mm; }
+  body { margin: 0; padding: 0 16px 32px; background: #FFFFFF; font-family: 'IBM Plex Sans Thai', sans-serif; }
+  .print-bar {
+    position: sticky; top: 0; z-index: 5;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    max-width: 718px; margin: 0 auto 18px; padding: 12px 0;
+    background: #FFFFFF; border-bottom: 1px solid #E3E3DF;
+  }
+  .print-bar button {
+    border: 0; border-radius: 10px; padding: 10px 16px; cursor: pointer;
+    font: 700 15px 'IBM Plex Sans Thai', sans-serif;
+  }
+  .print-go { background: #C8102E; color: #FFFFFF; }
+  .print-back { background: #F2F2F0; color: #4A4A46; }
+  .print-hint { flex-basis: 100%; margin: 0; color: #585854; font-size: 13px; line-height: 1.5; }
+  @media print {
+    body { padding: 0; }
+    .print-bar { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="print-bar">
+    <button class="print-go" type="button" onclick="window.print()">ดาวน์โหลด PDF</button>
+    <button class="print-back" type="button" onclick="history.length > 1 ? history.back() : window.close()">ปิด</button>
+    <p class="print-hint">ในหน้าต่างที่เด้งขึ้น เลือกเครื่องพิมพ์เป็น <b>"บันทึกเป็น PDF"</b> (Save as PDF) แล้วกดบันทึก</p>
+  </div>
+  <div id="handout"></div>
+
+  <script src="data.js?v=20260916-2"></script>
+  <script src="topic-pdf.js?v=20260918-3"></script>
+  <script>
+    (function() {
+      const topic = renderTopicHandout(document.getElementById('handout'));
+      if (!topic) return;
+      // Wait for the Thai font and every photo, otherwise the PDF can capture blanks.
+      const images = Array.from(document.images).map(function(img) {
+        return img.complete ? null : new Promise(function(r) { img.onload = img.onerror = r; });
+      }).filter(Boolean);
+      Promise.all([document.fonts ? document.fonts.ready : null].concat(images)).then(function() {
+        setTimeout(function() { window.print(); }, 300);
+      });
+    })();
+  </script>
+</body>
+</html>
