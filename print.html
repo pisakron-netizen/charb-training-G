@@ -33,7 +33,18 @@
   <div class="print-bar">
     <button class="print-go" type="button" onclick="window.print()">ดาวน์โหลด PDF</button>
     <button class="print-back" type="button" onclick="history.length > 1 ? history.back() : window.close()">ปิด</button>
-    <p class="print-hint">ในหน้าต่างที่เด้งขึ้น เลือกเครื่องพิมพ์เป็น <b>"บันทึกเป็น PDF"</b> (Save as PDF) แล้วกดบันทึก</p>
+    <p class="print-hint" data-os="ios">
+      <b>iPhone / iPad:</b> กดปุ่มแดง → หน้า "ตัวเลือก" กดปุ่ม <b>แชร์</b> (สี่เหลี่ยมมีลูกศรขึ้น) ด้านบน
+      → เลือก <b>"บันทึกไปยังไฟล์"</b> (Save to Files) → กดบันทึก
+    </p>
+    <p class="print-hint" data-os="android">
+      <b>Android:</b> กดปุ่มแดง → แตะช่องเครื่องพิมพ์ด้านบน เลือก <b>"บันทึกเป็น PDF"</b>
+      → กดปุ่ม <b>PDF</b> สีฟ้า → เลือกที่เก็บไฟล์ แล้วกดบันทึก
+    </p>
+    <p class="print-hint" data-os="desktop">
+      <b>คอมพิวเตอร์:</b> ในหน้าต่างที่เด้งขึ้น เลือกเครื่องพิมพ์ (Destination) เป็น
+      <b>"บันทึกเป็น PDF"</b> (Save as PDF) แล้วกดบันทึก
+    </p>
   </div>
   <div id="handout"></div>
 
@@ -41,6 +52,14 @@
   <script src="topic-pdf.js?v=20260918-3"></script>
   <script>
     (function() {
+      // Show only the steps for this device; iPadOS reports itself as a Mac with touch.
+      const ua = navigator.userAgent;
+      const os = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)
+        ? 'ios' : /Android/.test(ua) ? 'android' : 'desktop';
+      document.querySelectorAll('.print-hint').forEach(function(p) {
+        if (p.dataset.os !== os) p.style.display = 'none';
+      });
+
       const topic = renderTopicHandout(document.getElementById('handout'));
       if (!topic) return;
       // Wait for the Thai font and every photo, otherwise the PDF can capture blanks.
