@@ -110,7 +110,13 @@
         (saHtml ? '<div class="pdf-section"><div class="pdf-bar"><span class="pdf-bar-mark">SA</span>ข้อมูลสำหรับแนะนำลูกค้า</div>' + saHtml + '</div>' : '') +
         (techHtml ? '<div class="pdf-section"><div class="pdf-bar tech"><span class="pdf-bar-mark">ช่าง</span>' +
           (obs.length ? 'จุดสังเกตในการตรวจ' : 'ขั้นตอนตรวจสอบ') +
-          (t.techDraft ? ' (ข้อมูลเบื้องต้น รอคลิปยืนยัน)' : '') + '</div>' + techHtml + '</div>' : '') +
+          (t.techDraft ? (t.sources ? ' (อ้างอิงเอกสาร รอคลิปยืนยัน)' : ' (ข้อมูลเบื้องต้น รอคลิปยืนยัน)') : '') + '</div>' + techHtml + '</div>' : '') +
+        (Array.isArray(t.sources) && t.sources.length
+          ? '<div class="pdf-foot pdf-avoid"><b>แหล่งอ้างอิง:</b> ' + t.sources.map(function(k) {
+              return esc({ DLT: 'คู่มือการตรวจสภาพรถ กรมการขนส่งทางบก (ม.ค. 2566)', FMCSA: 'FMCSA 49 CFR 396 Appendix A',
+                EXCEL: 'บทสนทนามาตรฐาน 117 รายการ ชัยรัชการ' }[k] || k);
+            }).join(' · ') + '</div>'
+          : '') +
         '<div class="pdf-foot pdf-avoid">' +
           'หน้าหัวข้อออนไลน์: ' + esc(pageLink) +
           (videoLink ? '<br>วิดีโอการตรวจ: ' + esc(videoLink) : '') +

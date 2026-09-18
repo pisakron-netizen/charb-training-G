@@ -163,6 +163,19 @@
     font-size: 16px;
   }
   .detail-search:focus { outline: none; border-color: var(--accent-red); box-shadow: 0 0 0 3px var(--accent-red-soft); }
+  .source-note {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 12px 18px 14px;
+    border-top: 1px solid #E7E7E3;
+    background: #FAFAF8;
+    color: var(--text3);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .source-note strong { color: #5C5C57; font-size: 12px; }
+  .source-note span::before { content: "• "; }
   .topic-sa-only {
     flex-shrink: 0;
     margin-left: 8px;
@@ -1202,8 +1215,8 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260918-3"></script>
-  <script src="topic-pdf.js?v=20260918-5" defer></script>
+  <script src="data.js?v=20260918-4"></script>
+  <script src="topic-pdf.js?v=20260918-6" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1347,7 +1360,7 @@ function renderInspectionSection(t) {
           <span class="sales-support-mark">ช่าง</span>
           <span class="sales-support-copy">
             <span class="sales-support-title">จุดสังเกตในการตรวจ</span>
-            <span class="sales-support-meta">จุดตรวจ ${observations.length} จุด${t.techDraft ? ' · ข้อมูลเบื้องต้น รอคลิปยืนยัน' : ''}</span>
+            <span class="sales-support-meta">จุดตรวจ ${observations.length} จุด${t.techDraft ? (t.sources ? ' · อ้างอิงเอกสาร รอคลิปยืนยัน' : ' · ข้อมูลเบื้องต้น รอคลิปยืนยัน') : ''}</span>
           </span>
           <span class="sales-support-chevron" aria-hidden="true">›</span>
         </summary>
@@ -1389,6 +1402,7 @@ function renderInspectionSection(t) {
             </details>
           `;}).join('')}
         </div>
+        ${renderSourceNote(t)}
       </details>
     `;
   }
@@ -1843,6 +1857,18 @@ function showDetail(id) {
   updateTopicUrl(id);
   showScreen('screen-detail');
   bindStepAccordions();
+}
+
+// Reference documents behind the written-up (not yet filmed) topics.
+const SOURCE_LABELS = {
+  DLT: 'คู่มือการปฏิบัติงานการตรวจสภาพรถ กรมการขนส่งทางบก (ม.ค. 2566)',
+  FMCSA: 'FMCSA 49 CFR 396 Appendix A เกณฑ์ตรวจสภาพรถบรรทุก (สหรัฐฯ)',
+  EXCEL: 'บทสนทนามาตรฐาน 117 รายการ ชัยรัชการ'
+};
+
+function renderSourceNote(t) {
+  if (!Array.isArray(t.sources) || t.sources.length === 0) return '';
+  return `<div class="source-note"><strong>แหล่งอ้างอิง</strong>${t.sources.map(key => `<span>${escapeHtml(SOURCE_LABELS[key] || key)}</span>`).join('')}</div>`;
 }
 
 function renderPendingTechNote() {
