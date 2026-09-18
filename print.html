@@ -23,6 +23,12 @@
   .print-go { background: #C8102E; color: #FFFFFF; }
   .print-back { background: #F2F2F0; color: #4A4A46; }
   .print-hint { flex-basis: 100%; margin: 0; color: #585854; font-size: 13px; line-height: 1.5; }
+  /* Phone preview only; the printed page keeps the A4 two-column layout. */
+  @media screen and (max-width: 600px) {
+    .pdf-grid { flex-direction: column; }
+    .pdf-body { padding-left: 0 !important; }
+    .pdf-imgs figure { width: 100% !important; }
+  }
   @media print {
     body { padding: 0; }
     .print-bar { display: none; }
