@@ -163,6 +163,51 @@
     font-size: 16px;
   }
   .detail-search:focus { outline: none; border-color: var(--accent-red); box-shadow: 0 0 0 3px var(--accent-red-soft); }
+  .script-box {
+    margin-top: 14px;
+    border: 1px solid #E3D3D6;
+    border-radius: 8px;
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+  .script-summary {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    background: #FFF7F8;
+    color: var(--accent-red-dark);
+    cursor: pointer;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .script-summary::-webkit-details-marker { display: none; }
+  .script-chevron { margin-left: auto; font-size: 18px; transition: transform 0.2s ease; }
+  .script-box[open] .script-chevron { transform: rotate(90deg); }
+  .script-card { padding: 10px 14px 12px; border-top: 1px solid #F0E4E6; }
+  .script-card-head {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .script-card-head.tech { background: #3C3C38; color: #FFFFFF; }
+  .script-card-head.sa { background: var(--accent-red); color: #FFFFFF; }
+  .script-line { display: flex; gap: 10px; align-items: flex-start; margin: 6px 0; }
+  .script-who {
+    flex: 0 0 48px;
+    padding-top: 2px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text3);
+  }
+  .script-line.sa .script-who { color: var(--accent-red-dark); }
+  .script-line.tech .script-who { color: #3C3C38; }
+  .script-line p { margin: 0; color: #2A2A28; font-size: 14px; line-height: 1.65; }
+  .script-line.customer p { color: #5C5C57; font-style: italic; }
+  .script-blank { display: inline-block; min-width: 56px; border-bottom: 1px dashed #A8A8A2; color: transparent; }
   .source-note {
     display: flex;
     flex-direction: column;
@@ -1215,7 +1260,7 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260918-8"></script>
+  <script src="data.js?v=20260918-9"></script>
   <script src="topic-pdf.js?v=20260918-6" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
@@ -1722,6 +1767,37 @@ function renderTalkingPoints(iss) {
   `;
 }
 
+// Standard dialogue: the technician films a clip for the customer, then SA walks
+// the customer through the same clip. Shared lines are fixed; per-finding lines come from data.
+function renderDialogueScript(s) {
+  if (!s) return '';
+  const blank = text => escapeHtml(text).replace(/___/g, '<span class="script-blank">______</span>');
+  const line = (who, cls, text) =>
+    `<div class="script-line ${cls}"><span class="script-who">${who}</span><p>${blank(text)}</p></div>`;
+  const q = Array.isArray(s.objection) ? s.objection : [];
+  return `
+    <details class="script-box" open>
+      <summary class="script-summary">บทสนทนามาตรฐาน<span class="script-chevron" aria-hidden="true">›</span></summary>
+      <div class="script-card">
+        <div class="script-card-head tech">ช่างถ่ายคลิปพูดกับลูกค้า</div>
+        ${line('ช่าง', 'tech', 'สวัสดีครับคุณลูกค้า ผมช่าง ___ รถทะเบียน ___ ครับ')}
+        ${line('ช่าง', 'tech', s.clip)}
+        ${line('ช่าง', 'tech', `ช่างแนะนำให้${s.recommend}ครับ รายละเอียดค่าใช้จ่าย SA จะแจ้งให้ทราบครับ`)}
+      </div>
+      <div class="script-card">
+        <div class="script-card-head sa">SA คุยกับลูกค้า (ใช้คลิปของช่าง)</div>
+        ${line('SA', 'sa', 'คุณลูกค้าครับ นี่คือคลิปที่ช่างตรวจรถของคุณลูกค้าครับ (เปิดคลิปให้ลูกค้าดู)')}
+        ${line('SA', 'sa', s.explain)}
+        ${line('SA', 'sa', s.risk)}
+        ${line('SA', 'sa', `ผมแนะนำให้${s.recommend}ครับ ใช้เวลาประมาณ ___ ค่าใช้จ่ายประมาณ ___ ครับ`)}
+        ${q[0] ? line('ลูกค้า', 'customer', q[0]) : ''}
+        ${q[1] ? line('SA', 'sa', q[1]) : ''}
+        ${line('SA', 'sa', 'ให้ผมแจ้งช่างเริ่มงานเลยไหมครับ')}
+      </div>
+    </details>
+  `;
+}
+
 function renderIssueDetail(t, iss, idx) {
   if (t.detailMode === 'quick-sales-preview') {
     return `
@@ -1737,6 +1813,7 @@ function renderIssueDetail(t, iss, idx) {
           <p class="sales-resolution-text">${iss.fix}</p>
         </section>
       </div>
+      ${renderDialogueScript(iss.script)}
     `;
   }
 
