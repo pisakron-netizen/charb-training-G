@@ -79,7 +79,7 @@
       '</div>';
     }).join('');
 
-    const techHtml = obs.length
+    const techHtml = t.saOnly ? '' : obs.length
       ? obs.map(function(item, i) {
           const imgs = observationImages(item);
           return '<div class="pdf-item pdf-avoid">' +

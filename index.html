@@ -163,6 +163,42 @@
     font-size: 16px;
   }
   .detail-search:focus { outline: none; border-color: var(--accent-red); box-shadow: 0 0 0 3px var(--accent-red-soft); }
+  .topic-sa-only {
+    flex-shrink: 0;
+    margin-left: 8px;
+    padding: 1px 8px;
+    border: 1px solid var(--border2);
+    border-radius: 999px;
+    color: var(--text3);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pending-tech-note {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding: 16px 18px;
+    border: 1px dashed var(--border2);
+    border-radius: 8px;
+    background: #FAFAF8;
+  }
+  .pending-tech-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 38px;
+    flex: 0 0 46px;
+    border-radius: 6px;
+    background: #E7E7E3;
+    color: #6A6A64;
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .pending-tech-note strong { display: block; color: #3C3C38; font-size: 15px; }
+  .pending-tech-note p { margin-top: 2px; color: var(--text3); font-size: 13px; }
   .topic-pager {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1160,8 +1196,8 @@
   </div>
 </div>
 
-  <script src="data.js?v=20260916-2"></script>
-  <script src="topic-pdf.js?v=20260918-3" defer></script>
+  <script src="data.js?v=20260918-1"></script>
+  <script src="topic-pdf.js?v=20260918-4" defer></script>
 <script>
 // ข้อมูลหลักอยู่ใน data.js เพื่อให้เพิ่มหัวข้อจำนวนมากได้ง่ายขึ้น
 const trainingData = window.trainingData || {};
@@ -1623,6 +1659,7 @@ function renderTopics() {
           '<span class="topic-bullet"></span>' +
           '<h3 class="topic-title-line">' +
             '<span class="topic-title">' + escapeHtml(t.title) + '</span>' +
+            (t.saOnly ? '<span class="topic-sa-only">ยังไม่มีคลิป</span>' : '') +
           '</h3>' +
           '</div>' +
           '<span class="topic-card-arrow">›</span>' +
@@ -1761,7 +1798,10 @@ function showDetail(id) {
     </div>
   `;
   // SA-facing advice leads the page, the technician points sit right under it, then the video.
-  const detailSections = `${renderIssuesSection(t)}${renderInspectionSection(t)}${videoSection}`;
+  // SA-only topics (text from the master Excel) have no technician footage yet.
+  const detailSections = t.saOnly
+    ? `${renderIssuesSection(t)}${renderPendingTechNote()}`
+    : `${renderIssuesSection(t)}${renderInspectionSection(t)}${videoSection}`;
 
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-hero">
@@ -1790,6 +1830,18 @@ function showDetail(id) {
   updateTopicUrl(id);
   showScreen('screen-detail');
   bindStepAccordions();
+}
+
+function renderPendingTechNote() {
+  return `
+    <div class="pending-tech-note">
+      <span class="pending-tech-mark">ช่าง</span>
+      <div>
+        <strong>จุดตรวจและคลิปวิดีโอกำลังจัดทำ</strong>
+        <p>ตอนนี้ใช้ข้อมูลส่วน SA ด้านบนคุยกับลูกค้าได้ก่อน</p>
+      </div>
+    </div>
+  `;
 }
 
 // Same order as the topic list: category order first, then id.
