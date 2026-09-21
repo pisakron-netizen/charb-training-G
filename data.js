@@ -33,7 +33,8 @@ window.trainingData = {
   17: 'https://www.canva.com/design/DAHUyv6dcW4/l7T9QaTUmuDcGTRU5NdkEA/watch?utm_content=DAHUyv6dcW4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h39c6ef8d29', // ตรวจรอยรั่วกระปุกพวงมาลัย
   18: 'https://www.canva.com/design/DAHU3kPSp6I/tXfr_k1zE0FLCkRo7oDcCQ/watch?utm_content=DAHU3kPSp6I&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hecb831a62b', // ตรวจเช็กน้ำมันเครื่องรั่วผ่านหน้าเครื่องและท้ายเครื่องและบริเวณรอบเครื่อง
   19: 'https://www.canva.com/design/DAHUysZsTF8/-CIHF0RqNJqo5yu9Tc7pZQ/watch?utm_content=DAHUysZsTF8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3bb305ceef', // ตรวจเช็กรอยรั่วซึมระบบเบรคและระบบคลัทช์
-  20: 'https://www.canva.com/design/DAHUyWOuvK8/ZTDc9ak-vtTzAgWLXpXX2g/watch?utm_content=DAHUyWOuvK8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfc1a1f3222'  // ตรวจเช็กรั่วซึมปั๊มเชื้อเพลิง หัวฉีด และปั๊มแรงดันต่ำ (ปั๊มแย็ก)
+  20: 'https://www.canva.com/design/DAHUyWOuvK8/ZTDc9ak-vtTzAgWLXpXX2g/watch?utm_content=DAHUyWOuvK8&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfc1a1f3222',  // ตรวจเช็กรั่วซึมปั๊มเชื้อเพลิง หัวฉีด และปั๊มแรงดันต่ำ (ปั๊มแย็ก)
+  116: 'https://www.canva.com/design/DAHVz8jMzqo/bJyoOMPxwv07t74ZYJLm1A/watch?utm_content=DAHVz8jMzqo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h0fd5fe7c8f'  // อะไหล่ของเก่าคืนลูกค้า
 },
   topicMedia: {
   1: {
@@ -7390,7 +7391,7 @@ window.trainingData = {
     ]
   },
   {
-    id: 116, saOnly: true, techDraft: true, detailMode: "quick-sales-preview", icon: "", title: "อะไหล่ของเก่าคืนลูกค้า", severity: "medium",
+    id: 116, techDraft: true, detailMode: "quick-sales-preview", icon: "", title: "อะไหล่ของเก่าคืนลูกค้า", severity: "medium",
     category: "อื่นๆ",
     sources: ["EXCEL"],
     quickObservations: [
