@@ -37,7 +37,8 @@ window.trainingData = {
   116: 'https://www.canva.com/design/DAHVz8jMzqo/bJyoOMPxwv07t74ZYJLm1A/watch?utm_content=DAHVz8jMzqo&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h0fd5fe7c8f',  // อะไหล่ของเก่าคืนลูกค้า
   114: 'https://www.canva.com/design/DAHVz3HZP_4/EepPO6cmWWpJxGBSDFMiFw/watch?utm_content=DAHVz3HZP_4&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h49546b97fe',  // ความสะอาดจุดที่มีการซ่อม
   23: 'https://www.canva.com/design/DAHV0ATGO-Q/UOHZn976E4fgXHEe40_4Xw/watch?utm_content=DAHV0ATGO-Q&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc805e77966',  // เช็กน้ำยาฟรีปั้มและใบพัดระบายความร้อน
-  45: 'https://www.canva.com/design/DAHV0XzRKaI/XKbnbOAeOtSO2vu2h3D2AQ/watch?utm_content=DAHV0XzRKaI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf25dfe002a'  // ระดับน้ำมันพาวเวอร์พวงมาลัย
+  45: 'https://www.canva.com/design/DAHV0XzRKaI/XKbnbOAeOtSO2vu2h3D2AQ/watch?utm_content=DAHV0XzRKaI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hf25dfe002a',  // ระดับน้ำมันพาวเวอร์พวงมาลัย
+  117: 'https://www.canva.com/design/DAHV0TDA0HI/ZIg8PJTA2Dl4NsrwXpkMog/watch?utm_content=DAHV0TDA0HI&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h8c854374a0'  // ตรวจรอยรั่วปั๊มพวงมาลัย
 },
   topicMedia: {
   1: {
@@ -7418,6 +7419,39 @@ window.trainingData = {
       "ใส่อะไหล่เก่าในถุงแดง",
       "ให้ลูกค้าตรวจเช็กอะไหล่เก่า",
       "เซ็นรับทราบในใบสั่งงาน แล้ววางไว้หน้ารถ"
+    ]
+  },
+  {
+    id: 117, detailMode: "quick-sales-preview", icon: "", title: "ตรวจรอยรั่วปั๊มพวงมาลัย", severity: "high",
+    category: "ระบบบังคับเลี้ยว",
+    quickObservations: [
+      {
+        label: "จุดตรวจที่ 1",
+        title: "ตรวจรอยรั่วที่ปั๊มพวงมาลัย",
+        text: "เมื่อน้ำมันพาวเวอร์ขาด อีกจุดที่ต้องเช็กคือปั๊มพวงมาลัยที่ท้ายเครื่องยนต์ ดูรอยรั่วตามจุดต่อท่อของปั๊ม ถ้ามีรอยรั่ว ให้เปลี่ยนโอริง",
+        images: [
+          { src: "topic117-pump.jpg", caption: "ปั๊มพวงมาลัยที่ท้ายเครื่องยนต์" },
+          { src: "topic117-pump-joint.jpg", caption: "จุดต่อท่อที่ปั๊มพวงมาลัย ตรวจรอยรั่วตรงนี้" }
+        ]
+      }
+    ],
+    issuesList: [
+      {
+        issue: "ปั๊มพวงมาลัยรั่วที่จุดต่อท่อ",
+        solution: "เปลี่ยนโอริงที่จุดรั่วของปั๊มพวงมาลัย แล้วเติมน้ำมันพาวเวอร์ให้ได้ระดับครับ",
+        talkingPoints: [
+          "ปั๊มพวงมาลัยสร้างแรงดันน้ำมัน ช่วยให้หมุนพวงมาลัยได้เบา",
+          "น้ำมันพาวเวอร์ขาด → ต้องเช็กรอยรั่วที่ปั๊มด้วย",
+          "โอริงที่จุดต่อท่อเสื่อม → น้ำมันซึมออก",
+          "รั่วต่อเนื่อง → น้ำมันขาด ระบบพวงมาลัยเสียหาย",
+          "ปิดท้าย: เปลี่ยนโอริงตอนนี้เป็นงานเล็ก ป้องกันน้ำมันขาดและปั๊มเสียหาย"
+        ],
+        fix: "หากปั๊มพวงมาลัยรั่วแล้วไม่เปลี่ยนโอริง น้ำมันพาวเวอร์จะลดลงเรื่อยๆ จนขาด พวงมาลัยอาจหนักขึ้น และปั๊มหรือชิ้นส่วนในระบบพวงมาลัยพาวเวอร์เสียหายได้",
+        script: {"clip": "ปั๊มพวงมาลัยท้ายเครื่องยนต์มีรอยรั่วที่จุดต่อท่อครับ (ถ่ายจุดต่อท่อที่ปั๊ม)", "recommend": "เปลี่ยนโอริงที่จุดรั่วของปั๊มพวงมาลัย แล้วเติมน้ำมันพาวเวอร์ให้ได้ระดับ", "explain": "ปั๊มพวงมาลัยที่ท้ายเครื่องยนต์มีรอยรั่วที่จุดต่อท่อครับ ดูได้ในคลิป", "risk": "ถ้าไม่แก้ น้ำมันพาวเวอร์จะขาด และระบบพวงมาลัยเสียหายได้ครับ", "objection": ["เติมน้ำมันไปก่อนได้ไหม", "เติมได้ครับ แต่ถ้าไม่เปลี่ยนโอริง น้ำมันจะรั่วออกอีกครับ โอริงเป็นงานเล็ก ทำตอนนี้คุ้มกว่าครับ"], "urgency": "soon"}
+      }
+    ],
+    steps: [
+      "ตรวจรอยรั่วที่ปั๊มพวงมาลัย"
     ]
   }
 ]
