@@ -1892,11 +1892,13 @@ function renderTopics() {
       return;
     }
 
-    // Numbers follow the full list order, so a topic keeps its number while searching or filtering.
+    // Numbers restart at 1 in each category and ignore the search, so a topic keeps its number.
     const topicNumbers = {};
-    topics.slice().sort(function(a, b) {
-      return (categories.indexOf(a.category) - categories.indexOf(b.category)) || a.id - b.id;
-    }).forEach(function(t, i) { topicNumbers[t.id] = i + 1; });
+    categories.forEach(function(cat) {
+      topics.filter(function(t) { return t.category === cat; })
+        .sort(function(a, b) { return a.id - b.id; })
+        .forEach(function(t, i) { topicNumbers[t.id] = i + 1; });
+    });
 
     let html = '';
     categories.forEach(function(cat) {
